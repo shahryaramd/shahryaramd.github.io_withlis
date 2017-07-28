@@ -1,0 +1,138 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+
+<body>
+    <div id="container" style="min-width: 670px; height: 400px; margin: 0 auto"></div>
+    <script>
+        function getParamValue(paramName) {
+            var url = window.location.search.substring(1); //get rid of "?" in querystring
+            var qArray = url.split('&'); //get key-value pairs
+            for (var i = 0; i < qArray.length; i++) {
+                var pArr = qArray[i].split('='); //split key and value
+                if (pArr[0] == paramName)
+                    return pArr[1]; //return value
+            }
+        }
+
+    </script>
+    <script type="text/javascript">
+        // get the data
+        var zone = getParamValue("param1");
+        var dn = getParamValue("param2");
+        var filename = zone + "_rainfall_" + dn + ".csv";
+
+        $(document).ready(function() {
+            // AJAX in the data file
+            $.ajax({
+                type: "GET",
+                url: filename,
+                dataType: "text",
+                success: function(data) {
+                    processdata(data);
+                }
+            });
+
+            function processdata(data) {
+                var ranges = [],
+                    averages = [],
+                    reference1 = [],
+                    reference2 = [],
+                    current = [],
+                    lines = data.split('\n');
+
+                for (i = 1; i < lines.length; i++) {
+                    var items = lines[i].split(',');
+
+                    ranges.push([new Date(items[0]).getTime(), +items[2], +items[3]]);
+                    averages.push([new Date(items[0]).getTime(), +items[1]]);
+                    reference1.push([new Date(items[0]).getTime(), +items[4]]);
+                    reference2.push([new Date(items[0]).getTime(), +items[5]]);
+                    current.push([new Date(items[0]).getTime(), +items[6]]);
+                }
+
+                Highcharts.chart('container', {
+                    chart: {
+                        zoomType: 'xy'
+                    },
+                    title: {
+                        text: 'Parameter: Rainfall'
+                    },
+                    subtitle: {
+                        text: 'Region: ' + zone + ', Basin: ' + dn
+                    },
+                    xAxis: {
+                        type: 'datetime'
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Rainfall (mm/day)'
+                        },
+                        min: 0.0,
+                    },
+                    tooltip: {
+                        crosshairs: true,
+                        shared: true,
+                        valueSuffix: 'mm/day'
+                    },
+                    legend: {},
+                    series: [{
+                        name: 'Current Year',
+                        data: current,
+                        zIndex: 1,
+                        marker: {
+                            fillColor: 'yellow',
+                            lineWidth: 3,
+                            lineColor: Highcharts.getOptions().colors[0]
+                        }
+                    }, {
+                        name: '2015',
+                        data: reference2,
+                        zIndex: 2,
+                        marker: {
+                            fillColor: 'white',
+                            lineWidth: 2,
+                            lineColor: Highcharts.getOptions().colors[0]
+                        }
+                    }, {
+                        name: '2010',
+                        data: reference1,
+                        zIndex: 3,
+                        marker: {
+                            fillColor: 'yellow',
+                            lineWidth: 2,
+                            lineColor: Highcharts.getOptions().colors[0]
+                        }
+                    }, {
+                        name: 'Average',
+                        data: averages,
+                        zIndex: 4,
+                        marker: {
+                            fillColor: 'blue',
+                            lineWidth: 2,
+                            lineColor: Highcharts.getOptions().colors[0]
+                        }
+                    }, {
+                        name: 'Climatology',
+                        data: ranges,
+                        zIndex: 5,
+                        type: 'arearange',
+                        lineWidth: 0,
+                        color: Highcharts.getOptions().colors[0],
+                        fillOpacity: 0.3,
+                        zIndex: 0,
+                        marker: {
+                            enabled: false
+                        }
+                    }]
+                });
+            };
+        });
+
+    </script>
+</body>

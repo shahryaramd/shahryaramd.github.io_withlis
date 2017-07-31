@@ -13,7 +13,7 @@
     <script src="https://use.fontawesome.com/d5fc1a9abc.js"></script>
     <link rel="stylesheet" href="css/L.Control.Basemaps.css" />
 
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@0.7.7/dist/leaflet.css">
     <style>
         html,
         body,
@@ -167,7 +167,8 @@
 
             var msg = document.getElementById('message');
             msg.style.display = 'none';
-
+            var opc = document.getElementById('selOpacity');
+            opc.style.display = 'none';
             // Layer control /////////////////////////////
             layerControl.removeLayer(afghanistanS6)
             layerControl.removeLayer(afghanistanT7)
@@ -430,6 +431,10 @@
                 });
 
 
+                $('#bgopacity').on('input', function(value) {
+                    dataLayer.setOpacity($(this).val() * '.01');
+                });
+
                 map.removeControl(legendSM);
                 map.removeControl(legendT);
                 map.removeControl(legendSW);
@@ -497,8 +502,10 @@
                 http.open('HEAD', imgdata, false);
                 http.send();
                 var msg = document.getElementById('message');
+                var opc = document.getElementById('selOpacity');
                 if (http.status != 404) {
                     msg.style.display = 'none';
+                    opc.style.display = 'block';
                     map.addLayer(dataLayer);
 
                     var imgElement = dataLayer.getElement();
@@ -507,6 +514,7 @@
                     return "datapresent";
                 } else {
                     msg.style.display = 'block';
+                    opc.style.display = 'none';
                     $(document).ready(function() {
                         $('#message').delay(2500).fadeOut();
                     });
@@ -585,11 +593,25 @@
             <button class="button buttonR" id="btforward" title="Play Animation Forwards" type="reset" onclick="playforward();">
                 <i class="fa fa-forward" aria-hidden="true"></i>
             </button>
+
+
         </div>
         <!--        <div class="printMessage" style="display:none;">Test message</div>-->
+        <div class='hidePrint' id="selOpacity" style="display:none;">
+            <form>
+                <label>Opacity</label>
+                <input type="range" name="bgopacity" id="bgopacity" value="100" min="0" max="100" step="1" onchange="rangevalue.value=value">
+                <!--                <output id="rangevalue"></output>-->
+            </form>
+        </div>
+
+
         <div class='hidePrint' id='message'>
             Sorry, queried data is unavailable
         </div>
+
+
+
     </ul>
 
     <!-- Leaflet map -->
@@ -612,6 +634,8 @@
     <script src='js/Leaflet.GridLayer.FadeOut.js'></script>
     <script src="js/leaflet.easyPrint.js"></script>
     <script src="js/L.Control.Basemaps.js"></script>
+    <script src="js/togeojson@0.14.2"></script>
+    <script src="js/leaflet.filelayer.js"></script>
     <script type="text/javascript">
         function highlightFeature(e) {
             highlightLayer = e.target;
@@ -641,27 +665,16 @@
                 subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
                 label: 'Google Satellite'
             }),
-            L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
-                attribution: 'Tiles &copy; Esri &mdash; Source: Esri',
-                maxZoom: 13,
-                label: "ESRI World Terrain"
-            }),
-            L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-                attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
-                maxZoom: 16,
-                label: "ESRI Gray Canvas"
-
-            }),
             L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
                 maxZoom: 22,
                 subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
                 label: 'Google Streets'
+            }), L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri',
+                maxZoom: 13,
+                label: "ESRI World Terrain"
             })
-
         ];
-
-
-
 
         //        var baseMaps = {
         //            'Google Satellite': L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
@@ -1070,6 +1083,31 @@
             position: "bottomright"
         };
         L.control.scale(scaleOptions).addTo(map);
+
+        // KML Load
+        var style = {
+            color: 'red',
+            opacity: 1.0,
+            fillOpacity: 1.0,
+            weight: 2,
+            clickable: false
+        };
+
+        //        L.Control.FileLayerLoad.LABEL = '<img class="icon" src="images/folder.svg" alt="file icon"/>';
+
+        L.Control.fileLayerLoad({
+            fitBounds: true,
+            layerOptions: {
+                style: style,
+                pointToLayer: function(data, latlng) {
+                    return L.circleMarker(
+                        latlng, {
+                            style: style
+                        }
+                    );
+                }
+            }
+        }); //.addTo(map);
 
     </script>
 </body>

@@ -1088,12 +1088,12 @@
         var style = {
             color: 'red',
             opacity: 1.0,
-            fillOpacity: 1.0,
+            fillOpacity: 0.5,
             weight: 2,
             clickable: false
         };
 
-        //        L.Control.FileLayerLoad.LABEL = '<img class="icon" src="images/folder.svg" alt="file icon"/>';
+        L.Control.FileLayerLoad.LABEL = '<i class="fa fa-folder-open" aria-hidden="true"></i>';
 
         L.Control.fileLayerLoad({
             fitBounds: true,
@@ -1107,7 +1107,7 @@
                     );
                 }
             }
-        }); //.addTo(map);
+        }).addTo(map);
 
     </script>
 </body>

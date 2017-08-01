@@ -360,10 +360,16 @@ function pop_afghanistanT7(feature, layer) {
 
         },
         mouseover: highlightFeature_nopop,
+        click: function (e) {
+            var dn = e.target.feature.properties['USERBASINI'];
+            //$('#ts_WA').attr('src', "timeseries.html?param1=wa&param2=");
+            var content = '<iframe id="ts_wa" width="700" height="420" src="timeseries.html?param1=centralasia&param2=" frameborder="0"></iframe>';
+            var popupContent = content.replace("param2=", "param2=" + dn);
+            layer.bindPopup(popupContent);
+        },
     });
-    var popupContent = '<iframe width="680" height="450" src="timeseries.html" frameborder="0" style="z-index:1001;"></iframe>';
-    layer.bindPopup(popupContent);
 }
+
 
 function style_afghanistanT7() {
     return {

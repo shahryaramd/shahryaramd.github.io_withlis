@@ -1,3 +1,13 @@
+<!-- 
+#######################################
+LIS Atlas: A web based visualization framework for LIS output
+Written by Nishan Kumar Biswas and Shahryar Khalique Ahmad
+nbiswas@uw.edu, skahmad@uw.edu
+
+#######################################
+-->
+
+
 <html>
 
 <head>
@@ -25,7 +35,7 @@
         // get the data
         var zone = getParamValue("param1");
         var dn = getParamValue("param2");
-        var filename = zone + "_rainfall_" + dn + ".csv";
+        var filename = "DATA_DIR/timeseries/" + zone + "_rainfall_" + dn + ".csv";
 
         $(document).ready(function() {
             // AJAX in the data file

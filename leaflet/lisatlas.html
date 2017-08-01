@@ -1,0 +1,148 @@
+<!-- 
+#######################################
+LIS Atlas: A web based visualization framework for LIS output
+Written by Shahryar Khalique Ahmad
+skahmad@uw.edu
+
+#######################################
+-->
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="css/shapefilestyle.css">
+    <link href="js/jquery-ui.css" rel="stylesheet" />
+    <script src="js/fontawesome.js"></script>
+    <link rel="stylesheet" href="css/L.Control.Basemaps.css" />
+    <link rel="stylesheet" href="css/atlasstyle.css" />
+    <style>
+        html,
+        body,
+        #map {
+            width: 100%;
+            height: 92.5%;
+            padding: 0;
+            margin: 0;
+        }
+
+    </style>
+    <title>LIS Atlas</title>
+    <!--     Leaflet scripts-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/lisatlasload.js"></script>
+</head>
+
+<body onload="initialize()">
+
+    <!-- Buttons for query -->
+    <ul class="actions">
+        <select name="region" id="region" onchange="genOptions()">
+                                <option value="-1">- Domain -</option>
+                                <optgroup label="Asia">
+                                    <option value="centralasia">Central Asia</option>
+                                <optgroup label="Africa">
+                                    <option value="eastafrica">East Africa</option>
+                                    <option value="southernafrica">Southern Africa</option>
+                                    <option value="westafrica">West Africa</option>
+                            </select>
+        <select name="model" id="model" onchange="mapInit()">
+                                <option value="-1" selected>- Model -</option>
+                                
+                            </select>
+
+        <select name="forcing" id="forcing" onchange="mapInit()">
+                                <option value="-1">- Forcing -</option>
+                                
+                            </select>
+
+        <select name="dataset" id="dataset" onchange="mapInit()">
+                                <option value="-1">- Dataset -</option>
+                            
+                            </select>
+
+        <input class="seldate" type="date" id="seldate" name="seldate" value="" onchange="mapInit()" style="position: relative; z-index: 100000;">
+
+        <!--  date picker -->
+
+        <script>
+            (function() {
+                var elem = document.createElement('input');
+                elem.setAttribute('type', 'date');
+
+                if (elem.type === 'text') {
+                    $('#seldate').datepicker({
+                        dateFormat: 'yy-mm-dd'
+                    });
+                }
+            })();
+
+        </script>
+
+        <div class='hidePrint' style="display:inline;">
+            <button class="button buttonL" type="reset" title="Step Back 1 Day" onclick="decreaseDate();">
+                <i class="fa fa-step-backward" aria-hidden="true"></i>
+            </button>
+
+            <button class="button buttonR" type="reset" title="Step Forward 1 Day " onclick="increaseDate();">
+                <i class="fa fa-step-forward" aria-hidden="true"></i>
+            </button>
+
+
+            <button class="button buttonL" id="btback" title="Play Animation Backwards" type="reset" onclick="playback();">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </button>
+            <button class="button buttonC" id="btpause" title="Pause Animation" type="reset" disabled="true" onclick="playstop();">
+                <i class="fa fa-pause" aria-hidden="true"></i>
+            </button>
+            <button class="button buttonR" id="btforward" title="Play Animation Forwards" type="reset" onclick="playforward();">
+                <i class="fa fa-forward" aria-hidden="true"></i>
+            </button>
+
+
+        </div>
+        <!--        <div class="printMessage" style="display:none;">Test message</div>-->
+        <div class='hidePrint' id="selOpacity" style="display:none;">
+            <form>
+                <label>Opacity</label>
+                <input type="range" name="bgopacity" id="bgopacity" value="100" min="0" max="100" step="1" onchange="rangevalue.value=value">
+            </form>
+        </div>
+
+        <div class='hidePrint' id='message'>
+            Sorry, queried data is unavailable
+        </div>
+
+    </ul>
+    <!-- Leaflet map -->
+    <div id="map">
+    </div>
+
+
+    <script src="js/leaflet.js"></script>
+    <script src="js/leaflet-hash.js"></script>
+    <script src="data/eastafricaS0.js"></script>
+    <script src="data/eastafricaT1.js"></script>
+    <script src="data/westafricaS2.js"></script>
+    <script src="data/westafricaT3.js"></script>
+    <script src="data/southafricaS4.js"></script>
+    <script src="data/southafricaT5.js"></script>
+    <script src="data/afghanistanS6.js"></script>
+    <script src="data/afghanistanT7.js"></script>
+    <script src='js/Leaflet.GridLayer.FadeOut.js'></script>
+    <script src="js/leaflet.easyPrint.js"></script>
+    <script src="js/L.Control.Basemaps.js"></script>
+    <script src="js/togeojson.js"></script>
+    <script src="js/leaflet.filelayer.js"></script>
+    <script src="js/lisatlasmap.js"></script>
+</body>
+
+</html>

@@ -19,8 +19,10 @@ skahmad@uw.edu
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="css/leaflet.css" />
     <link rel="stylesheet" type="text/css" href="css/shapefilestyle.css">
+    <link rel="stylesheet" type="text/css" href="css/styledLayerControl.css">
     <link href="js/jquery-ui.css" rel="stylesheet" />
     <script src="js/fontawesome.js"></script>
+
     <link rel="stylesheet" href="css/L.Control.Basemaps.css" />
     <link rel="stylesheet" href="css/atlasstyle.css" />
     <style>
@@ -38,7 +40,7 @@ skahmad@uw.edu
     <!--     Leaflet scripts-->
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.js"></script>
-    <script src="js/lisatlasload.js"></script>
+    <script src="js/lisatlas-load.js"></script>
 </head>
 
 <body onload="initialize()">
@@ -71,7 +73,7 @@ skahmad@uw.edu
 
         <input class="seldate" type="date" id="seldate" name="seldate" value="" onchange="mapInit()" style="position: relative; z-index: 100000;">
 
-        <!--  date picker -->
+        <!--  date picker for Safari/Firefox -->
 
         <script>
             (function() {
@@ -110,9 +112,21 @@ skahmad@uw.edu
 
         </div>
         <!--        <div class="printMessage" style="display:none;">Test message</div>-->
+
+
+        <!--    GIBS layers -->
+        <div class='hidePrint' id="comp_checkbox">
+            <img src="images/gibs/compare.png" alt="compare icon" width="20" style="vertical-align: middle"> Compare Dataset <label class="switch">
+              <input type="checkbox"  id="compare" onchange="fireGibs(this)" >
+              <span class="slider round"></span>
+            </label>
+
+        </div>
+
+
         <div class='hidePrint' id="selOpacity" style="display:none;">
             <form>
-                <label>Opacity</label>
+                <label> <img src="images/gibs/opacity.png" alt="opacity icon" width="15" style="vertical-align: middle"> Set Opacity</label>
                 <input type="range" name="bgopacity" id="bgopacity" value="100" min="0" max="100" step="1" onchange="rangevalue.value=value">
             </form>
         </div>
@@ -122,10 +136,10 @@ skahmad@uw.edu
         </div>
 
     </ul>
+
     <!-- Leaflet map -->
     <div id="map">
     </div>
-
 
     <script src="js/leaflet.js"></script>
     <script src="js/leaflet-hash.js"></script>
@@ -140,9 +154,12 @@ skahmad@uw.edu
     <script src='js/Leaflet.GridLayer.FadeOut.js'></script>
     <script src="js/leaflet.easyPrint.js"></script>
     <script src="js/L.Control.Basemaps.js"></script>
-    <script src="js/togeojson.js"></script>
-    <script src="js/leaflet.filelayer.js"></script>
-    <script src="js/lisatlasmap.js"></script>
+    <script src="js/styledLayerControl.js"></script>
+    <script src="js/GIBSLayer.js"></script>
+    <script src="js/GIBSMetadata.js"></script>
+    <script src="js/lisatlas-map.js"></script>
+
+
 </body>
 
 </html>

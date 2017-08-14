@@ -52,8 +52,8 @@ var basemaps = [
         maxZoom: 22,
         subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
         label: 'Google Streets'
-    }), L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
-        attribution: 'Tiles &copy; Esri &mdash; Source: Esri',
+    }), L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: USGS, Esri, TANA, DeLorme, and NPS',
         maxZoom: 13,
         label: "ESRI World Terrain"
     })

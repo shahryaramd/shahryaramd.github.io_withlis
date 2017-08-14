@@ -1,11 +1,90 @@
-//
-//#######################################
 //LIS Atlas: A web based visualization framework for LIS output
-// Javascript code written for rendering the map and LIS output data based on leaflet.js API
-//Written by Shahryar Khalique Ahmad  
-//skahmad@uw.edu
 //
-//#######################################
+//Written by Shahryar Khalique Ahmad 
+//
+//Graduate Student and Research Assistant 
+//Homepage: http://students.washington.edu/skahmad/ 
+//Department of Civil and Environmental Engineering 
+//University of Washington 
+//skahmad@uw.edu, shahryaramd786@gmail.com
+
+
+// Overlay layer popup
+
+
+function pop_eastafricaT(feature, layer) {
+
+    layer.on({
+        mouseout: function (e) {
+            layer.setStyle(style_eastafricaT1(feature));
+
+        },
+        mouseover: highlightFeature,
+        click: function (e) {
+            console.log('vs')
+            var dn = e.target.feature.properties['DN'];
+            var ndn = e.target.feature.properties['name'];
+            //$('#ts_WA').attr('src', "timeseries.html?param1=wa&param2=");
+            var content = '<iframe id="ts_wa" width="700" height="420" src="timeseries.html?param1=eastafrica&param2=&param3=" frameborder="0"></iframe>';
+            var popupContent = content.replace("param2=&param3=", "param2=" + dn + "&param3=" + dataset.value);
+            layer.bindPopup(popupContent).openPopup();
+        },
+    });
+}
+
+function pop_westafricaT(feature, layer) {
+    layer.on({
+        mouseout: function (e) {
+            layer.setStyle(style_westafricaT3(feature));
+
+        },
+        mouseover: highlightFeature,
+        click: function (e) {
+            var dn = e.target.feature.properties['DN'];
+            //$('#ts_WA').attr('src', "timeseries.html?param1=wa&param2=");
+            var content = '<iframe id="ts_wa" width="700" height="420" src="timeseries.html?param1=westafrica&param2=&param3=" frameborder="0"></iframe>';
+            var popupContent = content.replace("param2=&param3=", "param2=" + dn + "&param3=" + dataset.value);
+            layer.bindPopup(popupContent).openPopup();
+        },
+    });
+
+}
+
+function pop_southafricaT(feature, layer) {
+    layer.on({
+        mouseout: function (e) {
+            layer.setStyle(style_southafricaT5(feature));
+
+        },
+        mouseover: highlightFeature,
+        click: function (e) {
+            var dn = e.target.feature.properties['DN'];
+            //$('#ts_WA').attr('src', "timeseries.html?param1=wa&param2=");
+            var content = '<iframe id="ts_wa" width="700" height="420" src="timeseries.html?param1=southernafrica&param2=&param3=" frameborder="0"></iframe>';
+            var popupContent = content.replace("param2=&param3=", "param2=" + dn + "&param3=" + dataset.value);
+            layer.bindPopup(popupContent).openPopup();
+        },
+    });
+}
+
+function pop_afghanistanT(feature, layer) {
+    layer.on({
+        mouseout: function (e) {
+            layer.setStyle(style_afghanistanT7(feature));
+
+        },
+        mouseover: highlightFeature_nopop,
+        click: function (e) {
+            var dn = e.target.feature.properties['USERBASINI'];
+            //$('#ts_WA').attr('src', "timeseries.html?param1=wa&param2=");
+            var content = '<iframe id="ts_wa" width="700" height="420" src="timeseries.html?param1=centralasia&param2=&param3=" frameborder="0"></iframe>';
+            var popupContent = content.replace("param2=&param3=", "param2=" + dn + "&param3=" + dataset.value);
+            layer.bindPopup(popupContent).openPopup();
+        },
+    });
+}
+///////////
+
 
 
 function playforward() {
@@ -208,6 +287,8 @@ function genOptions() {
         dataset.options[1] = new Option("Soil Moisture", "soilmoisture");
         dataset.options[2] = new Option("Temperature", "temperature")
         dataset.options[3] = new Option("Precipitation", "precipitation");
+        dataset.options[4] = new Option("Evapotranspiration", "evapotranspiration");
+        dataset.options[5] = new Option("Runoff (Timeseries only)", "runoff");
 
         //default options
         model.value = "noah";
@@ -245,6 +326,9 @@ function removeGibs() {
     }
     map.removeControl(legendG);
 }
+
+
+
 
 function mapInit() {
 
@@ -327,38 +411,40 @@ function mapInit() {
                     "AMSR2 SWE": gibsLayers['AMSR2_Snow_Water_Equivalent']
                 }
             },
-            //            {
-            //                groupName: "Snow Cover",
-            //                layers: {
-            //                    "Modis Terra Snow Cover": gibsLayers['MODIS_Terra_Snow_Cover'],
-            //                    "Modis Aqua Snow Cover": gibsLayers['MODIS_Aqua_Snow_Cover'],
-            //                    "Modis Terra NDSI": gibsLayers['MODIS_Terra_NDSI_Snow_Cover'],
-            //                    "Modis Aqua NDSI": gibsLayers['MODIS_Aqua_NDSI_Snow_Cover']
-            //
-            //                }
-            //            },
+//            {
+//                groupName: "Snow Cover",
+//                layers: {
+//                    "Modis Terra Snow Cover": gibsLayers['MODIS_Terra_Snow_Cover'],
+//                    "Modis Aqua Snow Cover": gibsLayers['MODIS_Aqua_Snow_Cover'],
+//                    //                    "Modis Terra NDSI": gibsLayers['MODIS_Terra_NDSI_Snow_Cover'],
+//                    //                    "Modis Aqua NDSI": gibsLayers['MODIS_Aqua_NDSI_Snow_Cover']
+//
+//                }
+//            },
 
 
             {
-                groupName: "Reflectance",
+                groupName: "Corrected Reflectance",
                 layers: {
                     "MODIS Terra (True Color)": gibsLayers['MODIS_Terra_CorrectedReflectance_TrueColor'],
-                    "MODIS Aqua (True Color)": gibsLayers['MODIS_Aqua_CorrectedReflectance_TrueColor']
+                    "MODIS Aqua (True Color)": gibsLayers['MODIS_Aqua_CorrectedReflectance_TrueColor'],
+                    "MODIS Terra (Bands 7-2-1)": gibsLayers['MODIS_Terra_CorrectedReflectance_Bands721'],
+                    "MODIS Aqua (Bands 7-2-1)": gibsLayers['MODIS_Aqua_CorrectedReflectance_Bands721'],
+
 
                 }
             },
             {
                 groupName: "Soil Moisture",
                 layers: {
-                    "AMSR-U2 NPD (Day, 25km)": gibsLayers['AMSRU2_Soil_Moisture_NPD_Day'],
-                    "AMSR-U2 NPD (Night, 25km)": gibsLayers['AMSRU2_Soil_Moisture_NPD_Night'],
+                    //                    "SMAP L3 Active (3km)": gibsLayers['SMAP_L3_Active_Soil_Moisture'],
+                    //                    "SMAP L3 Active-Passive (9km)": gibsLayers['SMAP_L3_Active_Passive_Soil_Moisture'],
                     "SMAP L3 Passive (Day, 9km)": gibsLayers['SMAP_L3_Passive_Enhanced_Day_Soil_Moisture'],
-                    "SMAP L3 Passive (Night, 9km)": gibsLayers['SMAP_L3_Passive_Enhanced_Night_Soil_Moisture']
-
-
+                    "SMAP L3 Passive (Night, 9km)": gibsLayers['SMAP_L3_Passive_Enhanced_Night_Soil_Moisture'],
+                    "AMSR-U2 NPD (Day, 25km)": gibsLayers['AMSRU2_Soil_Moisture_NPD_Day'],
+                    "AMSR-U2 NPD (Night, 25km)": gibsLayers['AMSRU2_Soil_Moisture_NPD_Night']
                 }
             }
-
         ];
 
         overlayGibs = [
@@ -370,7 +456,6 @@ function mapInit() {
                 }
             }
         ];
-
 
         options = {
             container_width: "210px",
@@ -391,21 +476,24 @@ function mapInit() {
 
         //  Legend for GIBS layer
         map.on('baselayerchange', function (e) {
-            var selgibs = (e.layer._layerInfo.title)
-            map.removeControl(legendG)
-            legendG.onAdd = function (map) {
-                var div = L.DomUtil.create('div', 'legend');
-                div.innerHTML += '<b><center>' + e.name + '</b></center>';
-                div.innerHTML += '<img src="images/gibs/' + selgibs + '.png" /><br>';
-                return div;
-            };
-            if (e.name == 'Reference_Features') {
+            if (e.name == 'MODIS Terra (True Color)' || e.name == 'MODIS Aqua (True Color)' || e.name == 'MODIS Terra (Bands 7-2-1)' || e.name == 'MODIS Aqua (Bands 7-2-1)') {
+                map.removeControl(legendG)
                 legendG.onAdd = function (map) {
                     var div = L.DomUtil.create('div', 'legend');
-                    div.innerHTML += '<b><center>Choose a Reference Dataset</b></center>';
+                    div.innerHTML += '<b><center>' + e.name + '</b></center>';
+                    return div;
+                };
+            } else {
+                var selgibs = (e.layer._layerInfo.title)
+                map.removeControl(legendG)
+                legendG.onAdd = function (map) {
+                    var div = L.DomUtil.create('div', 'legend');
+                    div.innerHTML += '<b><center>' + e.name + '</b></center>';
+                    div.innerHTML += '<img src="images/gibs/' + selgibs + '.png" /><br>';
                     return div;
                 };
             }
+
             legendG.addTo(map);
         });
 
@@ -423,7 +511,7 @@ function mapInit() {
     layer_afghanistanT7 = new L.geoJson(json_afghanistanT7, {
         attribution: '<a href=""></a>',
         pane: 'pane_afghanistanT7',
-        onEachFeature: pop_afghanistanT7,
+        onEachFeature: pop_afghanistanT,
         style: style_afghanistanT7
     });
 
@@ -437,7 +525,7 @@ function mapInit() {
     layer_southafricaT5 = new L.geoJson(json_southafricaT5, {
         attribution: '<a href=""></a>',
         pane: 'pane_southafricaT5',
-        onEachFeature: pop_southafricaT5,
+        onEachFeature: pop_southafricaT,
         style: style_southafricaT5
     });
 
@@ -451,7 +539,7 @@ function mapInit() {
     layer_westafricaT3 = new L.geoJson(json_westafricaT3, {
         attribution: '<a href=""></a>',
         pane: 'pane_westafricaT3',
-        onEachFeature: pop_westafricaT3,
+        onEachFeature: pop_westafricaT,
         style: style_westafricaT3
     });
 
@@ -465,7 +553,7 @@ function mapInit() {
     layer_eastafricaT1 = new L.geoJson(json_eastafricaT1, {
         attribution: '<a href=""></a>',
         pane: 'pane_eastafricaT1',
-        onEachFeature: pop_eastafricaT1,
+        onEachFeature: pop_eastafricaT,
         style: style_eastafricaT1
     });
 
@@ -544,14 +632,14 @@ function mapInit() {
 
         } else if (region.value == 'eastafrica') {
             layerControl.addOverlay(eastafricaT1, '<img src="legend/ts.png" width=20px /> Timeseries');
-            layerControl.addOverlay(eastafricaS0, '<img src="legend/stat.png" width=20px /> Statistics');
+            //layerControl.addOverlay(eastafricaS0, '<img src="legend/stat.png" width=20px /> Statistics');
             var img_bounds = [ // EA
                 [-12.0, 21.75],
                 [23.25, 51.25]
             ];
         } else if (region.value == 'southernafrica') {
             layerControl.addOverlay(southafricaT5, '<img src="legend/ts.png" width=20px /> Timeseries');
-            layerControl.addOverlay(southafricaS4, '<img src="legend/stat.png" width=20px /> Statistics');
+            //layerControl.addOverlay(southafricaS4, '<img src="legend/stat.png" width=20px /> Statistics');
             if (model.value == 'noah') {
                 var img_bounds = [ // SA - NOAH
                     [-37.9, 6.0],
@@ -565,7 +653,7 @@ function mapInit() {
             }
         } else if (region.value == 'westafrica') {
             layerControl.addOverlay(westafricaT3, '<img src="legend/ts.png" width=20px /> Timeseries');
-            layerControl.addOverlay(westafricaS2, '<img src="legend/stat.png" width=20px /> Statistics');
+            //layerControl.addOverlay(westafricaS2, '<img src="legend/stat.png" width=20px /> Statistics');
             if (model.value == 'noah') {
                 var img_bounds = [ // WA - NOAH
                     [5.3, -18.7],
@@ -593,6 +681,7 @@ function mapInit() {
         map.removeControl(legendT);
         map.removeControl(legendSW);
         map.removeControl(legendP);
+        map.removeControl(legendET);
 
         if (dataset.value == 'swe') {
 
@@ -649,6 +738,20 @@ function mapInit() {
             ////////////////
 
 
+        } else if (dataset.value == 'evapotranspiration') {
+
+            // Legend////////
+            legendET.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'legend');
+                div.innerHTML += '<center><b>Evapotranspiration (mm/day)</b></center>';
+                div.innerHTML += '<img src="images/evapotranspiration.png" /><br>';
+                div.innerHTML += '<center><font size="2" color="black">Dataset for <b>' + dateOrig + '</b></font></center>';
+                return div;
+            };
+            legendET.addTo(map);
+            ////////////////
+
+
         }
 
         // give message if data unavailable
@@ -678,5 +781,8 @@ function mapInit() {
                 $('#message').delay(2500).fadeOut();
             });
         }
+
+
+
     }
 }

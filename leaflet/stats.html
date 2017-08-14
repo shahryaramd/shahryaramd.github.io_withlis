@@ -1,0 +1,427 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script>
+        function getParamValue(paramName) {
+            var url = window.location.search.substring(1); //get rid of "?" in querystring
+            var qArray = url.split('&'); //get key-value pairs
+            for (var i = 0; i < qArray.length; i++) {
+                var pArr = qArray[i].split('='); //split key and value
+                if (pArr[0] == paramName)
+                    return pArr[1]; //return value
+            }
+        }
+
+    </script>
+
+    <script type="text/javascript">
+        // JavaScript Function to plot Statistics of Snow Cover of Central Asia
+        // Written by Nishan Kumar Biswas
+        // PhD Student and Graduate Research Assistant
+        // Department of CEE, University of Washington
+        // nbiswas@uw.edu, nishan.wre.buet@gmail.com
+        // www.students.washington.edu/nbiswas
+
+        var region = getParamValue("param1");
+        var basin = getParamValue("param2");
+        //var param = getParamValue("param3");
+
+
+        var daily = 'daily';
+        var monthly = 'monthly'
+        var summary = 'summary'
+
+        function readfile(datafile) {
+            dataset = '';
+            // AJAX in the data file
+            $.ajax({
+                type: "GET",
+                url: datafile,
+                async: false,
+                dataType: "text",
+                success: function(data) {
+                    dataset = String(data);
+                }
+            });
+            return dataset;
+        }
+
+        function dailystats() {
+            var pods = [],
+                fars = [],
+                modelmeans = [],
+                modismeans = [];
+
+            data = readfile("DATA_DIR/stats/" + region + "/" + daily + "/" + basin + "/PODY.txt");
+            lines = data.split('\n');
+            for (i = 1; i < lines.length; i++) {
+                var items = lines[i].split(',');
+                pods.push([new Date(items[0]).getTime(), +items[1]]);
+            }
+
+            data = readfile("DATA_DIR/stats/" + region + "/" + daily + "/" + basin + "/FAR.txt");
+            lines = data.split('\n');
+            for (i = 1; i < lines.length; i++) {
+                var items = lines[i].split(',');
+                fars.push([new Date(items[0]).getTime(), +items[1]]);
+            }
+
+            data = readfile("DATA_DIR/stats/" + region + "/" + daily + "/" + basin + "/MEAN.txt");
+            lines = data.split('\n');
+            for (i = 1; i < lines.length; i++) {
+                var items = lines[i].split(',');
+                modelmeans.push([new Date(items[0]).getTime(), +items[1]]);
+                modismeans.push([new Date(items[0]).getTime(), +items[2]]);
+
+            }
+            Highcharts.chart('container', {
+                chart: {
+                    zoomType: 'x',
+                    panning: true,
+                    panKey: 'shift'
+
+                },
+                title: {
+                    text: 'Daily Statistics - Snow Cover'
+                },
+                subtitle: {
+                    text: "Basin: " + basin + ", Region: " + region
+                },
+                xAxis: {
+                    type: 'datetime',
+                    panning: true,
+                    panKey: 'shift'
+                },
+                yAxis: [{
+                    min: 0.0,
+                    max: 1.0,
+                    title: {
+                        text: 'POD'
+                    }
+                }, {
+                    min: 0.0,
+                    title: {
+                        text: 'Mean (Fraction)'
+                    },
+                    opposite: true
+                }],
+                tooltip: {
+                    crosshairs: true,
+                    shared: true,
+                    valueSuffix: ' mm/day'
+                },
+                plotOptions: {
+                    column: {
+                        grouping: false,
+                        shadow: false,
+                        borderWidth: 0
+                    }
+                },
+                legend: {},
+                series: [{
+                    name: 'POD',
+                    type: 'column',
+                    data: pods,
+                    color: 'lightgreen',
+                    data: pods,
+                    tooltip: {
+                        valueSuffix: ''
+                    },
+                    pointPadding: 0.3,
+                    pointPlacement: 0.2,
+                    yAxis: 0
+                }, {
+                    name: 'FAR',
+                    type: 'column',
+                    color: 'orange',
+                    data: fars,
+                    tooltip: {
+                        valueSuffix: ' '
+                    },
+                    pointPadding: 0.4,
+                    pointPlacement: 0.2,
+                    yAxis: 0
+                }, {
+                    name: 'Model Mean',
+                    color: 'blue',
+                    data: modelmeans,
+                    type: 'spline',
+                    linewidth: 1,
+                    tooltip: {
+                        valueSuffix: ' '
+                    },
+                    yAxis: 1
+                }, {
+                    name: 'MODIS Mean',
+                    color: 'red',
+                    data: modismeans,
+                    type: 'line',
+                    linewidth: 1,
+                    tooltip: {
+                        valueSuffix: ' '
+                    },
+                    yAxis: 1
+                }]
+            });
+        }
+
+        function monthlystats() {
+            var pods = [],
+                fars = [],
+                modelmeans = [],
+                modismeans = [];
+
+            data = readfile("DATA_DIR/stats/" + region + "/" + monthly + "/" + basin + "/PODY.txt");
+            lines = data.split('\n');
+            for (i = 1; i < lines.length; i++) {
+                var items = lines[i].split(',');
+                pods.push([new Date(items[0]).getTime(), +items[1]]);
+            }
+
+            data = readfile("DATA_DIR/stats/" + region + "/" + monthly + "/" + basin + "/FAR.txt");
+            lines = data.split('\n');
+            for (i = 1; i < lines.length; i++) {
+                var items = lines[i].split(',');
+                fars.push([new Date(items[0]).getTime(), +items[1]]);
+            }
+
+            data = readfile("DATA_DIR/stats/" + region + "/" + monthly + "/" + basin + "/MEAN.txt");
+            lines = data.split('\n');
+            for (i = 1; i < lines.length; i++) {
+                var items = lines[i].split(',');
+                modelmeans.push([new Date(items[0]).getTime(), +items[1]]);
+                modismeans.push([new Date(items[0]).getTime(), +items[2]]);
+
+            }
+            Highcharts.chart('container2', {
+                chart: {
+                    zoomType: 'x',
+                    panning: true,
+                    panKey: 'shift'
+
+                },
+                title: {
+                    text: 'Monthly Statistics'
+                },
+                subtitle: {
+                    text: "Basin: " + basin + ", Region: " + region
+                },
+                xAxis: {
+                    type: 'datetime'
+                },
+                yAxis: [{
+                    min: 0,
+                    max: 1,
+                    title: {
+                        text: 'POD'
+                    }
+                }, {
+                    min: 0.0,
+                    max: 1.0,
+                    title: {
+                        text: 'Mean (Fraction)'
+                    },
+                    opposite: true
+                }],
+                tooltip: {
+                    crosshairs: true,
+                    shared: true,
+                    valueSuffix: ' mm/day'
+                },
+                plotOptions: {
+                    column: {
+                        grouping: false,
+                        shadow: true,
+                        borderWidth: 0
+                    }
+                },
+                legend: {},
+                series: [{
+                    name: 'POD',
+                    type: 'column',
+                    data: pods,
+                    color: 'lightgreen',
+                    data: pods,
+                    tooltip: {
+                        valueSuffix: ''
+                    },
+                    pointPadding: 0.3,
+                    pointPlacement: 0.2,
+                    yAxis: 0
+                }, {
+                    name: 'FAR',
+                    type: 'column',
+                    color: 'orange',
+                    data: fars,
+                    tooltip: {
+                        valueSuffix: ' '
+                    },
+                    pointPadding: 0.4,
+                    pointPlacement: 0.2,
+                    yAxis: 0
+                }, {
+                    name: 'Model Mean',
+                    color: 'blue',
+                    data: modelmeans,
+                    type: 'spline',
+                    linewidth: 1,
+                    tooltip: {
+                        valueSuffix: ' '
+                    },
+                    yAxis: 1
+                }, {
+                    name: 'MODIS Mean',
+                    color: 'red',
+                    data: modismeans,
+                    type: 'spline',
+                    linewidth: 1,
+                    tooltip: {
+                        valueSuffix: ' '
+                    },
+                    yAxis: 1
+                }]
+            });
+        }
+
+        function summarystats() {
+            var pods = [],
+                fars = [],
+                modelmeans = [],
+                modismeans = [];
+
+            data = readfile("DATA_DIR/stats/" + region + "/summary/PODY.txt");
+            lines = data.split('\n');
+            for (i = 1; i < lines.length; i++) {
+                var items = lines[i].split(',');
+                pods.push([items[0], +items[1]]);
+            }
+
+            data = readfile("DATA_DIR/stats/" + region + "/summary/FAR.txt");
+            lines = data.split('\n');
+            for (i = 1; i < lines.length; i++) {
+                var items = lines[i].split(',');
+                fars.push([items[0], +items[1]]);
+            }
+
+            data = readfile("DATA_DIR/stats/" + region + "/summary/MEAN.txt");
+            lines = data.split('\n');
+            for (i = 1; i < lines.length; i++) {
+                var items = lines[i].split(',');
+                modelmeans.push([items[0], +items[1]]);
+                modismeans.push([items[0], +items[2]]);
+
+            }
+            Highcharts.chart('container3', {
+                chart: {
+                    zoomType: 'x',
+                    panning: true,
+                    panKey: 'shift'
+
+                },
+                title: {
+                    text: 'Summary Statistics'
+                },
+                xAxis: {
+                    type: 'text',
+                    tickInterval: 1,
+                    max: 18,
+                    title: {
+                        text: 'Basin'
+                    }
+                },
+                yAxis: [{
+                    min: 0,
+                    max: 1,
+                    title: {
+                        text: 'POD'
+                    }
+                }, {
+                    min: 0.0,
+                    max: 1.0,
+                    title: {
+                        text: 'Mean (Fraction)'
+                    },
+                    opposite: true
+                }],
+                tooltip: {
+                    crosshairs: true,
+                    shared: true,
+                    valueSuffix: ' '
+                },
+                plotOptions: {
+                    column: {
+                        grouping: false,
+                        shadow: true,
+                        borderWidth: 0
+                    }
+                },
+                legend: {},
+                series: [{
+                    name: 'POD',
+                    type: 'column',
+                    data: pods,
+                    color: 'lightgreen',
+                    data: pods,
+                    tooltip: {
+                        valueSuffix: ''
+                    },
+                    pointPadding: 0.3,
+                    pointPlacement: 0.2,
+                    yAxis: 0
+                }, {
+                    name: 'FAR',
+                    type: 'column',
+                    color: 'orange',
+                    data: fars,
+                    tooltip: {
+                        valueSuffix: ' '
+                    },
+                    pointPadding: 0.4,
+                    pointPlacement: 0.2,
+                    yAxis: 0
+                }, {
+                    name: 'Model Mean',
+                    color: 'blue',
+                    data: modelmeans,
+                    type: 'spline',
+                    linewidth: 1,
+                    tooltip: {
+                        valueSuffix: ' '
+                    },
+                    yAxis: 1
+                }, {
+                    name: 'MODIS Mean',
+                    color: 'red',
+                    data: modismeans,
+                    type: 'spline',
+                    linewidth: 1,
+                    tooltip: {
+                        valueSuffix: ' '
+                    },
+                    yAxis: 1
+                }]
+            });
+        }
+
+        function start() {
+            dailystats();
+            monthlystats();
+            summarystats();
+        }
+
+    </script>
+
+</head>
+
+<body onload="start()">
+    <div id="container" style="width: 100%; height: 500px; margin: 0 auto"></div>
+    <div id="container2" style="display: inline-block; width: 48%; height: 300px; margin: 0 auto"></div>
+    <div id="container3" style="display: inline-block; width: 48%; height: 300px; margin: 0 auto"></div>
+</body>
+
+</html>
+</body>

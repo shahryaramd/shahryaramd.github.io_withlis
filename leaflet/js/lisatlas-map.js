@@ -2,9 +2,13 @@
 //#######################################
 //LIS Atlas: A web based visualization framework for LIS output
 // Javascript code written for rendering the map and LIS output data based on leaflet.js API
-//Written by Shahryar Khalique Ahmad  
-//skahmad@uw.edu
-//
+/*Written by Shahryar Khalique Ahmad 
+
+Graduate Student and Research Assistant 
+Homepage: http://students.washington.edu/skahmad/ 
+Department of Civil and Environmental Engineering 
+University of Washington 
+skahmad@uw.edu, shahryaramd786@gmail.com*/
 //#######################################
 
 
@@ -28,11 +32,10 @@ function highlightFeature_nopop(e) {
         fillColor: '#ffff00',
         fillOpacity: 0.9
     });
-    console.log(e.target.feature.properties['USERBASINI']);
-    var popup = L.popup()
-        .setLatLng(e.latlng)
-        .setContent('Basin ID ' + (e.target.feature.properties['USERBASINI']).toString())
-        .openOn(map);
+    //    var popup = L.popup()
+    //    .setLatLng(e.latlng)
+    //        .setContent('Basin ID ' + (e.target.feature.properties['USERBASINI']).toString())
+    //        .openOn(map);
     //highlightLayer.openPopup();
 }
 var basemaps = [
@@ -120,6 +123,9 @@ var legendSW = L.control({
     position: 'bottomleft'
 });
 var legendP = L.control({
+    position: 'bottomleft'
+});
+var legendET = L.control({
     position: 'bottomleft'
 });
 
@@ -368,9 +374,13 @@ function pop_afghanistanS6(feature, layer) {
 
         },
         mouseover: highlightFeature_nopop,
+        click: function (e) {
+            var dn = e.target.feature.properties['USERBASINI'];
+            var content = '<iframe id="ts_wa" width="800" height="500" src="stats.html?param1=centralasia&param2=" frameborder="0"></iframe>';
+            var popupContent = content.replace("param2=", "param2=" + dn);
+            layer.bindPopup(popupContent).openPopup();
+        },
     });
-    var popupContent = '<iframe width="600" height="420" src="chart.html" frameborder="0" ></iframe>';
-    layer.bindPopup(popupContent);
 }
 
 function style_afghanistanS6() {

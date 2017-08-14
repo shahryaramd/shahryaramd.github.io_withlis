@@ -61,23 +61,36 @@ L.GIBS_LAYERS = {
         "zoom": 9,
         "date": true
     },
-    "MODIS_Terra_NDSI_Snow_Cover": {
-        "title": "MODIS_Terra_NDSI_Snow_Cover",
-        "template": "http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_NDSI_Snow_Cover/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
-        "zoom": 8,
+
+    "MODIS_Terra_CorrectedReflectance_Bands721": {
+        "title": "MODIS_Terra_CorrectedReflectance_Bands721",
+        "template": "http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_CorrectedReflectance_Bands721/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg",
+        "zoom": 9,
         "date": true
     },
-
-    "MODIS_Aqua_SurfaceReflectance_Bands721": {
-        "title": "MODIS_Aqua_SurfaceReflectance_Bands721",
-        "template": "http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Aqua_SurfaceReflectance_Bands721/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg",
-        "zoom": 8,
+    "MODIS_Aqua_CorrectedReflectance_Bands721": {
+        "title": "MODIS_Aqua_CorrectedReflectance_Bands721",
+        "template": "http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Aqua_CorrectedReflectance_Bands721/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg",
+        "zoom": 9,
         "date": true
     },
     "MODIS_Aqua_CorrectedReflectance_TrueColor": {
         "title": "MODIS_Aqua_CorrectedReflectance_TrueColor",
         "template": "http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Aqua_CorrectedReflectance_TrueColor/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg",
         "zoom": 9,
+        "date": true
+    },
+
+    "SMAP_L3_Active_Soil_Moisture": {
+        "title": "SMAP_L3_Active_Soil_Moisture",
+        "template": "http://map1.vis.earthdata.nasa.gov/wmts-webmerc/SMAP_L3_Active_Soil_Moisture/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+        "zoom": 6,
+        "date": true
+    },
+    "SMAP_L3_Active_Passive_Soil_Moisture": {
+        "title": "SMAP_L3_Active_Passive_Soil_Moisture",
+        "template": "http://map1.vis.earthdata.nasa.gov/wmts-webmerc/SMAP_L3_Active_Passive_Soil_Moisture/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+        "zoom": 6,
         "date": true
     },
     "SMAP_L3_Passive_Enhanced_Day_Soil_Moisture": {
@@ -107,25 +120,25 @@ L.GIBS_LAYERS = {
     "MODIS_Terra_Snow_Cover": {
         "title": "MODIS_Terra_Snow_Cover",
         "template": "http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_Snow_Cover/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
-        "zoom": 6,
+        "zoom": 8,
         "date": true
     },
     "MODIS_Aqua_Snow_Cover": {
         "title": "MODIS_Aqua_Snow_Cover",
         "template": "http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Aqua_Snow_Cover/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
-        "zoom": 6,
+        "zoom": 8,
         "date": true
     },
     "MODIS_Terra_NDSI_Snow_Cover": {
         "title": "MODIS_Terra_NDSI_Snow_Cover",
         "template": "http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_NDSI_Snow_Cover/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
-        "zoom": 6,
+        "zoom": 8,
         "date": true
     },
     "MODIS_Aqua_NDSI_Snow_Cover": {
         "title": "MODIS_Aqua_NDSI_Snow_Cover",
         "template": "http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Aqua_NDSI_Snow_Cover/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
-        "zoom": 6,
+        "zoom": 8,
         "date": true
     },
 

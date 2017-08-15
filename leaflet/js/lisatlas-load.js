@@ -1,11 +1,11 @@
 //LIS Atlas: A web based visualization framework for LIS output
 //
-//Written by Shahryar Khalique Ahmad 
+//Written by Shahryar Khalique Ahmad
 //
-//Graduate Student and Research Assistant 
-//Homepage: http://students.washington.edu/skahmad/ 
-//Department of Civil and Environmental Engineering 
-//University of Washington 
+//Graduate Student and Research Assistant
+//Homepage: http://students.washington.edu/skahmad/
+//Department of Civil and Environmental Engineering
+//University of Washington
 //skahmad@uw.edu, shahryaramd786@gmail.com
 
 
@@ -48,7 +48,7 @@ function pop_westafricaT(feature, layer) {
         },
     });
 
-}
+}  
 
 function pop_southafricaT(feature, layer) {
     layer.on({
@@ -460,7 +460,7 @@ function mapInit() {
         options = {
             container_width: "210px",
             group_maxHeight: "80px",
-            //container_maxHeight : "350px", 
+            //container_maxHeight : "350px",
             exclusive: false,
             collapsed: false,
             position: 'bottomright',

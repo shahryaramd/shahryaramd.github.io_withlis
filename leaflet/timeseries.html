@@ -7,13 +7,13 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
     <!--
-JS Function to receive parameters from calling file: lisatlas-load.js 
-Written by Shahryar Khalique Ahmad 
+JS Function to receive parameters from calling file: lisatlas-load.js
+Written by Shahryar Khalique Ahmad
 
-Graduate Student and Research Assistant 
-Homepage: http://students.washington.edu/skahmad/ 
-Department of Civil and Environmental Engineering 
-University of Washington 
+Graduate Student and Research Assistant
+Homepage: http://students.washington.edu/skahmad/
+Department of Civil and Environmental Engineering
+University of Washington
 skahmad@uw.edu, shahryaramd786@gmail.com
 
 -->
@@ -179,7 +179,7 @@ skahmad@uw.edu, shahryaramd786@gmail.com
                 var year = this.value;
                 curdata = addyr("DATA_DIR/timeseries/" + region + "/" + param + "/" + basin + "/" + year + ".txt");
                 lines = curdata.split('\n');
-                for (i = 1; i < lines.length; i++) {
+                for (i = 0; i < lines.length-1; i++) {
                     var items = lines[i].split(',');
                     newseries.push([new Date("2017" + items[0].substring(4, 10)).getTime(), +items[1]]);
                 }
@@ -198,7 +198,7 @@ skahmad@uw.edu, shahryaramd786@gmail.com
             right: 1%;
             top: 5%;
         }
-        
+
         .selectyear {
             background-color: #444244;
             color: white;

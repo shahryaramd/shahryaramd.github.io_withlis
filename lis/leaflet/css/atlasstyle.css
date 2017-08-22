@@ -1,12 +1,12 @@
 /*
 #######################################
 LIS Atlas: A web based visualization framework for LIS output
-Written by Shahryar Khalique Ahmad 
+Written by Shahryar Khalique Ahmad
 
-Graduate Student and Research Assistant 
-Homepage: http://students.washington.edu/skahmad/ 
-Department of Civil and Environmental Engineering 
-University of Washington 
+Graduate Student and Research Assistant
+Homepage: http://students.washington.edu/skahmad/
+Department of Civil and Environmental Engineering
+University of Washington
 skahmad@uw.edu, shahryaramd786@gmail.com
 
 #######################################
@@ -32,7 +32,7 @@ li {}
     font-size: 13px;
     margin-left: 60px;
     margin-top: 12px;
-    padding: 3px 10px 5px 10px;
+    padding: 3px 0px 6px 0px;
     z-index: 1000;
     text-align: center;
     color: #000000;
@@ -47,9 +47,9 @@ li {}
     top: auto;
     font-family: Helvetica, Arial, Sans-Serif;
     font-size: 13px;
-    margin-left: 312px;
+    margin-left: 272px;
     margin-top: 12px;
-    padding: 9px;
+    padding: 2px 10px 2px 10px;
     z-index: 1000;
     text-align: center;
     color: #000000;
@@ -73,11 +73,50 @@ li {}
     border-radius: 2px;
 }
 
+#exportdiv {
+    display: none;
+    position: absolute;
+    top: auto;
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 13px;
+    margin-left: 11px;
+    margin-top: 130px;
+    padding: 0px;
+    z-index: 1000;
+    text-align: center;
+    color: #000000;
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px;
+    border-radius: 5px;
+}
+
+
+.savebtn {
+    background-color: white;
+    color: black;
+    border: 1px solid rgba(0, 0, 0, 0.13);
+    padding: 4px 6px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    /*    margin: px 2px;*/
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 4px;
+}
+ .savebtn:hover {
+     background-color: rgb(230, 230, 230);
+ }
+
+
 select {
-    margin: 5px 5px 10px 10px;
+    margin: 5px 7px 10px 0px;
     border: 1px solid #111;
     background: transparent;
-    width: 194px;
+    width: 171px;
     padding: 5px 35px 5px 5px;
     font-size: 16px;
     border: 1px solid #fefeff;
@@ -89,12 +128,12 @@ select {
 }
 
 .seldate {
-    margin: 10px 10px 10px 10px;
+    margin: 10px 14px 10px 0px;
     border: 1px solid #111;
     background: transparent;
-    width: 165px;
+    width: 212px;
     height: 29px;
-    padding: 5px 10px 3px 5px;
+    padding: 5px 1px 3px 5px;
     font-size: 16px;
     border: 1px solid #fefeff;
     border-radius: 5px;
@@ -105,14 +144,20 @@ select {
 }
 
 
-/* CAUTION: IE hackery ahead */
+
 
 select::-ms-expand {
     display: none;
     /* remove default arrow on ie10 and ie11 */
 }
-
-
+#anim {
+    margin-left: 26px;
+}
+#changeOne {
+    position: relative;
+    margin-left: -95px;
+    z-index: 100001;
+}
 /* target Internet Explorer 9 to undo the custom arrow */
 
 @media screen and (min-width:0\0) {
@@ -157,10 +202,10 @@ select::-ms-expand {
 }
 
 .button {
-    background-color: white;
+    background-color: #eae5fa;
     color: black;
-    border: 1px solid #7314c6;
-    padding: 7px 11px;
+    border: 1px solid #eae5fa;
+    padding: 7px 7px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -181,31 +226,25 @@ select::-ms-expand {
 .button:disabled,
 button[disabled]:hover {
     /*    border: 1px solid #999999;*/
-    background-color: #f7f7f7;
+    background-color: #eae5fa;
     color: #868484;
     cursor: default;
 }
 
 .buttonR {
-    background-color: white;
-    color: black;
-    border: 1px solid #7314c6;
-    border-radius: 0px 5px 5px 0px;
+
+    border-radius: 0px 3px 3px 0px;
     margin-left: -6px;
 }
 
 .buttonL {
-    background-color: white;
-    color: black;
-    border: 1px solid #7314c6;
-    border-radius: 5px 0px 0px 5px;
+
+    border-radius: 3px 0px 0px 3px;
     /*    margin-left: -6px;*/
 }
 
 .buttonC {
-    background-color: white;
-    color: black;
-    border: 1px solid #7314c6;
+
     border-radius: 0px;
     margin-left: -6px;
 }
@@ -226,8 +265,8 @@ buttonC:hover {
 
 input[type=range] {
     -webkit-appearance: none;
-    width: 100%;
-    margin: 4.5px 0;
+    width: 50%;
+    margin: 5.5px 0;
 }
 
 input[type=range]:focus {
@@ -238,10 +277,10 @@ input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 7px;
     cursor: pointer;
-    box-shadow: 0.3px 0.3px 5.5px rgba(62, 0, 222, 0.82), 0px 0px 0.3px rgba(69, 0, 248, 0.82);
+    /*box-shadow: 0.3px 0.3px 5.5px rgba(62, 0, 222, 0.82), 0px 0px 0.3px rgba(69, 0, 248, 0.82);*/
     background: #ffffff;
     border-radius: 16.8px;
-    border: 0.2px solid #010101;
+    border: 0.2px solid rgba(62, 0, 222, 0.82);
 }
 
 input[type=range]::-webkit-slider-thumb {

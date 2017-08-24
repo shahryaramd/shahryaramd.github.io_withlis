@@ -152,7 +152,7 @@ function pop_Timeseries0(feature, layer) {
             //$('#ts_WA').attr('src', "timeseries.html?param1=wa&param2=");
             var content = '<iframe id="ts_wa" width="700" height="420" src="timeseries.html?param1=centralasia&param2=" frameborder="0"></iframe>';
             var popupContent = content.replace("param2=", "param2=" + dn);
-            layer.bindPopup(popupContent);
+            layer.bindPopup(popupContent).openPopup();
         },
     });
 }

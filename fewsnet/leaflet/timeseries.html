@@ -1,220 +1,263 @@
 <html>
 
+<!--- LIS Atlas: Dynamic web based framework for visualization of LIS Output
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ // Timeseries plotting of Basin average parameters
+ // Written by Nishan Kumar Biswas
+ // PhD Student and Graduate Research Assistant
+ // Department of CEE, University of Washington
+ // nbiswas@uw.edu, nishan.wre.buet@gmail.com
+ // www.students.washington.edu/nbiswas
+
+-->
+
 <head>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/highcharts-more.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
 
-    <!--
-JS Function to receive parameters from calling file: lisatlas-load.js
-Written by Shahryar Khalique Ahmad
-
-Graduate Student and Research Assistant
-Homepage: http://students.washington.edu/skahmad/
-Department of Civil and Environmental Engineering
-University of Washington
-skahmad@uw.edu, shahryaramd786@gmail.com
-
--->
-    <!--
-    // JavaScript Function to plot timeseries of rainfall data
-        // Written by Nishan Kumar Biswas
-        // PhD Student and Graduate Research Assistant
-        // Department of CEE, University of Washington
-        // nbiswas@uw.edu, nishan.wre.buet@gmail.com
-        // www.students.washington.edu/nbiswas
--->
-
-    <script>
-        function getParamValue(paramName) {
-            var url = window.location.search.substring(1); //get rid of "?" in querystring
-            var qArray = url.split('&'); //get key-value pairs
-            for (var i = 0; i < qArray.length; i++) {
-                var pArr = qArray[i].split('='); //split key and value
-                if (pArr[0] == paramName)
-                    return pArr[1]; //return value
-            }
+<script>
+    function getParamValue(paramName) {
+        var url = window.location.search.substring(1); //get rid of "?" in querystring
+        var qArray = url.split('&'); //get key-value pairs
+        for (var i = 0; i < qArray.length; i++) {
+            var pArr = qArray[i].split('='); //split key and value
+            if (pArr[0] == paramName)
+                return pArr[1]; //return value
         }
+    }
 
-    </script>
+</script>
 
-    <script type="text/javascript">
-        var region = getParamValue("param1");
-        var basin = getParamValue("param2");
-        var param = getParamValue("param3");
+<script type="text/javascript">
+
+var region = getParamValue("param1");
+var basin = getParamValue("param2");
+var param = getParamValue("param3");
 
 
-        function climatology() {
-            dataset = '';
-            // AJAX in the data file
-            $.ajax({
-                type: "GET",
-                url: "DATA_DIR/timeseries/" + region + "/" + param + "/" + basin + "/climatology.txt",
-                async: false,
-                dataType: "text",
-                success: function(data) {
-                    dataset = String(data);
-                }
-            });
-            return dataset;
-        }
+ var regions = ['centralasia', 'eastafrica', 'westafrica', 'southernafrica']
+ var regiontitles = ['Central Asia', 'East Africa', 'West Africa', 'Southern Africa']
+ var paramnames = ['swe','evapotranspiration','snowdepth','temperature','precipitation','twstorage','snowcover'];
+ var paramtitles = ['Snow Water Equivalent','Evapotranspiration','Snow Depth','Temperature','Precipitation','Terrestrial Water Storage','Snow Cover'];
+ var paramunits = ['mm','mm/day','m','K','mm/day','mm','fraction'];
+ var unit = paramunits[paramnames.indexOf(param)];
+ var title = paramtitles[paramnames.indexOf(param)];
+ var regiontitle = regiontitles[regions.indexOf(region)];
 
-        function addyr(datafile) {
-            dataset = '';
-            // AJAX in the data file
-            $.ajax({
-                type: "GET",
-                url: datafile,
-                async: false,
-                dataType: "text",
-                success: function(data) {
-                    dataset = String(data);
-                }
-            });
-            return dataset;
-        }
+function climatology()
+{
+	dataset = '';
+	// AJAX in the data file
+    $.ajax({
+        type: "GET",
+        url: "./" + region + "/" + param + "/" + basin + "/climatology.txt",
+		async: false,
+        dataType: "text",
+        success: function(data)
+		{
+		  dataset=String(data);
+		}
+        });
+		return dataset;
+}
 
-        function load() {
-            var ranges = [],
-                averages = [],
-                current = [];
+function addyr(region, param, basin, year)
+{
+   var datafile = "./" + region + "/" + param + "/" + basin + "/" + year + ".txt";
+	dataset = '';
+	// AJAX in the data file
+    $.ajax({
+        type: "GET",
+        url: datafile,
+		async: false,
+        dataType: "text",
+		error: function()
+		{
+			$("#errormessage").fadeIn(600);
+			txt = year + " data not available.";
+			document.getElementById("errormessage").innerHTML = txt;
+			setTimeout(function(){
+			$("#errormessage").fadeOut(600);
+			}, 2000)
+		},
+        success: function(data)
+		{
+		  dataset=String(data);
+		}
+        });
+		return dataset;
+}
+function load()
+{
+	var ranges = [],
+	averages = [],
+	current = [];
+	data = climatology();
+	lines = data.split('\n');
+	for (i = 1; i < lines.length; i++) {
+	var items = lines[i].split(',');
+	ranges.push([new Date(items[0]).getTime(), +items[1], +items[2]]);
+	averages.push([new Date(items[0]).getTime(), +items[3]]);
+	}
 
-            data = climatology();
-            lines = data.split('\n');
-            for (i = 1; i < lines.length; i++) {
-                var items = lines[i].split(',');
-                ranges.push([new Date(items[0]).getTime(), +items[1], +items[2]]);
-                averages.push([new Date(items[0]).getTime(), +items[3]]);
-            }
+	curdata = addyr(region, param, basin, 2017);
+	lines = curdata.split('\n');
+	for (i = 1; i < lines.length; i++) {
+	var items = lines[i].split(',');
+	current.push([new Date(items[0]).getTime(), +items[1]]);
+	}
+	var chart = Highcharts.chart('container', {
+	chart: {
+			zoomType: 'x',
+			panning: true,
+			panKey: 'shift'
+		},
+	title: {
+	  text: title
+	},
+	subtitle: {
+	  text: "Region: " + regiontitle + ", Basin: " + basin
+	},
+	xAxis: {
+	  type: 'datetime'
+	},
+	yAxis: {
+	  title: {
+		text: title + " (" + unit + ")"
+	  },
+	  min: 0.0,
+	},
+	tooltip: {
+	  crosshairs: true,
+	  shared: true,
+	  valueSuffix: " " + unit
+	},
+	legend: {},
+	series: [{
+	  name: '2017',
+	  data: current,
+	  color:'green',
+	  zIndex: 1,
+	  marker: {
+		fillColor: 'black',
+		lineWidth: 2,
+		lineColor: Highcharts.getOptions().colors[0]
+	  }
+	},{
+	  name: 'Average',
+	  data: averages,
+	  color:'gray',
+	  lineWidth: 1,
+	  dashStyle: 'longdash',
+	  zIndex: 4
+	}, {
+	  name: 'Climatology',
+	  data: ranges,
+	  type: 'arearange',
+	  lineWidth: 0,
+	  color: Highcharts.getOptions().colors[0],
+	  fillOpacity: 0.3,
+	  zIndex: 0,
+	  marker: {
+		enabled: false
+	  }
+	}]
+	});
 
-            curdata = addyr("DATA_DIR/timeseries/" + region + "/" + param + "/" + basin + "/2017.txt");
-            lines = curdata.split('\n');
-            for (i = 1; i < lines.length; i++) {
-                var items = lines[i].split(',');
-                current.push([new Date(items[0]).getTime(), +items[1]]);
-            }
-            if (param == 'precipitation') {
-                var titletext = 'Precipitation'
-                var ytext = 'Precipitation (mm/day)'
-                var valsuff = ' mm/day'
-                var subtext = "Region: " + region + ", Basin: " + basin
-            } else if (param == 'swe') {
-                var titletext = 'Snow Water Equivalent'
-                var ytext = 'Snow Water Equivalent (mm)'
-                var valsuff = ' mm'
-                var subtext = "Region: " + region + ", Basin: " + basin
-            } else if (param == 'runoff') {
-                var titletext = 'Runoff'
-                var ytext = 'Runoff (mm/day)'
-                var valsuff = ' mm/day'
-                var subtext = "Region: " + region + ", Basin: " + basin
-            } else {
-                var titletext = 'Sorry, timeseries for ' + param + ' unavailable'
-                var ytext = ''
-                var valsuff = ' --'
-                var subtext = ''
-            }
-            var chart = Highcharts.chart('container', {
-                chart: {
-                    zoomType: 'x',
-                    panning: true,
-                    panKey: 'shift'
-                },
-                title: {
-                    text: titletext
-                },
-                subtitle: {
-                    text: subtext
-                },
-                xAxis: {
-                    type: 'datetime'
-                },
-                yAxis: {
-                    title: {
-                        text: ytext
-                    },
-                    min: 0.0,
-                },
-                tooltip: {
-                    crosshairs: true,
-                    shared: true,
-                    valueSuffix: valsuff
-                },
-                legend: {},
-                series: [{
-                    name: '2017',
-                    data: current,
-                    color: 'green',
-                    zIndex: 1,
-                    marker: {
-                        fillColor: 'black',
-                        lineWidth: 2,
-                        lineColor: Highcharts.getOptions().colors[0]
-                    }
-                }, {
-                    name: 'Average',
-                    data: averages,
-                    color: 'gray',
-                    lineWidth: 1,
-                    dashStyle: 'longdash',
-                    zIndex: 4
-                }, {
-                    name: 'Climatology',
-                    data: ranges,
-                    zIndex: 5,
-                    type: 'arearange',
-                    lineWidth: 0,
-                    color: Highcharts.getOptions().colors[0],
-                    fillOpacity: 0.3,
-                    zIndex: 0,
-                    marker: {
-                        enabled: false
-                    }
-                }]
-            });
+	$('#selectyear').change(function () {
+	var newseries = [];
+	var year = this.value;
+	curdata = addyr(region, param, basin, year);
+	lines = curdata.split('\n');
+	if (param=='swe')
+	{
+		for (i = 0; i < lines.length-1; i++)
+		{
+		var items = lines[i].split(',');
+		if(parseInt(items[0].substring(0,4))==year)
+		{
+			newseries.push([new Date("2017"+items[0].substring(4,10)).getTime(), +items[1]]);
+		}
+		else
+		{
+			newseries.push([new Date("2016"+items[0].substring(4,10)).getTime(), +items[1]]);
+		}
+		}
+	}
+	else
+	{
+		for (i = 0; i < lines.length-1; i++)
+		{
+		var items = lines[i].split(',');
+		newseries.push([new Date("2017"+items[0].substring(4,10)).getTime(), +items[1]]);
+		}
+	}
+	var addstatus= "";
+	for (i = 0; i < chart.series.length; i++)
+	{
+		if(chart.series[i].name===year)
+		{
+			addstatus="yes";
+			break;
+		}
+		else
+		{
+			addstatus="no"
+		}
+	}
+	if(addstatus==="no")
+	{
+		chart.addSeries({
+		name: year,
+		data: newseries
+		});
+	}
+	if(addstatus==="yes")
+	{
+		document.getElementById("errormessage").innerHTML = "Series already added.";
+		setTimeout(function(){
+		$("#errormessage").fadeOut(600);
+		}, 2000);
+	}
+});
+}
+</script>
+<style>
+.selector {
+	position: absolute;
+	right: 20px;
+	top: 580px;
+}
+.errormessage {
+	position: absolute;
+	width:200px;
+	left:50%;
+	margin-left:-100px;
+	top: 60px;
+    color: red;
+    padding: 20px;
+    font-size: 20px;
+    border: 2px;
+    cursor: pointer;
+}
+.selectyear {
+    background-color: #444244;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px;
+    cursor: pointer;
+}
 
-            $('#selectyear').change(function() {
-                var newseries = [];
-                var year = this.value;
-                curdata = addyr("DATA_DIR/timeseries/" + region + "/" + param + "/" + basin + "/" + year + ".txt");
-                lines = curdata.split('\n');
-                for (i = 0; i < lines.length-1; i++) {
-                    var items = lines[i].split(',');
-                    newseries.push([new Date("2017" + items[0].substring(4, 10)).getTime(), +items[1]]);
-                }
-                chart.addSeries({
-                    name: year,
-                    data: newseries
-                });
-            });
-
-        }
-
-    </script>
-    <style>
-        .selector {
-            position: absolute;
-            right: 1%;
-            top: 5%;
-        }
-
-        .selectyear {
-            background-color: #444244;
-            color: white;
-            padding: 10px;
-            font-size: 16px;
-            border: 2px;
-            cursor: pointer;
-        }
-
-    </style>
+</style>
 </head>
-
 <body onload="load()">
-    <div id="container" style="width: 100%; height: 400px; margin: 0 auto"></div>
-    <div class="selector" id=selector>
-        <select class="selectyear" id="selectyear">
+<div id="container" style="width: 100%; height: 600px; margin: 0 auto"></div>
+<div class="selector" id=selector>
+<select class="selectyear"id="selectyear">
   <option value="2001">2001</option>
   <option value="2002">2002</option>
   <option value="2003">2003</option>
@@ -233,6 +276,6 @@ skahmad@uw.edu, shahryaramd786@gmail.com
   <option value="2016"  selected="selected">2016</option>
   <option value="2017">2017</option>
 </select>
-    </div>
-
+</div>
+<div class="errormessage" id="errormessage"></div>
 </body>

@@ -12,71 +12,19 @@
 // Overlay layer popup
 
 
-function pop_eastafricaT(feature, layer) {
+function pop_Timeseries0(feature, layer) {
 
     layer.on({
         mouseout: function(e) {
-            layer.setStyle(style_eastafricaT1(feature));
+            layer.setStyle(style_Timeseries0(feature));
 
         },
-        mouseover: highlightFeature,
+        mouseover: highlightFeature_nopop,
         click: function(e) {
             var dn = e.target.feature.properties['DN'];
             var ndn = e.target.feature.properties['name'];
             //$('#ts_WA').attr('src', "timeseries.html?param1=wa&param2=");
             var content = '<iframe id="ts_wa" width="700" height="420" src="timeseries.html?param1=eastafrica&param2=&param3=" frameborder="0" style="z-index:1000000;"></iframe>';
-            var popupContent = content.replace("param2=&param3=", "param2=" + dn + "&param3=" + dataset.value);
-            layer.bindPopup(popupContent).openPopup();
-        },
-    });
-}
-
-function pop_westafricaT(feature, layer) {
-    layer.on({
-        mouseout: function(e) {
-            layer.setStyle(style_westafricaT3(feature));
-
-        },
-        mouseover: highlightFeature,
-        click: function(e) {
-            var dn = e.target.feature.properties['DN'];
-            //$('#ts_WA').attr('src', "timeseries.html?param1=wa&param2=");
-            var content = '<iframe id="ts_wa" width="700" height="420" src="timeseries.html?param1=westafrica&param2=&param3=" frameborder="0"></iframe>';
-            var popupContent = content.replace("param2=&param3=", "param2=" + dn + "&param3=" + dataset.value);
-            layer.bindPopup(popupContent).openPopup();
-        },
-    });
-
-}
-
-function pop_southafricaT(feature, layer) {
-    layer.on({
-        mouseout: function(e) {
-            layer.setStyle(style_southafricaT5(feature));
-
-        },
-        mouseover: highlightFeature,
-        click: function(e) {
-            var dn = e.target.feature.properties['DN'];
-            //$('#ts_WA').attr('src', "timeseries.html?param1=wa&param2=");
-            var content = '<iframe id="ts_wa" width="700" height="420" src="timeseries.html?param1=southernafrica&param2=&param3=" frameborder="0"></iframe>';
-            var popupContent = content.replace("param2=&param3=", "param2=" + dn + "&param3=" + dataset.value);
-            layer.bindPopup(popupContent).openPopup();
-        },
-    });
-}
-
-function pop_afghanistanT(feature, layer) {
-    layer.on({
-        mouseout: function(e) {
-            layer.setStyle(style_afghanistanT7(feature));
-
-        },
-        mouseover: highlightFeature_nopop,
-        click: function(e) {
-            var dn = e.target.feature.properties['USERBASINI'];
-            //$('#ts_WA').attr('src', "timeseries.html?param1=wa&param2=");
-            var content = '<iframe id="ts_wa" width="700" height="420" src="timeseries.html?param1=centralasia&param2=&param3=" frameborder="0"></iframe>';
             var popupContent = content.replace("param2=&param3=", "param2=" + dn + "&param3=" + dataset.value);
             layer.bindPopup(popupContent).openPopup();
         },
@@ -367,21 +315,6 @@ function removeGibs() {
     map.removeControl(legendG);
 }
 
-function handleTemporal() {
-    // Set temporal scale options
-    var temporal = document.getElementById("temporal");
-    for (i = 1; i < temporal.options.length; i++) {
-        temporal.options[i] = null;
-    }
-    if (forcing.value == 'cm') {
-        temporal.options[1] = new Option("Monthly", "monthly");
-        temporal.value = "monthly" //default
-        temporal.options[2] = new Option("Monthly", "monthly");
-        temporal.value = "daily" //default
-    }
-    mapInit();
-}
-
 function handleDate() {
     if (temporal.value == "monthly") {
         document.getElementById('seldate').type = "month";
@@ -446,14 +379,8 @@ function mapInit() {
 
     }
 
-    map.removeLayer(afghanistanS6)
-    map.removeLayer(afghanistanT7)
-    map.removeLayer(westafricaS2)
-    map.removeLayer(westafricaT3)
-    map.removeLayer(southafricaS4)
-    map.removeLayer(southafricaT5)
-    map.removeLayer(eastafricaS0)
-    map.removeLayer(eastafricaT1)
+    map.removeLayer(Statistics1)
+    map.removeLayer(Timeseries0)
 
     // gibs control
     var x = document.getElementById("compare");
@@ -581,79 +508,26 @@ function mapInit() {
 
     }
     // Layer control /////////////////////////////
-    layerControl.removeLayer(afghanistanS6)
-    layerControl.removeLayer(afghanistanT7)
-    layerControl.removeLayer(westafricaS2)
-    layerControl.removeLayer(westafricaT3)
-    layerControl.removeLayer(southafricaS4)
-    layerControl.removeLayer(southafricaT5)
-    layerControl.removeLayer(eastafricaS0)
-    layerControl.removeLayer(eastafricaT1)
+    layerControl.removeLayer(Statistics1)
+    layerControl.removeLayer(Timeseries0)
 
-    layer_afghanistanT7 = new L.geoJson(json_afghanistanT7, {
+
+    layer_Timeseries0 = new L.geoJson(json_Timeseries0, {
         attribution: '<a href=""></a>',
-        pane: 'pane_afghanistanT7',
-        onEachFeature: pop_afghanistanT,
-        style: style_afghanistanT7
+        pane: 'pane_Timeseries0',
+        onEachFeature: pop_Timeseries0,
+        style: style_Timeseries0
     });
 
-    layer_afghanistanS6 = new L.geoJson(json_afghanistanS6, {
+    layer_Statistics1 = new L.geoJson(json_Statistics1, {
         attribution: '<a href=""></a>',
-        pane: 'pane_afghanistanS6',
-        onEachFeature: pop_afghanistanS6,
-        style: style_afghanistanS6
+        pane: 'pane_Statistics1',
+        onEachFeature: pop_Statistics1,
+        style: style_Statistics1
     });
 
-    layer_southafricaT5 = new L.geoJson(json_southafricaT5, {
-        attribution: '<a href=""></a>',
-        pane: 'pane_southafricaT5',
-        onEachFeature: pop_southafricaT,
-        style: style_southafricaT5
-    });
-
-    layer_southafricaS4 = new L.geoJson(json_southafricaS4, {
-        attribution: '<a href=""></a>',
-        pane: 'pane_southafricaS4',
-        onEachFeature: pop_southafricaS4,
-        style: style_southafricaS4
-    });
-
-    layer_westafricaT3 = new L.geoJson(json_westafricaT3, {
-        attribution: '<a href=""></a>',
-        pane: 'pane_westafricaT3',
-        onEachFeature: pop_westafricaT,
-        style: style_westafricaT3
-    });
-
-    layer_westafricaS2 = new L.geoJson(json_westafricaS2, {
-        attribution: '<a href=""></a>',
-        pane: 'pane_westafricaS2',
-        onEachFeature: pop_westafricaS2,
-        style: style_westafricaS2
-    });
-
-    layer_eastafricaT1 = new L.geoJson(json_eastafricaT1, {
-        attribution: '<a href=""></a>',
-        pane: 'pane_eastafricaT1',
-        onEachFeature: pop_eastafricaT,
-        style: style_eastafricaT1
-    });
-
-    layer_eastafricaS0 = new L.geoJson(json_eastafricaS0, {
-        attribution: '<a href=""></a>',
-        pane: 'pane_eastafricaS0',
-        onEachFeature: pop_eastafricaS0,
-        style: style_eastafricaS0
-    });
-
-    eastafricaS0 = L.layerGroup().addLayer(layer_eastafricaS0);
-    eastafricaT1 = L.layerGroup().addLayer(layer_eastafricaT1);
-    westafricaS2 = L.layerGroup().addLayer(layer_westafricaS2);
-    westafricaT3 = L.layerGroup().addLayer(layer_westafricaT3);
-    southafricaS4 = L.layerGroup().addLayer(layer_southafricaS4);
-    southafricaT5 = L.layerGroup().addLayer(layer_southafricaT5);
-    afghanistanS6 = L.layerGroup().addLayer(layer_afghanistanS6);
-    afghanistanT7 = L.layerGroup().addLayer(layer_afghanistanT7);
+    Timeseries0 = L.layerGroup().addLayer(layer_Timeseries0);
+    Statistics1 = L.layerGroup().addLayer(layer_Statistics1);
     // Layer control ends
 
     L.ImageOverlay.include({
@@ -694,9 +568,9 @@ function mapInit() {
         var imgdata = 'DATA_DIR/tile/' + strModel + '/' + strDataset + '/' + strTemporal +  '/' + datepick + '.png';
 
         if (region.value == 'himat') {
-            layerControl.addOverlay(afghanistanT7, '<img src="legend/ts.png" width=17px style="vertical-align: middle" /> Timeseries');
-            layerControl.addOverlay(afghanistanS6, '<img src="legend/stat.png" width=15px style="vertical-align: middle"/> Statistics');
-            var img_bounds = [ // CA
+            layerControl.addOverlay(Statistics1, '<img src="legend/stat.png" width=15px style="vertical-align: middle"/> Statistics');
+            layerControl.addOverlay(Timeseries0, '<img src="legend/ts.png" width=17px style="vertical-align: middle" /> Timeseries');
+            var img_bounds = [ // himat
                 [22.02, 66.02],
                 [38.98, 84.98]
             ];

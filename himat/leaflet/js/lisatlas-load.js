@@ -248,98 +248,98 @@ function increaseDate() {
     }
 }
 
-function genOptions() {
-    if ((layerControl._map)) {
-        layerControl.remove(map);
-    }
-    document.getElementById("compare").checked = false;
-    map.removeControl(legendG)
-
-    map.removeLayer(dataLayer);
-    map.removeLayer(afghanistanS6)
-    map.removeLayer(afghanistanT7)
-    map.removeLayer(westafricaS2)
-    map.removeLayer(westafricaT3)
-    map.removeLayer(southafricaS4)
-    map.removeLayer(southafricaT5)
-    map.removeLayer(eastafricaS0)
-    map.removeLayer(eastafricaT1)
-
-    var msg = document.getElementById('message');
-    msg.style.display = 'none';
-    var opc = document.getElementById('selOpacity');
-    opc.style.display = 'none';
-    var cmp = document.getElementById('comp_checkbox');
-    cmp.style.display = 'none';
-    var exp = document.getElementById('exportdiv');
-    exp.style.display = 'none';
-
-    // Layer control /////////////////////////////
-    layerControl.removeLayer(afghanistanS6)
-    layerControl.removeLayer(afghanistanT7)
-    layerControl.removeLayer(westafricaS2)
-    layerControl.removeLayer(westafricaT3)
-    layerControl.removeLayer(southafricaS4)
-    layerControl.removeLayer(southafricaT5)
-    layerControl.removeLayer(eastafricaS0)
-    layerControl.removeLayer(eastafricaT1)
-
-    // Selections from user
-    var region = document.getElementById("region");
-    var model = document.getElementById("model");
-    //var forcing = document.getElementById("forcing");
-    var dataset = document.getElementById("dataset");
-    var temporal = document.getElementById("temporal");
-
-    // set map view
-    if (region.value == 'centralasia') {
-        map.setView(new L.LatLng(40.6, 66.7), 4);
-
-    } else if (region.value == 'eastafrica') {
-        map.setView(new L.LatLng(5.70, 32.61), 4);
-
-    } else if (region.value == 'southernafrica') {
-        map.setView(new L.LatLng(-15.0, 25.61), 4);
-
-    } else if (region.value == 'westafrica') {
-        map.setView(new L.LatLng(11.2, 7.0), 5);
-    }
-
-    // Generate model options
-    for (i = 1; i < model.options.length; i++) {
-        model.options[i] = null;
-    }
-    // for (i = 1; i < forcing.options.length; i++) {
-    //     forcing.options[i] = null;
-    // }
-    for (i = 1; i < dataset.options.length; i++) {
-        dataset.options[i] = null;
-    }
-    if (region.value == 'himat') {
-
-        model.options[1] = new Option("NOAH36", "noah");
-        //model.options[2] = new Option("CLM2", "clm");
-
-        //forcing.options[1] = new Option("GDAS", "gdas");
-
-        dataset.options[1] = new Option("SWE", "swe");
-        dataset.options[2] = new Option("Snow Cover", "snowcover")
-        dataset.options[3] = new Option("Snow Depth", "snowdepth")
-        dataset.options[4] = new Option("Temperature", "temperature")
-        dataset.options[5] = new Option("Precipitation", "precipitation")
-        dataset.options[6] = new Option("Evapotranspiration", "evapotranspiration")
-        dataset.options[7] = new Option("Terrestrial Water Storage", "twstorage")
-
-        //default options
-        model.value = "noah";
-        //forcing.value = "gdas";
-        //dataset.value = "swe";
-    }
-    temporal.value = "daily";
-    handleDate();
-    mapInit();
-
-}
+// function genOptions() {
+//     if ((layerControl._map)) {
+//         layerControl.remove(map);
+//     }
+//     document.getElementById("compare").checked = false;
+//     map.removeControl(legendG)
+//
+//     map.removeLayer(dataLayer);
+//     map.removeLayer(afghanistanS6)
+//     map.removeLayer(afghanistanT7)
+//     map.removeLayer(westafricaS2)
+//     map.removeLayer(westafricaT3)
+//     map.removeLayer(southafricaS4)
+//     map.removeLayer(southafricaT5)
+//     map.removeLayer(eastafricaS0)
+//     map.removeLayer(eastafricaT1)
+//
+//     var msg = document.getElementById('message');
+//     msg.style.display = 'none';
+//     var opc = document.getElementById('selOpacity');
+//     opc.style.display = 'none';
+//     var cmp = document.getElementById('comp_checkbox');
+//     cmp.style.display = 'none';
+//     var exp = document.getElementById('exportdiv');
+//     exp.style.display = 'none';
+//
+//     // Layer control /////////////////////////////
+//     layerControl.removeLayer(afghanistanS6)
+//     layerControl.removeLayer(afghanistanT7)
+//     layerControl.removeLayer(westafricaS2)
+//     layerControl.removeLayer(westafricaT3)
+//     layerControl.removeLayer(southafricaS4)
+//     layerControl.removeLayer(southafricaT5)
+//     layerControl.removeLayer(eastafricaS0)
+//     layerControl.removeLayer(eastafricaT1)
+//
+//     // Selections from user
+//     var region = document.getElementById("region");
+//     var model = document.getElementById("model");
+//     //var forcing = document.getElementById("forcing");
+//     var dataset = document.getElementById("dataset");
+//     var temporal = document.getElementById("temporal");
+//
+//     // set map view
+//     if (region.value == 'centralasia') {
+//         map.setView(new L.LatLng(40.6, 66.7), 4);
+//
+//     } else if (region.value == 'eastafrica') {
+//         map.setView(new L.LatLng(5.70, 32.61), 4);
+//
+//     } else if (region.value == 'southernafrica') {
+//         map.setView(new L.LatLng(-15.0, 25.61), 4);
+//
+//     } else if (region.value == 'westafrica') {
+//         map.setView(new L.LatLng(11.2, 7.0), 5);
+//     }
+//
+//     // Generate model options
+//     for (i = 1; i < model.options.length; i++) {
+//         model.options[i] = null;
+//     }
+//     // for (i = 1; i < forcing.options.length; i++) {
+//     //     forcing.options[i] = null;
+//     // }
+//     for (i = 1; i < dataset.options.length; i++) {
+//         dataset.options[i] = null;
+//     }
+//     if (region.value == 'himat') {
+//
+//         model.options[1] = new Option("NOAH36", "noah");
+//         //model.options[2] = new Option("CLM2", "clm");
+//
+//         //forcing.options[1] = new Option("GDAS", "gdas");
+//
+//         dataset.options[1] = new Option("SWE", "swe");
+//         dataset.options[2] = new Option("Snow Cover", "snowcover")
+//         dataset.options[3] = new Option("Snow Depth", "snowdepth")
+//         dataset.options[4] = new Option("Temperature", "temperature")
+//         dataset.options[5] = new Option("Precipitation", "precipitation")
+//         dataset.options[6] = new Option("Evapotranspiration", "evapotranspiration")
+//         dataset.options[7] = new Option("Terrestrial Water Storage", "twstorage")
+//
+//         //default options
+//         model.value = "noah";
+//         //forcing.value = "gdas";
+//         //dataset.value = "swe";
+//     }
+//     temporal.value = "daily";
+//     handleDate();
+//     mapInit();
+//
+// }
 
 function fireGibs(checkboxElem) {
     if (checkboxElem.checked) {

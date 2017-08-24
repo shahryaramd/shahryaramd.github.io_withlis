@@ -54,9 +54,11 @@ skahmad@uw.edu, shahryaramd786@gmail.com
     <!-- Buttons for query -->
     <ul class="actions">
         <select name="region" id="region" onchange="mapInit()">
-            <option value="himat">High Mountain Asia</option>
+            <option value="-1">- Region -</option>
+            <option value="himat" selected>High Mountain Asia</option>
         </select>
         <select name="model" id="model" onchange="mapInit()">
+            <option value="-1">- Model -</option>
             <option value="noah" selected>NOAH 36</option>
         </select>
 

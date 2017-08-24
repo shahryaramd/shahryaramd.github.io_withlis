@@ -82,21 +82,6 @@ function pop_afghanistanT(feature, layer) {
         },
     });
 }
-////////////////////
-
-// Exporting dataset
-// function save() {
-//     alert(imgdata)
-//     var url = imgdata;
-//     var a  = document.createElement('a');
-//     a.href = url;
-//     //a.download = 'image.png';
-//
-//     a.click();
-//
-// }
-
-////////////////////
 
 function playforward() {
     var temporal = document.getElementById("temporal");
@@ -133,7 +118,7 @@ function playforward() {
 
     var status = mapInit();
     if (status == "datapresent") {
-        playtime = setTimeout(playforward, 500);
+        playtime = setTimeout(playforward, 1500);
         btforward.disabled = true;
         btback.disabled = true;
         btpause.disabled = false;
@@ -177,7 +162,7 @@ function playback() {
     }
     var status = mapInit();
     if (status == "datapresent") {
-        playtime = setTimeout(playback, 500);
+        playtime = setTimeout(playback, 1500);
         btforward.disabled = true;
         btback.disabled = true;
         btpause.disabled = false;
@@ -204,7 +189,6 @@ function initialize() {
     var dd = date.getDate().toString();
     var reqDate = yyyy + (mm[1] ? mm : "0" + mm[0]) + (dd[1] ? dd : "0" + dd[0]);
     document.getElementById('seldate').value = yyyy + "-" + (mm[1] ? mm : "0" + mm[0]) + "-" + (dd[1] ? dd : "0" + dd[0]);
-
 
 } 
 
@@ -303,7 +287,7 @@ function genOptions() {
     // Selections from user
     var region = document.getElementById("region");
     var model = document.getElementById("model");
-    var forcing = document.getElementById("forcing");
+    //var forcing = document.getElementById("forcing");
     var dataset = document.getElementById("dataset");
     var temporal = document.getElementById("temporal");
 
@@ -325,45 +309,31 @@ function genOptions() {
     for (i = 1; i < model.options.length; i++) {
         model.options[i] = null;
     }
-    for (i = 1; i < forcing.options.length; i++) {
-        forcing.options[i] = null;
-    }
+    // for (i = 1; i < forcing.options.length; i++) {
+    //     forcing.options[i] = null;
+    // }
     for (i = 1; i < dataset.options.length; i++) {
         dataset.options[i] = null;
     }
-    if (region.value == 'centralasia') {
+    if (region.value == 'himat') {
 
         model.options[1] = new Option("NOAH36", "noah");
         //model.options[2] = new Option("CLM2", "clm");
 
-        forcing.options[1] = new Option("GDAS", "gdas");
+        //forcing.options[1] = new Option("GDAS", "gdas");
 
         dataset.options[1] = new Option("SWE", "swe");
-        dataset.options[2] = new Option("Temperature", "temperature")
-        //dataset.options[3] = new Option("Precipitation", "precipitation");
+        dataset.options[2] = new Option("Snow Cover", "snowcover")
+        dataset.options[3] = new Option("Snow Depth", "snowdepth")
+        dataset.options[4] = new Option("Temperature", "temperature")
+        dataset.options[5] = new Option("Precipitation", "precipitation")
+        dataset.options[6] = new Option("Evapotranspiration", "evapotranspiration")
+        dataset.options[7] = new Option("Terrestrial Water Storage", "twstorage")
 
         //default options
         model.value = "noah";
-        forcing.value = "gdas";
-        dataset.value = "swe";
-    } else if (region.value == 'eastafrica' || region.value == 'southernafrica' || region.value == 'westafrica') {
-
-        model.options[1] = new Option("NOAH33", "noah");
-        model.options[2] = new Option("VIC412", "vic");
-
-        forcing.options[1] = new Option("RFE+GDAS", "rg");
-        forcing.options[2] = new Option("CHIRPS+MERRA2", "cm");
-
-        dataset.options[1] = new Option("Soil Moisture", "soilmoisture");
-        dataset.options[2] = new Option("Temperature", "temperature")
-        dataset.options[3] = new Option("Precipitation", "precipitation");
-        dataset.options[4] = new Option("Evapotranspiration", "evapotranspiration");
-        dataset.options[5] = new Option("Runoff (Timeseries only)", "runoff");
-
-        //default options
-        model.value = "noah";
-        forcing.value = "rg";
-        dataset.value = "soilmoisture";
+        //forcing.value = "gdas";
+        //dataset.value = "swe";
     }
     temporal.value = "daily";
     handleDate();
@@ -406,8 +376,6 @@ function handleTemporal() {
     if (forcing.value == 'cm') {
         temporal.options[1] = new Option("Monthly", "monthly");
         temporal.value = "monthly" //default
-    } else if (forcing.value == 'rg' || 'gdas') {
-        temporal.options[1] = new Option("Daily", "daily");
         temporal.options[2] = new Option("Monthly", "monthly");
         temporal.value = "daily" //default
     }
@@ -465,6 +433,7 @@ function mapInit() {
     map.removeControl(legendG)
 
     var id_added = 'none'
+
     for (var id in L.GIBS_LAYERS) {
         if (map.hasLayer(gibsLayers[id])) {
             id_added = id
@@ -583,7 +552,6 @@ function mapInit() {
 
         gibscontrol = L.Control.styledLayerControl(baseMapsGibs, overlayGibs, options);
         map.addControl(gibscontrol);
-
         if (id_added != 'none') {
             gibsLayers[id_added].addTo(map);
         }
@@ -697,22 +665,21 @@ function mapInit() {
     // Selections from user
     var region = document.getElementById("region");
     var model = document.getElementById("model");
-    var forcing = document.getElementById("forcing");
+    //var forcing = document.getElementById("forcing");
     var dataset = document.getElementById("dataset");
 
     var strRegion = region.options[region.selectedIndex].value;
     var strModel = model.options[model.selectedIndex].value;
-    var strForcing = forcing.options[forcing.selectedIndex].value;
+    //var strForcing = forcing.options[forcing.selectedIndex].value;
     var strDataset = dataset.options[dataset.selectedIndex].value;
     var strTemporal = temporal.options[temporal.selectedIndex].value;
 
-    if (region.selectedIndex == 0) {
-        console.log('Please select a region');
-    } else if (model.selectedIndex == 0) {
-        console.log('Please select a model');
-    } else if (forcing.selectedIndex == 0) {
-        console.log('Please select a forcing');
-    } else if (dataset.selectedIndex == 0) {
+    // if (model.selectedIndex == 0) {
+    //     console.log('Please select a model');
+    // } else if (forcing.selectedIndex == 0) {
+    //     console.log('Please select a forcing');
+    // } else
+    if (dataset.selectedIndex == 0) {
         console.log('Please select a dataset');
     } else {
 
@@ -724,53 +691,18 @@ function mapInit() {
         var dateOrig = document.getElementById('seldate').value;
         datepick = dateOrig.replace(/-/g, "");
         yearpick = datepick.substring(0, 4);
-        var imgdata = 'DATA_DIR/tile/' + strRegion + '/' + strModel + '/' + strForcing + '/' + strTemporal + '/' + strDataset + '/' + yearpick + '/' + datepick + '.png';
+        var imgdata = 'DATA_DIR/tile/' + strModel + '/' + strDataset + '/' + strTemporal +  '/' + datepick + '.png';
 
-
-        if (region.value == 'centralasia') {
+        if (region.value == 'himat') {
             layerControl.addOverlay(afghanistanT7, '<img src="legend/ts.png" width=17px style="vertical-align: middle" /> Timeseries');
             layerControl.addOverlay(afghanistanS6, '<img src="legend/stat.png" width=15px style="vertical-align: middle"/> Statistics');
             var img_bounds = [ // CA
-                [25, 60],
-                [40, 90]
+                [22.02, 66.02],
+                [38.98, 84.98]
             ];
 
-        } else if (region.value == 'eastafrica') {
-            layerControl.addOverlay(eastafricaT1, '<img src="legend/ts.png" style="vertical-align: middle" width=17px /> Timeseries');
-            //layerControl.addOverlay(eastafricaS0, '<img src="legend/stat.png" width=20px /> Statistics');
-            var img_bounds = [ // EA
-                [-12.0, 21.75],
-                [23.25, 51.25]
-            ];
-        } else if (region.value == 'southernafrica') {
-            layerControl.addOverlay(southafricaT5, '<img src="legend/ts.png" width=17px style="vertical-align: middle"/> Timeseries');
-            //layerControl.addOverlay(southafricaS4, '<img src="legend/stat.png" width=20px /> Statistics');
-            if (model.value == 'noah') {
-                var img_bounds = [ // SA - NOAH
-                    [-37.9, 6.0],
-                    [6.4, 54.6]
-                ];
-            } else if (model.value == 'vic') {
-                var img_bounds = [ // SA - VIC
-                    [-34.75, 5.75],
-                    [6.75, 51.25]
-                ];
-            }
-        } else if (region.value == 'westafrica') {
-            layerControl.addOverlay(westafricaT3, '<img src="legend/ts.png" width=17px style="vertical-align: middle"/> Timeseries');
-            //layerControl.addOverlay(westafricaS2, '<img src="legend/stat.png" width=20px /> Statistics');
-            if (model.value == 'noah') {
-                var img_bounds = [ // WA - NOAH
-                    [5.3, -18.7],
-                    [17.7, 25.9]
-                ];
-            } else if (model.value == 'vic') {
-                var img_bounds = [ // WA - VIC
-                    [5.0, -17.25],
-                    [18.0, 25.75]
-                ];
-            }
         }
+
         // add png overlay
         dataLayer = new L.imageOverlay(imgdata, img_bounds, {
             opacity: 1,
@@ -785,7 +717,7 @@ function mapInit() {
         // save dataset option
         document.getElementById("savebtn").onclick = function() {
             var a = document.createElement('a');
-            var urldata = strRegion + '_' + strModel + '_' + strForcing + '_' + strTemporal + '_' + strDataset + '_' + datepick + '.png';
+            var urldata = strRegion + '_' + strModel  + '_' + strDataset + '_' + strTemporal + '_' + datepick + '.png';
             a.href = imgdata;
             a.download = urldata;
             a.click();

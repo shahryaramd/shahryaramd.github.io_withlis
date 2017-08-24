@@ -53,31 +53,33 @@ skahmad@uw.edu, shahryaramd786@gmail.com
 
     <!-- Buttons for query -->
     <ul class="actions">
-        <select name="region" id="region" onchange="genOptions()">
-        <option value="-1">- Domain -</option>
-        <optgroup label="Asia">
-            <option value="centralasia">Central Asia</option>
-        <optgroup label="Africa">
-            <option value="eastafrica">East Africa</option>
-            <option value="southernafrica">Southern Africa</option>
-            <option value="westafrica">West Africa</option>
-    </select>
+        <select name="region" id="region" onchange="mapInit()">
+            <option value="himat">High Mountain Asia</option>
+        </select>
         <select name="model" id="model" onchange="mapInit()">
-        <option value="-1" selected>- Model -</option>
-    </select>
+            <option value="noah" selected>NOAH 36</option>
+        </select>
 
-        <select name="forcing" id="forcing" onchange="handleTemporal()">
-        <option value="-1">- Forcing -</option>
-    </select>
+     <!-- <select name="forcing" id="forcing" onchange="handleTemporal()">
+        <option value="-1" >- Forcing -</option>
+    </select> -->
 
         <select name="dataset" id="dataset" onchange="mapInit()">
-        <option value="-1">- Dataset -</option>
-    </select>
+            <option value="-1">- Dataset -</option>
+            <option value="swe">SWE</option>
+            <option value="snowcover">Snow Cover</option>
+            <option value="snowdepth">Snow Depth</option>
+            <option value="precipitation">Precipitation</option>
+            <option value="temperature">Temperature</option>
+            <option value="evapotranspiration">Evapotranspiration</option>
+            <option value="twstorage">Terrestrial Water Storage</option>
+
+        </select>
         <select name="temporal" id="temporal" onchange="handleDate()">
-        <option value="-1">- Temporal Scale -</option>
-        <option value="daily">Daily</option>
-        <option value="monthly">Monthly</option>
-    </select>
+            <option value="-1">- Temporal Scale -</option>
+            <option value="daily" selected>Daily</option>
+            <option value="monthly">Monthly</option>
+        </select>
 
         <input class="seldate" type="date" id="seldate" name="seldate" value="" onchange="mapInit()" style="position: relative; z-index: 100000;">
 
@@ -121,7 +123,6 @@ skahmad@uw.edu, shahryaramd786@gmail.com
 
         </div>
         <!--        <div class="printMessage" style="display:none;">Test message</div>-->
-
 
         <!--    GIBS layers -->
         <div class='hidePrint' id="comp_checkbox">

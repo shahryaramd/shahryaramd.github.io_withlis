@@ -29,7 +29,7 @@ function highlightFeature(e) {
 function highlightFeature_nopop(e) {
     highlightLayer = e.target;
     highlightLayer.setStyle({
-        fillColor: '#ffff00',
+    //    fillColor: '#ffff00',
         fillOpacity: 0.9
     });
     //    var popup = L.popup()
@@ -161,13 +161,13 @@ function style_Timeseries0() {
     return {
         pane: 'pane_Timeseries0',
         opacity: 1,
-        color: 'rgba(0,0,0,1.0)',
+        color: 'rgba(235,235,235,0.121568627451)',
         dashArray: '',
         lineCap: 'butt',
         lineJoin: 'miter',
         weight: 1.0,
         fillOpacity: 1,
-        fillColor: timeseries_color,
+        fillColor: 'rgba(255,255,255,0.0)',
     }
 }
 map.createPane('pane_Timeseries0');
@@ -201,13 +201,13 @@ function style_Statistics1() {
     return {
         pane: 'pane_Statistics1',
         opacity: 1,
-        color: 'rgba(0,0,0,1.0)',
+        color: 'rgba(235,235,235,0.121568627451)',
         dashArray: '',
         lineCap: 'butt',
         lineJoin: 'miter',
         weight: 1.0,
         fillOpacity: 1,
-        fillColor: stats_color,
+        fillColor: 'rgba(255,255,255,0.0)',
     }
 }
 map.createPane('pane_Statistics1');

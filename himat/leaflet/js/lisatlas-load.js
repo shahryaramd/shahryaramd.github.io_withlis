@@ -10,20 +10,15 @@
 
 
 // Overlay layer popup
-
-
-function pop_Timeseries0(feature, layer) {
-
+function pop_Statistics1(feature, layer) {
     layer.on({
-        mouseout: function(e) {
-            layer.setStyle(style_Timeseries0(feature));
+        mouseout: function (e) {
+            layer.setStyle(style_Statistics1(feature));
 
         },
         mouseover: highlightFeature_nopop,
-        click: function(e) {
-            var dn = e.target.feature.properties['DN'];
-            var ndn = e.target.feature.properties['name'];
-            //$('#ts_WA').attr('src', "timeseries.html?param1=wa&param2=");
+        click: function (e) {
+            var dn = e.target.feature.properties['USERBASINI'];
             var content = '<iframe id="ts_wa" width="700" height="420" src="timeseries.html?param1=eastafrica&param2=&param3=" frameborder="0" style="z-index:1000000;"></iframe>';
             var popupContent = content.replace("param2=&param3=", "param2=" + dn + "&param3=" + dataset.value);
             layer.bindPopup(popupContent).openPopup();
@@ -31,6 +26,27 @@ function pop_Timeseries0(feature, layer) {
     });
 }
 
+// function pop_Timeseries0(feature, layer) {
+//     layer.bindPopup(popupContent).openPopup();
+//     layer.on({
+//         mouseout: function(e) {
+//             layer.setStyle(style_Timeseries0(feature));
+//
+//         },
+//         mouseover: highlightFeature_nopop,
+//         click: function(e) {
+//             var dn = e.target.feature.properties['DN'];
+//             var ndn = e.target.feature.properties['name'];
+//             //$('#ts_WA').attr('src', "timeseries.html?param1=wa&param2=");
+//             var content = '<iframe id="ts_wa" width="700" height="420" src="timeseries.html?param1=eastafrica&param2=&param3=" frameborder="0" style="z-index:1000000;"></iframe>';
+//             var popupContent = content.replace("param2=&param3=", "param2=" + dn + "&param3=" + dataset.value);
+//             layer.bindPopup(popupContent).openPopup();
+//         },
+//     });
+// }
+
+
+// Animation functions
 function playforward() {
     var temporal = document.getElementById("temporal");
     el = document.getElementById('seldate');
@@ -515,7 +531,9 @@ function mapInit() {
     layer_Timeseries0 = new L.geoJson(json_Timeseries0, {
         attribution: '<a href=""></a>',
         pane: 'pane_Timeseries0',
-        onEachFeature: pop_Timeseries0,
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup("popupContent");
+        },
         style: style_Timeseries0
     });
 
@@ -558,18 +576,18 @@ function mapInit() {
     } else {
 
         // Check if layer control already added to map, if not, add
-        if (!(layerControl._map)) {
-            layerControl.addTo(map);
-        }
+        // if (!(layerControl._map)) {
+        //     layerControl.addTo(map);
+        // }
 
         var dateOrig = document.getElementById('seldate').value;
         datepick = dateOrig.replace(/-/g, "");
         yearpick = datepick.substring(0, 4);
-        var imgdata = 'DATA_DIR/tile/' + strModel + '/' + strDataset + '/' + strTemporal +  '/' + datepick + '.png';
+        var imgdata = 'DATA_DIR/tile/' + strModel + '/' + strDataset + '/' + strTemporal + '/' + datepick + '.png';
 
         if (region.value == 'himat') {
-            layerControl.addOverlay(Statistics1, '<img src="legend/stat.png" width=15px style="vertical-align: middle"/> Statistics');
-            layerControl.addOverlay(Timeseries0, '<img src="legend/ts.png" width=17px style="vertical-align: middle" /> Timeseries');
+            //layerControl.addOverlay(Statistics1, '<img src="legend/stat.png" width=15px style="vertical-align: middle"/> Statistics');
+            //layerControl.addOverlay(Timeseries0, '<img src="legend/ts.png" width=17px style="vertical-align: middle" /> Timeseries');
             var img_bounds = [ // himat
                 [22.02, 66.02],
                 [38.98, 84.98]
@@ -591,7 +609,7 @@ function mapInit() {
         // save dataset option
         document.getElementById("savebtn").onclick = function() {
             var a = document.createElement('a');
-            var urldata = strRegion + '_' + strModel  + '_' + strDataset + '_' + strTemporal + '_' + datepick + '.png';
+            var urldata = strRegion + '_' + strModel + '_' + strDataset + '_' + strTemporal + '_' + datepick + '.png';
             a.href = imgdata;
             a.download = urldata;
             a.click();
@@ -691,6 +709,8 @@ function mapInit() {
             opc.style.display = 'block';
             cmp.style.display = 'block';
             exp.style.display = 'block';
+
+            map.addLayer(layer_Statistics1);
 
             map.addLayer(dataLayer);
             var imgElement = dataLayer.getElement();

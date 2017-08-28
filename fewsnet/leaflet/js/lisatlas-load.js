@@ -11,7 +11,6 @@
 
 // Overlay layer popup
 
-
 function pop_eastafricaT(feature, layer) {
 
     layer.on({
@@ -194,7 +193,7 @@ function playback() {
 
 
 }
-
+// Initialize date
 function initialize() {
 
     var date = new Date();
@@ -207,6 +206,8 @@ function initialize() {
 
 
 } 
+
+// Functions for incrementing/decrementing date
 
 function decreaseDate() {
     var temporal = document.getElementById("temporal");
@@ -264,6 +265,7 @@ function increaseDate() {
     }
 }
 
+// Generate options based on the user's selection of region
 function genOptions() {
     if ((layerControl._map)) {
         layerControl.remove(map);
@@ -371,6 +373,7 @@ function genOptions() {
 
 }
 
+// Add/remove compare dataset option
 function fireGibs(checkboxElem) {
     if (checkboxElem.checked) {
         addGibs();
@@ -397,6 +400,7 @@ function removeGibs() {
     map.removeControl(legendG);
 }
 
+// Handle the temporal options (daily/monthly) based on selected forcing
 function handleTemporal() {
     // Set temporal scale options
     var temporal = document.getElementById("temporal");
@@ -414,6 +418,7 @@ function handleTemporal() {
     mapInit();
 }
 
+// Modify the date format according to selected temporal option
 function handleDate() {
     if (temporal.value == "monthly") {
         document.getElementById('seldate').type = "month";

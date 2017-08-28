@@ -43,15 +43,16 @@ skahmad@uw.edu, shahryaramd786@gmail.com
     </style>
     <title>LIS Atlas</title>
     <!--     Leaflet scripts-->
+
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.js"></script>
-    <script src="js/jquery.ui.monthpicker.js"></script>
-    <script src="js/lisatlas-load.js"></script>
+    <script src="js/jquery.ui.monthpicker.js"></script>    <!-- jquery for monthpicker -->
+    <script src="js/lisatlas-load.js"></script>      <!-- javascript file for loading the leaflet map, with functions for switching between models, parameters, changing dates, animation etc. -->
 </head>
 
 <body onload="initialize()">
 
-    <!-- Buttons for query -->
+    <!-- Dropdown options for query -->
     <ul class="actions">
         <select name="region" id="region" onchange="genOptions()">
         <option value="-1">- Domain -</option>
@@ -96,6 +97,7 @@ skahmad@uw.edu, shahryaramd786@gmail.com
             })();
         </script>
 
+        <!-- Date add/subtract and animation -->
         <div class='hidePrint' style="display:inline;">
             <div id="changeOne" style="display:inline;">
                 <button class="button buttonL" type="reset" title="Step Back 1 Day" onclick="decreaseDate();">
@@ -123,7 +125,7 @@ skahmad@uw.edu, shahryaramd786@gmail.com
         <!--        <div class="printMessage" style="display:none;">Test message</div>-->
 
 
-        <!--    GIBS layers -->
+        <!--    GIBS layers - Reference Dataset option-->
         <div class='hidePrint' id="comp_checkbox">
             <img src="images/gibs/compare.png" alt="compare icon" width="20" style="vertical-align: middle"> Compare Dataset <label class="switch">
               <input type="checkbox"  id="compare" onchange="fireGibs(this)" >
@@ -132,7 +134,7 @@ skahmad@uw.edu, shahryaramd786@gmail.com
 
         </div>
 
-
+        <!--  Select opacity -->
         <div class='hidePrint' id="selOpacity" style="display:none;">
             <form>
                 <label> <img src="images/gibs/opacity.png" alt="opacity icon" width="15" style="vertical-align: middle"> Opacity</label>
@@ -140,10 +142,12 @@ skahmad@uw.edu, shahryaramd786@gmail.com
             </form>
         </div>
 
+        <!-- Message if dataset unavailable -->
         <div class='hidePrint' id='message'>
             Sorry, queried data is unavailable
         </div>
 
+        <!-- Download dataset -->
         <div class='hidePrint' id='exportdiv'>
             <button class='savebtn' id='savebtn'><i class="fa fa-download" aria-hidden="true"></i>
 </button>
@@ -151,11 +155,15 @@ skahmad@uw.edu, shahryaramd786@gmail.com
     </ul>
 
     <!-- Leaflet map -->
+
+    <!-- Map div, holding the map -->
     <div id="map">
     </div>
 
     <script src="js/leaflet.js"></script>
     <script src="js/leaflet-hash.js"></script>
+
+    <!-- json files for the shapefile of africa and afghanistan - for showing timeseries and statistics-->
     <script src="data/eastafricaS0.js"></script>
     <script src="data/eastafricaT1.js"></script>
     <script src="data/westafricaS2.js"></script>
@@ -164,12 +172,20 @@ skahmad@uw.edu, shahryaramd786@gmail.com
     <script src="data/southafricaT5.js"></script>
     <script src="data/afghanistanS6.js"></script>
     <script src="data/afghanistanT7.js"></script>
+
+    <!-- Fading out of layers on animation -->
     <script src='js/Leaflet.GridLayer.FadeOut.js'></script>
     <script src="js/leaflet.easyPrint.js"></script>
     <script src="js/L.Control.Basemaps.js"></script>
+
+    <!-- Layer control for reference dataset -->
     <script src="js/styledLayerControl.js"></script>
+
+    <!-- js files controlling GIBS reference layers -->
     <script src="js/GIBSLayer.js"></script>
     <script src="js/GIBSMetadata.js"></script>
+
+    <!-- js file for initiating the map element and the shapefiles-->
     <script src="js/lisatlas-map.js"></script>
 
 

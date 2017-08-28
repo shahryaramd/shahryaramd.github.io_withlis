@@ -2,12 +2,12 @@
 //#######################################
 //LIS Atlas: A web based visualization framework for LIS output
 // Javascript code written for rendering the map and LIS output data based on leaflet.js API
-/*Written by Shahryar Khalique Ahmad 
+/*Written by Shahryar Khalique Ahmad
 
-Graduate Student and Research Assistant 
-Homepage: http://students.washington.edu/skahmad/ 
-Department of Civil and Environmental Engineering 
-University of Washington 
+Graduate Student and Research Assistant
+Homepage: http://students.washington.edu/skahmad/
+Department of Civil and Environmental Engineering
+University of Washington
 skahmad@uw.edu, shahryaramd786@gmail.com*/
 //#######################################
 
@@ -43,10 +43,7 @@ var basemaps = [
         maxZoom: 22,
         subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
         label: 'Google Satellite'
-        //        bounds: [
-        //            new L.LatLng(28, 60),
-        //                    new L.LatLng(40, 90)
-        //                ]
+
     }),
     L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
         maxZoom: 22,
@@ -86,7 +83,7 @@ var overlayGibs = [];
 var options = {
     container_width: "300px",
     group_maxHeight: "80px",
-    //container_maxHeight : "350px", 
+    //container_maxHeight : "350px",
     exclusive: false,
     collapsed: true,
     position: 'topright',

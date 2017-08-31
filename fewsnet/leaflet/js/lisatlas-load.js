@@ -434,7 +434,7 @@ function handleDate() {
 
         var elem = document.createElement('input');
         elem.setAttribute('type', 'date');
-
+        //safari/firefox
         if (elem.type === 'text') {
             $('#seldate').prop("disabled", true);
         } else {
@@ -729,10 +729,10 @@ function mapInit() {
         if (!(layerControl._map)) {
             layerControl.addTo(map);
         }
-
         var dateOrig = document.getElementById('seldate').value;
         datepick = dateOrig.replace(/-/g, "");
         yearpick = datepick.substring(0, 4);
+        //path to data layer
         var imgdata = 'DATA_DIR/tile/' + strRegion + '/' + strModel + '/' + strForcing + '/' + strTemporal + '/' + strDataset + '/' + yearpick + '/' + datepick + '.png';
 
 
@@ -747,21 +747,28 @@ function mapInit() {
         } else if (region.value == 'eastafrica') {
             layerControl.addOverlay(eastafricaT1, '<img src="legend/ts.png" style="vertical-align: middle" width=17px /> Timeseries');
             //layerControl.addOverlay(eastafricaS0, '<img src="legend/stat.png" width=20px /> Statistics');
-            var img_bounds = [ // EA
-                [-12.0, 21.75],
-                [23.25, 51.25]
-            ];
+            if (model.value == 'noah') {
+                var img_bounds = [ // EA - NOAH
+                    [-11.70,22.00],//[-12.0, 21.75],
+                    [23.00,51.40]//[23.25, 51.25]
+                ];
+            }else if (model.value == 'vic') {
+                var img_bounds = [ // EA - VIC
+                    [-11.75,21.75],//[-12.0, 21.75],
+                    [23.25,51.25]//[23.25, 51.25]
+                ];
+            }
         } else if (region.value == 'southernafrica') {
             layerControl.addOverlay(southafricaT5, '<img src="legend/ts.png" width=17px style="vertical-align: middle"/> Timeseries');
             //layerControl.addOverlay(southafricaS4, '<img src="legend/stat.png" width=20px /> Statistics');
             if (model.value == 'noah') {
                 var img_bounds = [ // SA - NOAH
-                    [-37.9, 6.0],
+                    [-37.8,6.0],//[-37.9, 6.0],
                     [6.4, 54.6]
                 ];
             } else if (model.value == 'vic') {
                 var img_bounds = [ // SA - VIC
-                    [-34.75, 5.75],
+                    [-34.50,5.75],//[-34.75, 5.75],
                     [6.75, 51.25]
                 ];
             }

@@ -340,6 +340,9 @@ function genOptions() {
 
         forcing.options[1] = new Option("GDAS", "gdas");
 
+        for (i = 1; i < dataset.options.length; i++) {
+            dataset.options[i] = null;
+        }
         dataset.options[1] = new Option("SWE", "swe");
         dataset.options[2] = new Option("Temperature", "temperature")
         //dataset.options[3] = new Option("Precipitation", "precipitation");
@@ -358,9 +361,10 @@ function genOptions() {
 
         dataset.options[1] = new Option("Soil Moisture", "soilmoisture");
         dataset.options[2] = new Option("Temperature", "temperature")
-        dataset.options[3] = new Option("Precipitation", "precipitation");
-        dataset.options[4] = new Option("Evapotranspiration", "evapotranspiration");
-        dataset.options[5] = new Option("Runoff (Timeseries only)", "runoff");
+        dataset.options[3] = new Option("Temperature Anomaly", "temperature_anomaly")
+        dataset.options[4] = new Option("Precipitation", "precipitation");
+        dataset.options[5] = new Option("Evapotranspiration", "evapotranspiration");
+        dataset.options[6] = new Option("Runoff (Timeseries only)", "runoff");
 
         //default options
         model.value = "noah";
@@ -800,6 +804,7 @@ function mapInit() {
         // Adding legends
         map.removeControl(legendSM);
         map.removeControl(legendT);
+        map.removeControl(legendTA);
         map.removeControl(legendSW);
         map.removeControl(legendP);
         map.removeControl(legendET);
@@ -842,6 +847,20 @@ function mapInit() {
                 return div;
             };
             legendT.addTo(map);
+            ////////////////
+
+
+        } else if (dataset.value == 'temperature_anomaly') {
+
+            // Legend////////
+            legendTA.onAdd = function(map) {
+                var div = L.DomUtil.create('div', 'legend');
+                div.innerHTML += '<center><b>Temperature Anomaly(˚C)</b></center>';
+                div.innerHTML += '<img src="images/temperature_anomaly.png" /><br>';
+                div.innerHTML += '<center><font size="2" color="black">Dataset for <b>' + dateOrig + '</b></font></center>';
+                return div;
+            };
+            legendTA.addTo(map);
             ////////////////
 
 

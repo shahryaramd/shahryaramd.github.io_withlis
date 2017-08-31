@@ -481,6 +481,7 @@ var style = {
     weight: 2,
     clickable: false
 };
+//Showing coordinates 
 L.control.coordinates({
     position: "bottomright",
     decimals: 2,

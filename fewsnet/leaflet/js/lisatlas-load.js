@@ -419,9 +419,9 @@ function handleTemporal() {
         temporal.options[2] = new Option("Monthly", "monthly");
         temporal.value = "daily" //default
     }
+    handleDate();
     mapInit();
 }
-
 // Modify the date format according to selected temporal option
 function handleDate() {
     if (temporal.value == "monthly") {

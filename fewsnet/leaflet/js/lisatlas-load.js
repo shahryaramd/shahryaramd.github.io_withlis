@@ -8,6 +8,7 @@
 //University of Washington
 //skahmad@uw.edu, shahryaramd786@gmail.com
 
+// lisatlasload.js: Loads the leaflet map, with functions for switching between models, parameters, changing dates, animation etc.
 
 // Overlay layer popup
 
@@ -745,6 +746,7 @@ function mapInit() {
             ];
 
         } else if (region.value == 'eastafrica') {
+            //uncomment the next line if adding statistics
             layerControl.addOverlay(eastafricaT1, '<img src="legend/ts.png" style="vertical-align: middle" width=17px /> Timeseries');
             //layerControl.addOverlay(eastafricaS0, '<img src="legend/stat.png" width=20px /> Statistics');
             if (model.value == 'noah') {
@@ -759,11 +761,12 @@ function mapInit() {
                 ];
             }
         } else if (region.value == 'southernafrica') {
+            //uncomment the next line if adding statistics
             layerControl.addOverlay(southafricaT5, '<img src="legend/ts.png" width=17px style="vertical-align: middle"/> Timeseries');
             //layerControl.addOverlay(southafricaS4, '<img src="legend/stat.png" width=20px /> Statistics');
             if (model.value == 'noah') {
                 var img_bounds = [ // SA - NOAH
-                    [-37.8,6.0],//[-37.9, 6.0],
+                    [-37.9,6.0],//[-37.8, 6.0],
                     [6.4, 54.6]
                 ];
             } else if (model.value == 'vic') {
@@ -773,6 +776,7 @@ function mapInit() {
                 ];
             }
         } else if (region.value == 'westafrica') {
+            //uncomment the next line if adding statistics
             layerControl.addOverlay(westafricaT3, '<img src="legend/ts.png" width=17px style="vertical-align: middle"/> Timeseries');
             //layerControl.addOverlay(westafricaS2, '<img src="legend/stat.png" width=20px /> Statistics');
             if (model.value == 'noah') {

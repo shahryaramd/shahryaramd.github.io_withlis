@@ -473,15 +473,7 @@ var scaleOptions = {
 };
 L.control.scale(scaleOptions).addTo(map);
 
-// KML Load
-var style = {
-    color: 'red',
-    opacity: 1.0,
-    fillOpacity: 0.5,
-    weight: 2,
-    clickable: false
-};
-//Showing coordinates 
+//Showing coordinates
 L.control.coordinates({
     position: "bottomright",
     decimals: 2,

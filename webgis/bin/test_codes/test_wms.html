@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <link rel="stylesheet" href="../src/leaflet-search.css" />
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.css' rel='stylesheet' />
+    <!--<link 
+        rel="stylesheet" 
+        href="http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.css"
+    />-->
+    <style>
+      
+      .map {
+            position: absolute;
+            top:116px;
+            left: 0px;
+            right: 0;
+            bottom:0;
+      }
+
+      .leaflet-control.enabled a {
+            background-color: yellow;
+      }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js" type="text/javascript"></script>
+    <script src="../src/leaflet-search.js"></script>
+    <script src="data/shp_js/BUILDING_FAC.js" type="text/javascript"></script>   <!--Converted using http://converter.mygeodata.eu/ , extension changed to .js -->
+    <script src="data/shp_js/BUILDING_ACDEM.js" type="text/javascript"></script>
+    <script src="data/shp_js/BUILDING_OTHERS.js" type="text/javascript"></script>
+    <script src="data/shp_js/BUILDING_RES.js" type="text/javascript"></script>
+    <script src="data/shp_js/ROADS_FEB27.js" type="text/javascript"></script>
+    <script src="data/shp_js/SECURITY.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../../Leaflet.MeasureControl-gh-pages/Leaflet.draw/dist/leaflet.draw.css" />
+    <link rel="stylesheet" href="../../Leaflet.MeasureControl-gh-pages/leaflet.measurecontrol.css" />
+    <link rel="stylesheet" type="text/css" href="../../../GeoExt-master/resources/css/popup.css">
+    <script src="Libs/OpenLayers-2.13.1/OpenLayers.js"></script>
+    <script src="../../Leaflet.MeasureControl-gh-pages/Leaflet.draw/dist/leaflet.draw.js"></script>
+
+    <script src="../../Leaflet.MeasureControl-gh-pages/leaflet.measurecontrol.js"></script>
+    <!---->
+    <title>IIT Kanpur WebGIS</title>
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <H1 > WEB GIS, IIT KANPUR </H1>
+
+    <div id="formsearch" style="margin: 0 2em 1em 2em;float:left">
+      <label>Search <input id="textsearch" type="text" value="" /></label>
+    </div>
+
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-geodesy/v0.1.0/leaflet-geodesy.js'></script>
+    <script type="text/javascript">
+      var basemap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+      var map = L.map('map').setView([26.50943,80.23397], 15);
+      basemap.addTo(map);
+
+     // var circle = L.circle([51.508, -0.11], 500, {
+     //  color: 'red',
+     //  fillColor: '#f03',
+     //  fillOpacity: 0.5}).addTo(map);
+     //  circle.bindPopup("Well Done, 786!");
+      
+     //  function onMapClick(e) {
+     //    var popup = L.popup()
+     //    .setLatLng(e.latlng)
+     //    .setContent("You clicked the map at " + e.latlng)
+     //    .openOn(map);
+        
+     //  }
+     //  map.on('click', onMapClick);
+
+
+      var countryStyle = {
+        'color': '#035',
+        'weight': 1,
+        'opacity': 0.6
+      };
+
+      function popup(feature, layer) {
+          feature.layer = layer;
+          if (feature.properties) {
+              layer.bindPopup("Name: "+feature.properties.Name + '\n' +
+                
+                  "ShortName: " + feature.properties.ShortName +'\n' + "Type: " + feature.properties.Type +'\n' +
+                  "Nature: " + feature.properties.Nature +'\n' +
+                  "Department: " + feature.properties.Department + '\n' +"Use: " + feature.properties.USE +'\n' +
+                  "Address1: " + feature.properties.Address1 + '\n' +"Address2: " + feature.properties.Address2 +'\n' +
+                  "Floors: " + feature.properties.Floors +'\n' +"Construction Year: " + feature.properties.ConstYr +'\n' +
+                  "Area: " + feature.properties.AREA +'\n' +
+                  "Geometry: "+feature.geometry.type + '\n');
+          }
+      }
+
+// LAYERS //////////////////////////////////
+
+    var featuresLayer = new L.tileLayer.wms("http://localhost:8080/geoserver/IITK_db/wms", {
+    layers: 'facilities_new',
+    tiled: true,
+    format: 'image/png',
+    transparent: true,
+   
+});
+      map.addLayer(featuresLayer);
+
+      var featuresLayer2 = new L.tileLayer.wms(
+
+          "http://localhost:8080/geoserver/IITK_db/wms",
+                    {
+                        layers: 'academic_area_new',
+                        format: 'image/png',
+                        transparent: true
+                    },
+                    {
+                        singleTile: true
+                    }                    
+        );
+      
+      map.addLayer(featuresLayer2);
+      
+      var featuresLayer3 = new L.tileLayer.wms(
+
+          "http://localhost:8080/geoserver/IITK_db/wms",
+                    {
+                        layers: 'residential_new',
+                        format: 'image/png',
+                        transparent: true
+                    },
+                    {
+                        singleTile: true
+                    }                    
+        );
+
+      map.addLayer(featuresLayer3);
+
+      var featuresLayer4 = new L.tileLayer.wms(
+
+          "http://localhost:8080/geoserver/IITK_db/wms",
+                    {
+                        layers: 'airstrip_new',
+                        format: 'image/png',
+                        transparent: true
+                    },
+                    {
+                        singleTile: true
+                    }                    
+        );
+
+      map.addLayer(featuresLayer4);
+
+      var featuresLayer5 = new L.tileLayer.wms(
+
+          "http://localhost:8080/geoserver/IITK_db/wms",
+                    {
+                        layers: 'hostel_new',
+                        format: 'image/png',
+                        transparent: true
+                    },
+                    {
+                        singleTile: true
+                    }                    
+        );
+
+      map.addLayer(featuresLayer5);
+
+      var featuresLayer6 = new L.tileLayer.wms(
+
+          "http://localhost:8080/geoserver/IITK_db/wms",
+                    {
+                        layers: 'open_space_new',
+                        format: 'image/png',
+                        transparent: true
+                    },
+                    {
+                        singleTile: true
+                    }                    
+        );
+
+      map.addLayer(featuresLayer6);
+
+// TOGGLE LAYERS //////////////////////////
+      L.control.layers({
+          'Base map': L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'),
+          'Satellite Imagery': L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:17}),
+          'Topographic Map' : L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'),
+          'Street Map':  L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {  maxZoom: 19})
+          
+      }, {
+          'Academic Area': featuresLayer2,
+          'Residential buildings' : featuresLayer3,
+          'Facilities' : featuresLayer,
+          'Security' : featuresLayer5,
+          'Roads' : featuresLayer4,
+          'Other buildings': featuresLayer6
+      }).addTo(map);
+// START MEASURE TOOLS /////////////////
+      L.Control.measureControl().addTo(map);
+
+      var featureGroup = L.featureGroup().addTo(map);
+
+      var drawControl = new L.Control.Draw({
+        edit: {
+          featureGroup: featureGroup
+        },
+        draw: {
+          polygon: true,
+          polyline: false,
+          rectangle: true,
+          circle: true,
+          marker: true
+        }
+      }).addTo(map);
+
+      map.on('draw:created', showPolygonArea);
+      map.on('draw:edited', showPolygonAreaEdited);
+
+      function showPolygonAreaEdited(e) {
+        e.layers.eachLayer(function(layer) {
+          showPolygonArea({ layer: layer });
+        });
+      }
+      function showPolygonArea(e) {
+        featureGroup.clearLayers();
+        featureGroup.addLayer(e.layer);
+        e.layer.bindPopup((LGeo.area(e.layer)).toFixed(2) + ' m<sup>2</sup>');
+        e.layer.openPopup();
+      }
+//END MEASURE TOOLS --------------------
+
+
+// //SEARCH TOOL //////////////////////////
+      //lr=featuresLayer
+      var poiLayers = L.layerGroup([
+        featuresLayer,featuresLayer2,featuresLayer3,featuresLayer4,featuresLayer5,featuresLayer6
+      ])
+      var searchControl = new L.Control.Search({ layer: poiLayers, propertyName: 'Name', circleLocation:true,
+                                                textPlaceholder: 'Search in hostel area...', markerLocation: false});
+
+      searchControl.on('search_locationfound', function(e) {
+        
+        e.layer.setStyle({fillColor: '#3f0', color: '#0f0'});
+        if(e.layer._popup)
+          e.layer.openPopup();
+
+      }).on('search_collapsed', function(e) {
+
+        featuresLayer.eachLayer(function(layer) { //restore feature color
+          featuresLayer.resetStyle(layer);
+        }); 
+      });
+      
+      map.addControl( searchControl );  //inizialize search control
+     
+      $('#textsearch').on('keyup', function(e) {
+
+          searchControl.searchText( e.target.value );
+
+      })
+// END SEARCH TOOL ----------------------
+
+
+    </script>
+  </body>
+</html>

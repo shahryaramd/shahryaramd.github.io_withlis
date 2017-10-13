@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" type="text/css" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/label.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+        <script src="js/leaflet.js"></script>
+        <script src="js/OSMBuildings-Leaflet.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/label.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/proj4.js"></script>
+        <script src="js/proj4leaflet.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="data/json_Landuse2015any0.js"></script>
+        <script src="data/json_Academic1.js"></script>
+        <script src="data/json_Facilities2.js"></script>
+        <script src="data/json_Residential3.js"></script>
+        <script src="data/json_ShopsCanteens4.js"></script>
+        <script src="data/json_FitnessSports5.js"></script>
+        <script src="data/json_EventVenues6.js"></script>
+        <script src="data/json_Religious7.js"></script>
+        <script src="data/json_Parking8.js"></script>
+        <script src="data/json_HallWalkways9.js"></script>
+        <script src="data/json_ParksLawns10.js"></script>
+        <script src="data/json_Waterbody11.js"></script>
+        <script src="data/json_Security12.js"></script>
+        <script src="data/json_Unconstructed13.js"></script>
+        <script src="data/json_Roads14.js"></script>
+        <script src="data/json_Contours15.js"></script>
+        <script src="data/json_Landmarks16.js"></script>
+        <script src="data/json_IITKBoundary17.js"></script>
+        <script src="data/json_Merged18.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+        var crs = new L.Proj.CRS('EPSG:32644', '+proj=utm +zone=44 +datum=WGS84 +units=m +no_defs', {
+            resolutions: [2800, 1400, 700, 350, 175, 84, 42, 21, 11.2, 5.6, 2.8, 1.4, 0.7, 0.35, 0.14, 0.07],
+        });
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        var map = L.map('map', {
+            crs: crs,
+            continuousWorld: false,
+            worldCopyJump: false, 
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[26.5070324189,80.2245927248],[26.5140825399,80.2353534162]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        var feature_group = new L.featureGroup([]);
+        var bounds_group = new L.featureGroup([]);
+        var raster_group = new L.LayerGroup([]);
+        var initialOrder = new Array();
+        var layerOrder = new Array();
+        function stackLayers() {
+            for (index = 0; index < initialOrder.length; index++) {
+                map.removeLayer(initialOrder[index]);
+                map.addLayer(initialOrder[index]);
+            }
+        }
+        function restackLayers() {
+            for (index = 0; index < layerOrder.length; index++) {
+                layerOrder[index].bringToFront();
+            }
+        }
+        layerControl = L.control.layers({},{},{collapsed:false});
+        function pop_Landuse2015any0(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleLanduse2015any0(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">type</th><td>' + (feature.properties['type'] !== null ? Autolinker.link(String(feature.properties['type'])) : '') + '</td></tr><tr><th scope="row">use</th><td>' + (feature.properties['use'] !== null ? Autolinker.link(String(feature.properties['use'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleLanduse2015any0(feature) {
+			switch (feature.properties.type) {
+                case 'BUILT UP':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#f1f4c7',
+                    color: '#afb38a',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '1.0',
+                    fillOpacity: '1.0',
+                };
+                break;
+
+                case 'FOOTPATH':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#942033',
+                    color: '#afb38a',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '1.0',
+                    fillOpacity: '1.0',
+                };
+                break;
+
+                case 'OPEN SPACES':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#badd69',
+                    color: '#809848',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '1.0',
+                    fillOpacity: '1.0',
+                };
+                break;
+
+                case 'PARKWAYS':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#ffffbf',
+                    color: '#000000',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '1.0',
+                    fillOpacity: '1.0',
+                };
+                break;
+
+                case 'ROAD EDGE':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#b1b7b6',
+                    color: '#000000',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '1.0',
+                    fillOpacity: '1.0',
+                };
+                break;
+
+                case 'WATER BODY':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#3288bd',
+                    color: '#000000',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '1.0',
+                    fillOpacity: '1.0',
+                };
+                break;
+
+                case 'STADIUM':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#badd69',
+                    color: '#809848',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '1.0',
+                    fillOpacity: '1.0',
+                };
+                break;
+
+            }
+        }
+        var json_Landuse2015any0JSON = new L.geoJson(json_Landuse2015any0, {
+            onEachFeature: pop_Landuse2015any0,
+            style: doStyleLanduse2015any0
+        });
+        layerOrder[layerOrder.length] = json_Landuse2015any0JSON;
+        bounds_group.addLayer(json_Landuse2015any0JSON);
+        initialOrder[initialOrder.length] = json_Landuse2015any0JSON;
+        feature_group.addLayer(json_Landuse2015any0JSON);
+        function pop_Academic1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleAcademic1(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">Department</th><td>' + (feature.properties['Department'] !== null ? Autolinker.link(String(feature.properties['Department'])) : '') + '</td></tr><tr><th scope="row">USE</th><td>' + (feature.properties['USE'] !== null ? Autolinker.link(String(feature.properties['USE'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Floors</th><td>' + (feature.properties['Floors'] !== null ? Autolinker.link(String(feature.properties['Floors'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">Road_ID</th><td>' + (feature.properties['Road_ID'] !== null ? Autolinker.link(String(feature.properties['Road_ID'])) : '') + '</td></tr><tr><th scope="row">NameUse</th><td>' + (feature.properties['NameUse'] !== null ? Autolinker.link(String(feature.properties['NameUse'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleAcademic1(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#f60511',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_Academic1JSON = new L.geoJson(json_Academic1, {
+            onEachFeature: pop_Academic1,
+            style: doStyleAcademic1
+        });
+        layerOrder[layerOrder.length] = json_Academic1JSON;
+        bounds_group.addLayer(json_Academic1JSON);
+        initialOrder[initialOrder.length] = json_Academic1JSON;
+        feature_group.addLayer(json_Academic1JSON);
+        function pop_Facilities2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleFacilities2(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">USE</th><td>' + (feature.properties['USE'] !== null ? Autolinker.link(String(feature.properties['USE'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Floors</th><td>' + (feature.properties['Floors'] !== null ? Autolinker.link(String(feature.properties['Floors'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">RD_ID</th><td>' + (feature.properties['RD_ID'] !== null ? Autolinker.link(String(feature.properties['RD_ID'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleFacilities2(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#6af1c4',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_Facilities2JSON = new L.geoJson(json_Facilities2, {
+            onEachFeature: pop_Facilities2,
+            style: doStyleFacilities2
+        });
+        layerOrder[layerOrder.length] = json_Facilities2JSON;
+        bounds_group.addLayer(json_Facilities2JSON);
+        initialOrder[initialOrder.length] = json_Facilities2JSON;
+        feature_group.addLayer(json_Facilities2JSON);
+        function pop_Residential3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleResidential3(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Address2</th><td>' + (feature.properties['Address2'] !== null ? Autolinker.link(String(feature.properties['Address2'])) : '') + '</td></tr><tr><th scope="row">Floors</th><td>' + (feature.properties['Floors'] !== null ? Autolinker.link(String(feature.properties['Floors'])) : '') + '</td></tr><tr><th scope="row">BLOCK</th><td>' + (feature.properties['BLOCK'] !== null ? Autolinker.link(String(feature.properties['BLOCK'])) : '') + '</td></tr><tr><th scope="row">Road_ID</th><td>' + (feature.properties['Road_ID'] !== null ? Autolinker.link(String(feature.properties['Road_ID'])) : '') + '</td></tr><tr><th scope="row">ConstYr</th><td>' + (feature.properties['ConstYr'] !== null ? Autolinker.link(String(feature.properties['ConstYr'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">HouseName</th><td>' + (feature.properties['HouseName'] !== null ? Autolinker.link(String(feature.properties['HouseName'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleResidential3(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#ee22d7',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 0.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_Residential3JSON = new L.geoJson(json_Residential3, {
+            onEachFeature: pop_Residential3,
+            style: doStyleResidential3
+        });
+        layerOrder[layerOrder.length] = json_Residential3JSON;
+        bounds_group.addLayer(json_Residential3JSON);
+        initialOrder[initialOrder.length] = json_Residential3JSON;
+        feature_group.addLayer(json_Residential3JSON);
+        function pop_ShopsCanteens4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleShopsCanteens4(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">USE</th><td>' + (feature.properties['USE'] !== null ? Autolinker.link(String(feature.properties['USE'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">RD_ID</th><td>' + (feature.properties['RD_ID'] !== null ? Autolinker.link(String(feature.properties['RD_ID'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleShopsCanteens4(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#ff6e50',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_ShopsCanteens4JSON = new L.geoJson(json_ShopsCanteens4, {
+            onEachFeature: pop_ShopsCanteens4,
+            style: doStyleShopsCanteens4
+        });
+        layerOrder[layerOrder.length] = json_ShopsCanteens4JSON;
+        bounds_group.addLayer(json_ShopsCanteens4JSON);
+        initialOrder[initialOrder.length] = json_ShopsCanteens4JSON;
+        feature_group.addLayer(json_ShopsCanteens4JSON);
+        function pop_FitnessSports5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleFitnessSports5(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Floors</th><td>' + (feature.properties['Floors'] !== null ? Autolinker.link(String(feature.properties['Floors'])) : '') + '</td></tr><tr><th scope="row">AREA</th><td>' + (feature.properties['AREA'] !== null ? Autolinker.link(String(feature.properties['AREA'])) : '') + '</td></tr><tr><th scope="row">Road_ID</th><td>' + (feature.properties['Road_ID'] !== null ? Autolinker.link(String(feature.properties['Road_ID'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">ConstYr</th><td>' + (feature.properties['ConstYr'] !== null ? Autolinker.link(String(feature.properties['ConstYr'])) : '') + '</td></tr><tr><th scope="row">LastUPD</th><td>' + (feature.properties['LastUPD'] !== null ? Autolinker.link(String(feature.properties['LastUPD'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleFitnessSports5(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#127036',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_FitnessSports5JSON = new L.geoJson(json_FitnessSports5, {
+            onEachFeature: pop_FitnessSports5,
+            style: doStyleFitnessSports5
+        });
+        layerOrder[layerOrder.length] = json_FitnessSports5JSON;
+        bounds_group.addLayer(json_FitnessSports5JSON);
+        initialOrder[initialOrder.length] = json_FitnessSports5JSON;
+        feature_group.addLayer(json_FitnessSports5JSON);
+        function pop_EventVenues6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleEventVenues6(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">USE</th><td>' + (feature.properties['USE'] !== null ? Autolinker.link(String(feature.properties['USE'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">RD_ID</th><td>' + (feature.properties['RD_ID'] !== null ? Autolinker.link(String(feature.properties['RD_ID'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleEventVenues6(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#c94fff',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_EventVenues6JSON = new L.geoJson(json_EventVenues6, {
+            onEachFeature: pop_EventVenues6,
+            style: doStyleEventVenues6
+        });
+        layerOrder[layerOrder.length] = json_EventVenues6JSON;
+        bounds_group.addLayer(json_EventVenues6JSON);
+        initialOrder[initialOrder.length] = json_EventVenues6JSON;
+        feature_group.addLayer(json_EventVenues6JSON);
+        function pop_Religious7(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleReligious7(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Floors</th><td>' + (feature.properties['Floors'] !== null ? Autolinker.link(String(feature.properties['Floors'])) : '') + '</td></tr><tr><th scope="row">AREA</th><td>' + (feature.properties['AREA'] !== null ? Autolinker.link(String(feature.properties['AREA'])) : '') + '</td></tr><tr><th scope="row">Road_ID</th><td>' + (feature.properties['Road_ID'] !== null ? Autolinker.link(String(feature.properties['Road_ID'])) : '') + '</td></tr><tr><th scope="row">ConstYr</th><td>' + (feature.properties['ConstYr'] !== null ? Autolinker.link(String(feature.properties['ConstYr'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">LastUPD</th><td>' + (feature.properties['LastUPD'] !== null ? Autolinker.link(String(feature.properties['LastUPD'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleReligious7(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#0fb79e',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_Religious7JSON = new L.geoJson(json_Religious7, {
+            onEachFeature: pop_Religious7,
+            style: doStyleReligious7
+        });
+        layerOrder[layerOrder.length] = json_Religious7JSON;
+        bounds_group.addLayer(json_Religious7JSON);
+        initialOrder[initialOrder.length] = json_Religious7JSON;
+        feature_group.addLayer(json_Religious7JSON);
+        function pop_Parking8(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleParking8(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Road_ID</th><td>' + (feature.properties['Road_ID'] !== null ? Autolinker.link(String(feature.properties['Road_ID'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">NatureAddr</th><td>' + (feature.properties['NatureAddr'] !== null ? Autolinker.link(String(feature.properties['NatureAddr'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleParking8(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#da7f24',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_Parking8JSON = new L.geoJson(json_Parking8, {
+            onEachFeature: pop_Parking8,
+            style: doStyleParking8
+        });
+        layerOrder[layerOrder.length] = json_Parking8JSON;
+        bounds_group.addLayer(json_Parking8JSON);
+        initialOrder[initialOrder.length] = json_Parking8JSON;
+        feature_group.addLayer(json_Parking8JSON);
+        function pop_HallWalkways9(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleHallWalkways9(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">Location</th><td>' + (feature.properties['Location'] !== null ? Autolinker.link(String(feature.properties['Location'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleHallWalkways9(feature) {
+            return {
+                weight: 1.04,
+                color: '#809848',
+                fillColor: '#ab2929',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_HallWalkways9JSON = new L.geoJson(json_HallWalkways9, {
+            onEachFeature: pop_HallWalkways9,
+            style: doStyleHallWalkways9
+        });
+        layerOrder[layerOrder.length] = json_HallWalkways9JSON;
+        bounds_group.addLayer(json_HallWalkways9JSON);
+        initialOrder[initialOrder.length] = json_HallWalkways9JSON;
+        feature_group.addLayer(json_HallWalkways9JSON);
+        function pop_ParksLawns10(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleParksLawns10(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">Id</th><td>' + (feature.properties['Id'] !== null ? Autolinker.link(String(feature.properties['Id'])) : '') + '</td></tr><tr><th scope="row">NATURE</th><td>' + (feature.properties['NATURE'] !== null ? Autolinker.link(String(feature.properties['NATURE'])) : '') + '</td></tr><tr><th scope="row">Shape_Length</th><td>' + (feature.properties['Shape_Length'] !== null ? Autolinker.link(String(feature.properties['Shape_Length'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleParksLawns10(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#14e282',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_ParksLawns10JSON = new L.geoJson(json_ParksLawns10, {
+            onEachFeature: pop_ParksLawns10,
+            style: doStyleParksLawns10
+        });
+        layerOrder[layerOrder.length] = json_ParksLawns10JSON;
+        bounds_group.addLayer(json_ParksLawns10JSON);
+        initialOrder[initialOrder.length] = json_ParksLawns10JSON;
+        feature_group.addLayer(json_ParksLawns10JSON);
+        function pop_Waterbody11(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleWaterbody11(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">Id</th><td>' + (feature.properties['Id'] !== null ? Autolinker.link(String(feature.properties['Id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">Shape_Length</th><td>' + (feature.properties['Shape_Length'] !== null ? Autolinker.link(String(feature.properties['Shape_Length'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleWaterbody11(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#1a27e4',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_Waterbody11JSON = new L.geoJson(json_Waterbody11, {
+            onEachFeature: pop_Waterbody11,
+            style: doStyleWaterbody11
+        });
+        layerOrder[layerOrder.length] = json_Waterbody11JSON;
+        bounds_group.addLayer(json_Waterbody11JSON);
+        initialOrder[initialOrder.length] = json_Waterbody11JSON;
+        feature_group.addLayer(json_Waterbody11JSON);
+        function pop_Security12(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleSecurity12(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">USE</th><td>' + (feature.properties['USE'] !== null ? Autolinker.link(String(feature.properties['USE'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Floors</th><td>' + (feature.properties['Floors'] !== null ? Autolinker.link(String(feature.properties['Floors'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">RD_ID</th><td>' + (feature.properties['RD_ID'] !== null ? Autolinker.link(String(feature.properties['RD_ID'])) : '') + '</td></tr><tr><th scope="row">ConstYr</th><td>' + (feature.properties['ConstYr'] !== null ? Autolinker.link(String(feature.properties['ConstYr'])) : '') + '</td></tr><tr><th scope="row">LastUPD</th><td>' + (feature.properties['LastUPD'] !== null ? Autolinker.link(String(feature.properties['LastUPD'])) : '') + '</td></tr><tr><th scope="row">NameUse</th><td>' + (feature.properties['NameUse'] !== null ? Autolinker.link(String(feature.properties['NameUse'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleSecurity12(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#531532',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_Security12JSON = new L.geoJson(json_Security12, {
+            onEachFeature: pop_Security12,
+            style: doStyleSecurity12
+        });
+        layerOrder[layerOrder.length] = json_Security12JSON;
+        bounds_group.addLayer(json_Security12JSON);
+        initialOrder[initialOrder.length] = json_Security12JSON;
+        feature_group.addLayer(json_Security12JSON);
+        function pop_Unconstructed13(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleUnconstructed13(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">About</th><td>' + (feature.properties['About'] !== null ? Autolinker.link(String(feature.properties['About'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleUnconstructed13(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#a5a5a5',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_Unconstructed13JSON = new L.geoJson(json_Unconstructed13, {
+            onEachFeature: pop_Unconstructed13,
+            style: doStyleUnconstructed13
+        });
+        layerOrder[layerOrder.length] = json_Unconstructed13JSON;
+        bounds_group.addLayer(json_Unconstructed13JSON);
+        initialOrder[initialOrder.length] = json_Unconstructed13JSON;
+        feature_group.addLayer(json_Unconstructed13JSON);
+        function pop_Roads14(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleRoads14(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">Id</th><td>' + (feature.properties['Id'] !== null ? Autolinker.link(String(feature.properties['Id'])) : '') + '</td></tr><tr><th scope="row">type</th><td>' + (feature.properties['type'] !== null ? Autolinker.link(String(feature.properties['type'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">Surface</th><td>' + (feature.properties['Surface'] !== null ? Autolinker.link(String(feature.properties['Surface'])) : '') + '</td></tr><tr><th scope="row">TEMPNAME</th><td>' + (feature.properties['TEMPNAME'] !== null ? Autolinker.link(String(feature.properties['TEMPNAME'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleRoads14(feature) {
+            return {
+                weight: 5.04,
+                color: '#ffffff',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                opacity: 1.0
+            };
+        }
+        var json_Roads14JSON = new L.geoJson(json_Roads14, {
+            onEachFeature: pop_Roads14,
+            style: doStyleRoads14
+        });
+        layerOrder[layerOrder.length] = json_Roads14JSON;
+        bounds_group.addLayer(json_Roads14JSON);
+        initialOrder[initialOrder.length] = json_Roads14JSON;
+        feature_group.addLayer(json_Roads14JSON);
+        function pop_Contours15(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleContours15(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">CONTOUR</th><td>' + (feature.properties['CONTOUR'] !== null ? Autolinker.link(String(feature.properties['CONTOUR'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleContours15(feature) {
+            return {
+                weight: 1.04,
+                color: '#c09363',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0
+            };
+        }
+        var json_Contours15JSON = new L.geoJson(json_Contours15, {
+            onEachFeature: pop_Contours15,
+            style: doStyleContours15
+        });
+        layerOrder[layerOrder.length] = json_Contours15JSON;
+        bounds_group.addLayer(json_Contours15JSON);
+        function pop_Landmarks16(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleLandmarks16(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">name</th><td>' + (feature.properties['name'] !== null ? Autolinker.link(String(feature.properties['name'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleLandmarks16() {
+            return {
+                radius: 2.4,
+                fillColor: '#5c2b5c',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerLandmarks16(feature, latlng) {
+            return L.circleMarker(latlng, doStyleLandmarks16())
+        }
+        var json_Landmarks16JSON = new L.geoJson(json_Landmarks16, {
+            onEachFeature: pop_Landmarks16, 
+            pointToLayer: doPointToLayerLandmarks16
+            });
+        layerOrder[layerOrder.length] = json_Landmarks16JSON;
+
+        bounds_group.addLayer(json_Landmarks16JSON);
+        initialOrder[initialOrder.length] = json_Landmarks16JSON;
+        feature_group.addLayer(json_Landmarks16JSON);
+        function pop_IITKBoundary17(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleIITKBoundary17(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function doStyleIITKBoundary17(feature) {
+            return {
+                weight: 5.04,
+                color: '#721515',
+                fillColor: '#000000',
+                dashArray: '12.6,6.3,1.26,6.3',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 0.0
+            };
+        }
+        var json_IITKBoundary17JSON = new L.geoJson(json_IITKBoundary17, {
+            onEachFeature: pop_IITKBoundary17,
+            style: doStyleIITKBoundary17
+        });
+        layerOrder[layerOrder.length] = json_IITKBoundary17JSON;
+        bounds_group.addLayer(json_IITKBoundary17JSON);
+        function pop_Merged18(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleMerged18(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">Department</th><td>' + (feature.properties['Department'] !== null ? Autolinker.link(String(feature.properties['Department'])) : '') + '</td></tr><tr><th scope="row">USE</th><td>' + (feature.properties['USE'] !== null ? Autolinker.link(String(feature.properties['USE'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Floors</th><td>' + (feature.properties['Floors'] !== null ? Autolinker.link(String(feature.properties['Floors'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">ConstYr</th><td>' + (feature.properties['ConstYr'] !== null ? Autolinker.link(String(feature.properties['ConstYr'])) : '') + '</td></tr><tr><th scope="row">LastUPD</th><td>' + (feature.properties['LastUPD'] !== null ? Autolinker.link(String(feature.properties['LastUPD'])) : '') + '</td></tr><tr><th scope="row">Road_ID</th><td>' + (feature.properties['Road_ID'] !== null ? Autolinker.link(String(feature.properties['Road_ID'])) : '') + '</td></tr><tr><th scope="row">RD_ID</th><td>' + (feature.properties['RD_ID'] !== null ? Autolinker.link(String(feature.properties['RD_ID'])) : '') + '</td></tr><tr><th scope="row">Address2</th><td>' + (feature.properties['Address2'] !== null ? Autolinker.link(String(feature.properties['Address2'])) : '') + '</td></tr><tr><th scope="row">BLOCK</th><td>' + (feature.properties['BLOCK'] !== null ? Autolinker.link(String(feature.properties['BLOCK'])) : '') + '</td></tr><tr><th scope="row">About</th><td>' + (feature.properties['About'] !== null ? Autolinker.link(String(feature.properties['About'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleMerged18(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#000000',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 0.0745098,
+                fillOpacity: 0.0
+            };
+        }
+        var json_Merged18JSON = new L.geoJson(json_Merged18, {
+            onEachFeature: pop_Merged18,
+            style: doStyleMerged18
+        });
+        layerOrder[layerOrder.length] = json_Merged18JSON;
+        bounds_group.addLayer(json_Merged18JSON);
+        raster_group.addTo(map);
+        feature_group.addTo(map);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Merged18.png" /> Merged': json_Merged18JSON,'<img src="legend/IITKBoundary17.png" /> IITK Boundary': json_IITKBoundary17JSON,'<img src="legend/Landmarks16.png" /> Landmarks': json_Landmarks16JSON,'<img src="legend/Contours15.png" /> Contours': json_Contours15JSON,'<img src="legend/Roads14.png" /> Roads': json_Roads14JSON,'<img src="legend/Unconstructed13.png" /> Unconstructed': json_Unconstructed13JSON,'<img src="legend/Security12.png" /> Security': json_Security12JSON,'<img src="legend/Waterbody11.png" /> Waterbody': json_Waterbody11JSON,'<img src="legend/ParksLawns10.png" /> Parks/Lawns': json_ParksLawns10JSON,'<img src="legend/HallWalkways9.png" /> Hall Walkways': json_HallWalkways9JSON,'<img src="legend/Parking8.png" /> Parking': json_Parking8JSON,'<img src="legend/Religious7.png" /> Religious': json_Religious7JSON,'<img src="legend/EventVenues6.png" /> Event Venues': json_EventVenues6JSON,'<img src="legend/FitnessSports5.png" /> Fitness/Sports': json_FitnessSports5JSON,'<img src="legend/ShopsCanteens4.png" /> Shops/Canteens': json_ShopsCanteens4JSON,'<img src="legend/Residential3.png" /> Residential': json_Residential3JSON,'<img src="legend/Facilities2.png" /> Facilities': json_Facilities2JSON,'<img src="legend/Academic1.png" /> Academic': json_Academic1JSON,'Landuse_2015 any<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Landuse2015any0_BUILTUP.png" /> BUILT UP<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Landuse2015any0_FOOTPATH.png" /> FOOTPATH<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Landuse2015any0_OPENSPACES.png" /> OPEN SPACES<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Landuse2015any0_PARKWAYS.png" /> PARKWAYS<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Landuse2015any0_ROADEDGE.png" /> ROAD EDGE<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Landuse2015any0_WATERBODY.png" /> WATER BODY<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="legend/Landuse2015any0_MAINSTADIUM.png" /> MAIN STADIUM<br />': json_Landuse2015any0JSON,},{collapsed:true}).addTo(map);
+        stackLayers();
+        map.on('overlayadd', restackLayers);
+        </script>
+    </body>
+</html>

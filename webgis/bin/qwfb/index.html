@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="../../src/leaflet-search.css" />
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" type="text/css" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/label.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+        <link rel="stylesheet" href="css/leaflet.draw.css" />
+        <link rel="stylesheet" href="css/leaflet.measurecontrol.css" />
+        <script src="js/leaflet.js"></script>
+        <script src="js/OSMBuildings-Leaflet.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/label.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/leaflet.draw.js"></script>
+        <script src="js/leaflet.measurecontrol.js"></script>
+        <script src="js/proj4.js"></script>
+        <script src="js/proj4leaflet.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="../../src/leaflet-search.js"></script>
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        #sroom,#sname{
+            position: fixed;
+            display: inline-block;
+            background: #fff;
+        border-radius:.125em;
+         left:10px;
+        top:-10px;
+        margin-bottom: 10px;
+        padding: 2px 0;
+        width: 220px;
+        height: 26px;
+        border-style:solid;border-width:1px;border-color:#d3d3d3;border-left:2px;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;-moz-box-shadow:2px 2px 2px -2px gray;-webkit-box-shadow:2px 2px 2px -2px gray;box-shadow:2px 2px 2px -2px gray
+        
+      
+        }
+        </style>
+        <style type="text/css">
+
+    .labelutil { 
+      background: rgb(235, 235, 235);
+      background: rgba(235, 235, 235, 0.81);
+      background-clip: padding-box;
+      border-color: #777;
+      border-color: rgba(0,0,0,0.25);
+      border-radius: 4px;
+      border-style: solid;
+      border-width: 4px;
+      color: #111;
+      display: block;
+      font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      padding: 1px 6px;
+      position: absolute;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+  </style>
+        <title></title>
+    </head>
+    <body>
+        <h3 align="center">FACULTY BUILDING INTERIOR NAVIGATION</h3>
+        <div style='display:inline;'>
+            
+            <p id="sname"></p>
+            <p id="sroom"></p>
+        </div>
+        
+        <div id="map">
+        </div>
+        <script src="data/json_FBGroundFloor0.js"></script>
+        <script src="data/json_FBFirstFloor1.js"></script>
+        <script src="data/json_FBSecondFloor2.js"></script>
+        <script src="data/json_FBUtilities3.js"></script>
+        <script src="data/json_All4.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+      
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        var map = L.map('map', {
+            continuousWorld: false,
+            worldCopyJump: false, 
+            measureControl:true,
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).setView([26.51334,80.23294], 18);//.fitBounds([[26.5124097805,80.2311314196],[26.5149271115,80.2349739484]]);
+        var basemap = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+              maxZoom: 20,
+              subdomains:['mt0','mt1','mt2','mt3']
+          });
+        // basemap.addTo(map);
+        var hash = new L.Hash(map);
+        var feature_group = new L.featureGroup([]);
+        var bounds_group = new L.featureGroup([]);
+        var raster_group = new L.LayerGroup([]);
+        var initialOrder = new Array();
+        var layerOrder = new Array();
+        function stackLayers() {
+            for (index = 0; index < initialOrder.length; index++) {
+                map.removeLayer(initialOrder[index]);
+                map.addLayer(initialOrder[index]);
+            }
+        }
+        function restackLayers() {
+            for (index = 0; index < layerOrder.length; index++) {
+                layerOrder[index].bringToFront();
+            }
+        }
+        layerControl = L.control.layers({},{},{collapsed:false});
+        function pop_FBGroundFloor0(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleFBGroundFloor0(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">OBJECTID_1</th><td>' + (feature.properties['OBJECTID_1'] !== null ? Autolinker.link(String(feature.properties['OBJECTID_1'])) : '') + '</td></tr><tr><th scope="row">SPACEID</th><td>' + (feature.properties['SPACEID'] !== null ? Autolinker.link(String(feature.properties['SPACEID'])) : '') + '</td></tr><tr><th scope="row">BUILDING</th><td>' + (feature.properties['BUILDING'] !== null ? Autolinker.link(String(feature.properties['BUILDING'])) : '') + '</td></tr><tr><th scope="row">FLOOR</th><td>' + (feature.properties['FLOOR'] !== null ? Autolinker.link(String(feature.properties['FLOOR'])) : '') + '</td></tr><tr><th scope="row">SECTION</th><td>' + (feature.properties['SECTION'] !== null ? Autolinker.link(String(feature.properties['SECTION'])) : '') + '</td></tr><tr><th scope="row">DESCRIP</th><td>' + (feature.properties['DESCRIP'] !== null ? Autolinker.link(String(feature.properties['DESCRIP'])) : '') + '</td></tr><tr><th scope="row">SPACETYPE</th><td>' + (feature.properties['SPACETYPE'] !== null ? Autolinker.link(String(feature.properties['SPACETYPE'])) : '') + '</td></tr><tr><th scope="row">ACCESSTYPE</th><td>' + (feature.properties['ACCESSTYPE'] !== null ? Autolinker.link(String(feature.properties['ACCESSTYPE'])) : '') + '</td></tr><tr><th scope="row">BASEELEV</th><td>' + (feature.properties['BASEELEV'] !== null ? Autolinker.link(String(feature.properties['BASEELEV'])) : '') + '</td></tr><tr><th scope="row">FLOORAREA</th><td>' + (feature.properties['FLOORAREA'] !== null ? Autolinker.link(String(feature.properties['FLOORAREA'])) : '') + '</td></tr><tr><th scope="row">LASTUPDATE</th><td>' + (feature.properties['LASTUPDATE'] !== null ? Autolinker.link(String(feature.properties['LASTUPDATE'])) : '') + '</td></tr><tr><th scope="row">LASTEDITOR</th><td>' + (feature.properties['LASTEDITOR'] !== null ? Autolinker.link(String(feature.properties['LASTEDITOR'])) : '') + '</td></tr><tr><th scope="row">RoomNo</th><td>' + (feature.properties['RoomNo'] !== null ? Autolinker.link(String(feature.properties['RoomNo'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">Link</th><td>' + (feature.properties['Link'] !== null ? Autolinker.link(String(feature.properties['Link'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleFBGroundFloor0(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#68a057',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_FBGroundFloor0JSON = new L.geoJson(json_FBGroundFloor0, {
+            onEachFeature: pop_FBGroundFloor0,
+            style: doStyleFBGroundFloor0
+        });
+        layerOrder[layerOrder.length] = json_FBGroundFloor0JSON;
+        bounds_group.addLayer(json_FBGroundFloor0JSON);
+        initialOrder[initialOrder.length] = json_FBGroundFloor0JSON;
+        feature_group.addLayer(json_FBGroundFloor0JSON);
+        function pop_FBFirstFloor1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleFBFirstFloor1(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">OBJECTID_1</th><td>' + (feature.properties['OBJECTID_1'] !== null ? Autolinker.link(String(feature.properties['OBJECTID_1'])) : '') + '</td></tr><tr><th scope="row">SPACEID</th><td>' + (feature.properties['SPACEID'] !== null ? Autolinker.link(String(feature.properties['SPACEID'])) : '') + '</td></tr><tr><th scope="row">FLOORKEY</th><td>' + (feature.properties['FLOORKEY'] !== null ? Autolinker.link(String(feature.properties['FLOORKEY'])) : '') + '</td></tr><tr><th scope="row">BUILDING</th><td>' + (feature.properties['BUILDING'] !== null ? Autolinker.link(String(feature.properties['BUILDING'])) : '') + '</td></tr><tr><th scope="row">FLOOR</th><td>' + (feature.properties['FLOOR'] !== null ? Autolinker.link(String(feature.properties['FLOOR'])) : '') + '</td></tr><tr><th scope="row">SECTION</th><td>' + (feature.properties['SECTION'] !== null ? Autolinker.link(String(feature.properties['SECTION'])) : '') + '</td></tr><tr><th scope="row">DESCRIP</th><td>' + (feature.properties['DESCRIP'] !== null ? Autolinker.link(String(feature.properties['DESCRIP'])) : '') + '</td></tr><tr><th scope="row">SPACETYPE</th><td>' + (feature.properties['SPACETYPE'] !== null ? Autolinker.link(String(feature.properties['SPACETYPE'])) : '') + '</td></tr><tr><th scope="row">ACCESSTYPE</th><td>' + (feature.properties['ACCESSTYPE'] !== null ? Autolinker.link(String(feature.properties['ACCESSTYPE'])) : '') + '</td></tr><tr><th scope="row">CEILINGHEI</th><td>' + (feature.properties['CEILINGHEI'] !== null ? Autolinker.link(String(feature.properties['CEILINGHEI'])) : '') + '</td></tr><tr><th scope="row">BASEELEV</th><td>' + (feature.properties['BASEELEV'] !== null ? Autolinker.link(String(feature.properties['BASEELEV'])) : '') + '</td></tr><tr><th scope="row">FLOORAREA</th><td>' + (feature.properties['FLOORAREA'] !== null ? Autolinker.link(String(feature.properties['FLOORAREA'])) : '') + '</td></tr><tr><th scope="row">LASTUPDATE</th><td>' + (feature.properties['LASTUPDATE'] !== null ? Autolinker.link(String(feature.properties['LASTUPDATE'])) : '') + '</td></tr><tr><th scope="row">LASTEDITOR</th><td>' + (feature.properties['LASTEDITOR'] !== null ? Autolinker.link(String(feature.properties['LASTEDITOR'])) : '') + '</td></tr><tr><th scope="row">RoomNo</th><td>' + (feature.properties['RoomNo'] !== null ? Autolinker.link(String(feature.properties['RoomNo'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">Link</th><td>' + (feature.properties['Link'] !== null ? Autolinker.link(String(feature.properties['Link'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleFBFirstFloor1(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#b66dc2',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_FBFirstFloor1JSON = new L.geoJson(json_FBFirstFloor1, {
+            onEachFeature: pop_FBFirstFloor1,
+            style: doStyleFBFirstFloor1
+        });
+        layerOrder[layerOrder.length] = json_FBFirstFloor1JSON;
+        bounds_group.addLayer(json_FBFirstFloor1JSON);
+        initialOrder[initialOrder.length] = json_FBFirstFloor1JSON;
+        feature_group.addLayer(json_FBFirstFloor1JSON);
+        function pop_FBSecondFloor2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleFBSecondFloor2(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">OBJECTID_1</th><td>' + (feature.properties['OBJECTID_1'] !== null ? Autolinker.link(String(feature.properties['OBJECTID_1'])) : '') + '</td></tr><tr><th scope="row">SPACEID</th><td>' + (feature.properties['SPACEID'] !== null ? Autolinker.link(String(feature.properties['SPACEID'])) : '') + '</td></tr><tr><th scope="row">FLOORKEY</th><td>' + (feature.properties['FLOORKEY'] !== null ? Autolinker.link(String(feature.properties['FLOORKEY'])) : '') + '</td></tr><tr><th scope="row">BUILDING</th><td>' + (feature.properties['BUILDING'] !== null ? Autolinker.link(String(feature.properties['BUILDING'])) : '') + '</td></tr><tr><th scope="row">FLOOR</th><td>' + (feature.properties['FLOOR'] !== null ? Autolinker.link(String(feature.properties['FLOOR'])) : '') + '</td></tr><tr><th scope="row">DESCRIP</th><td>' + (feature.properties['DESCRIP'] !== null ? Autolinker.link(String(feature.properties['DESCRIP'])) : '') + '</td></tr><tr><th scope="row">SPACETYPE</th><td>' + (feature.properties['SPACETYPE'] !== null ? Autolinker.link(String(feature.properties['SPACETYPE'])) : '') + '</td></tr><tr><th scope="row">ACCESSTYPE</th><td>' + (feature.properties['ACCESSTYPE'] !== null ? Autolinker.link(String(feature.properties['ACCESSTYPE'])) : '') + '</td></tr><tr><th scope="row">BASEELEV</th><td>' + (feature.properties['BASEELEV'] !== null ? Autolinker.link(String(feature.properties['BASEELEV'])) : '') + '</td></tr><tr><th scope="row">FLOORAREA</th><td>' + (feature.properties['FLOORAREA'] !== null ? Autolinker.link(String(feature.properties['FLOORAREA'])) : '') + '</td></tr><tr><th scope="row">LASTUPDATE</th><td>' + (feature.properties['LASTUPDATE'] !== null ? Autolinker.link(String(feature.properties['LASTUPDATE'])) : '') + '</td></tr><tr><th scope="row">RoomNo</th><td>' + (feature.properties['RoomNo'] !== null ? Autolinker.link(String(feature.properties['RoomNo'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">Link</th><td>' + (feature.properties['Link'] !== null ? Autolinker.link(String(feature.properties['Link'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleFBSecondFloor2(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#40a1ce',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_FBSecondFloor2JSON = new L.geoJson(json_FBSecondFloor2, {
+            onEachFeature: pop_FBSecondFloor2,
+            style: doStyleFBSecondFloor2
+        });
+        layerOrder[layerOrder.length] = json_FBSecondFloor2JSON;
+        bounds_group.addLayer(json_FBSecondFloor2JSON);
+        initialOrder[initialOrder.length] = json_FBSecondFloor2JSON;
+        feature_group.addLayer(json_FBSecondFloor2JSON);
+        function pop_FBUtilities3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleFBUtilities3(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row"></th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleFBUtilities3() {
+            return {
+                radius: 2.0,
+                fillColor: '#8107cc',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerFBUtilities3(feature, latlng) {
+            //return L.circleMarker(latlng, doStyleFBUtilities3())
+            return L.circleMarker(latlng, doStyleFBUtilities3()).bindLabel(feature.properties['Name'], {noHide:true, className: 'labelutil'})
+        }
+        var json_FBUtilities3JSON = new L.geoJson(json_FBUtilities3, {
+            onEachFeature: pop_FBUtilities3, 
+            pointToLayer: doPointToLayerFBUtilities3
+            });
+        layerOrder[layerOrder.length] = json_FBUtilities3JSON;
+
+        bounds_group.addLayer(json_FBUtilities3JSON);
+        initialOrder[initialOrder.length] = json_FBUtilities3JSON;
+        feature_group.addLayer(json_FBUtilities3JSON);
+        function pop_All4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleAll4(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">OBJECTID_1</th><td>' + (feature.properties['OBJECTID_1'] !== null ? Autolinker.link(String(feature.properties['OBJECTID_1'])) : '') + '</td></tr><tr><th scope="row">SPACEID</th><td>' + (feature.properties['SPACEID'] !== null ? Autolinker.link(String(feature.properties['SPACEID'])) : '') + '</td></tr><tr><th scope="row">FLOORKEY</th><td>' + (feature.properties['FLOORKEY'] !== null ? Autolinker.link(String(feature.properties['FLOORKEY'])) : '') + '</td></tr><tr><th scope="row">BUILDING</th><td>' + (feature.properties['BUILDING'] !== null ? Autolinker.link(String(feature.properties['BUILDING'])) : '') + '</td></tr><tr><th scope="row">FLOOR</th><td>' + (feature.properties['FLOOR'] !== null ? Autolinker.link(String(feature.properties['FLOOR'])) : '') + '</td></tr><tr><th scope="row">SECTION</th><td>' + (feature.properties['SECTION'] !== null ? Autolinker.link(String(feature.properties['SECTION'])) : '') + '</td></tr><tr><th scope="row">DESCRIP</th><td>' + (feature.properties['DESCRIP'] !== null ? Autolinker.link(String(feature.properties['DESCRIP'])) : '') + '</td></tr><tr><th scope="row">SPACETYPE</th><td>' + (feature.properties['SPACETYPE'] !== null ? Autolinker.link(String(feature.properties['SPACETYPE'])) : '') + '</td></tr><tr><th scope="row">ACCESSTYPE</th><td>' + (feature.properties['ACCESSTYPE'] !== null ? Autolinker.link(String(feature.properties['ACCESSTYPE'])) : '') + '</td></tr><tr><th scope="row">CEILINGHEI</th><td>' + (feature.properties['CEILINGHEI'] !== null ? Autolinker.link(String(feature.properties['CEILINGHEI'])) : '') + '</td></tr><tr><th scope="row">BASEELEV</th><td>' + (feature.properties['BASEELEV'] !== null ? Autolinker.link(String(feature.properties['BASEELEV'])) : '') + '</td></tr><tr><th scope="row">FLOORAREA</th><td>' + (feature.properties['FLOORAREA'] !== null ? Autolinker.link(String(feature.properties['FLOORAREA'])) : '') + '</td></tr><tr><th scope="row">LASTUPDATE</th><td>' + (feature.properties['LASTUPDATE'] !== null ? Autolinker.link(String(feature.properties['LASTUPDATE'])) : '') + '</td></tr><tr><th scope="row">LASTEDITOR</th><td>' + (feature.properties['LASTEDITOR'] !== null ? Autolinker.link(String(feature.properties['LASTEDITOR'])) : '') + '</td></tr><tr><th scope="row">RoomNo</th><td>' + (feature.properties['RoomNo'] !== null ? Autolinker.link(String(feature.properties['RoomNo'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">Link</th><td>' + (feature.properties['Link'] !== null ? Autolinker.link(String(feature.properties['Link'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleAll4(feature) {
+            return {
+                weight: 1.04,
+                color: '#d6d6e1',
+                fillColor: '#000000',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 0.0
+            };
+        }
+        var json_All4JSON = new L.geoJson(json_All4, {
+            onEachFeature: pop_All4,
+            style: doStyleAll4
+        });
+        layerOrder[layerOrder.length] = json_All4JSON;
+        bounds_group.addLayer(json_All4JSON);
+        initialOrder[initialOrder.length] = json_All4JSON;
+        feature_group.addLayer(json_All4JSON);
+        raster_group.addTo(map);
+        feature_group.addTo(map);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'': json_All4JSON,'<img src="legend/FBUtilities3.png" /> FB-Utilities': json_FBUtilities3JSON,'<img src="legend/FBSecondFloor2.png" /> FB-Second Floor': json_FBSecondFloor2JSON,'<img src="legend/FBFirstFloor1.png" /> FB-First Floor': json_FBFirstFloor1JSON,'<img src="legend/FBGroundFloor0.png" /> FB-Ground Floor': json_FBGroundFloor0JSON,},{collapsed:false}).addTo(map);
+        L.control.scale({options: {position: 'bottomleft', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}}).addTo(map);
+        stackLayers();
+        map.on('overlayadd', restackLayers);
+        // json_All4JSON.bringToBack();
+
+
+         var searchControl= new L.Control.Search({
+                container: 'sname',
+                layer: json_All4JSON,
+                propertyName: 'Name',
+                
+                textPlaceholder: 'Name or Initials',
+                initial: false,
+                collapsed: false,
+                markerLocation: true,
+                callTip: function(text, val) {
+              var type = 'Room '+val.layer.feature.properties.RoomNo+' '+val.layer.feature.properties.DESCRIP + ':'+val.layer.feature.properties.FLOORKEY ;
+              return '<a href="#" class="'+type+'">'+text+'('+type+')'+'</a>';
+            }
+              }) ;
+        map.addControl(searchControl);
+
+        var searchControl= new L.Control.Search({
+        container: 'sroom',
+        layer: json_All4JSON,
+        propertyName: 'RoomNo',
+        
+        textPlaceholder: 'Room Number',
+        initial: false,
+        collapsed: false,
+        markerLocation: true,
+        callTip: function(text, val) {
+      var type = val.layer.feature.properties.Name +' '+val.layer.feature.properties.DESCRIP + ':'+val.layer.feature.properties.FLOORKEY ;
+      return '<a href="#" class="'+type+'">'+text+'('+type+')'+'</a>';
+    }
+      }) ;
+      map.addControl(searchControl);
+
+        </script>
+    </body>
+</html>

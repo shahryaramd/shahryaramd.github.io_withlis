@@ -1,0 +1,1706 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <link rel="stylesheet" href="../src/leaflet-search.css" />
+    <link rel="stylesheet" type="text/css" href="qw2/css/qgis2web.css">
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
+
+    <link rel="stylesheet" href="Print/dist/easyPrint.css"/>
+   <link rel="stylesheet" href="mylocation/dist/L.Control.Locate.min.css" />
+   <link rel="stylesheet" href="mylocation/style.css" />
+   <link rel="stylesheet" href="legend/src/leaflet-panel-layers.css" />
+   <link rel="stylesheet" href="legend/icons.css" />
+   <link rel="stylesheet" href="sidebar/css/leaflet-sidebar.css" />
+   <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="qw2/css/label.css" />
+    <link rel="stylesheet" href="qw2/css/MarkerCluster.css" />
+    <link rel="stylesheet" href="qw2/css/MarkerCluster.Default.css" />
+    <!-- <link rel="stylesheet" href="http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.css" /> -->
+    <link rel="stylesheet" type="text/css" href="webgis.css">
+    <!--<link 
+        rel="stylesheet" 
+        href="http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.css"
+    />-->
+   
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js" type="text/javascript"></script>
+    <script src="../src/leaflet-search.js"></script>
+
+    
+    <!-- for qgis2web -->
+    <script src="qw2/js/OSMBuildings-Leaflet.js"></script>
+    <script src="qw2/js/leaflet-hash.js"></script>
+    <script src="qw2/js/label.js"></script>
+    <script src="qw2/js/Autolinker.min.js"></script>
+    <!-- <script src="http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.js"></script> -->
+    <script src="qw2/js/proj4.js"></script>
+    <script src="qw2/js/proj4leaflet.js"></script>
+    <script src="qw2/js/leaflet.markercluster.js"></script>
+<!-- /////////////// -->
+    <link rel="stylesheet" href=" Leaflet.MeasureControl-gh-pages/Leaflet.draw/dist/leaflet.draw.css" />
+    <link rel="stylesheet" href=" Leaflet.MeasureControl-gh-pages/leaflet.measurecontrol.css" />
+
+    <script type="text/javascript" src="myrouting.js"></script>
+
+    <script src=" Leaflet.MeasureControl-gh-pages/Leaflet.draw/dist/leaflet.draw.js"></script>
+
+    <script src=" Leaflet.MeasureControl-gh-pages/leaflet.measurecontrol.js"></script>
+
+    <link href='fullscr/leaflet.fullscreen.css' rel='stylesheet' />
+    <script src='fullscr/Leaflet.fullscreen.min.js'></script>
+    <script src="https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-map.js?key=aLnojtzcFJOuNAd6BxA3uz8pn7PHhrWv"></script>
+        <script src="https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-routing.js?key=aLnojtzcFJOuNAd6BxA3uz8pn7PHhrWv"></script>
+
+    <!---->
+    <title>IIT Kanpur WebGIS</title>
+  </head>
+  <body>
+    <!-- Data layers -->
+        <script src="qw2/data/json_Landuse2015any0.js"></script>
+        <script src="qw2/data/json_Academic1.js"></script>
+        <script src="qw2/data/json_Facilities2.js"></script>
+        <script src="qw2/data/json_Residential3.js"></script>
+        <script src="qw2/data/json_ShopsCanteens4.js"></script>
+        <script src="qw2/data/json_FitnessSports5.js"></script>
+        <script src="qw2/data/json_EventVenues6.js"></script>
+        <script src="qw2/data/json_Religious7.js"></script>
+        <script src="qw2/data/json_Parking8.js"></script>
+        <script src="qw2/data/json_HallWalkways9.js"></script>
+        <script src="qw2/data/json_ParksLawns10.js"></script>
+        <script src="qw2/data/json_Waterbody11.js"></script>
+        <script src="qw2/data/json_Security12.js"></script>
+        <script src="qw2/data/json_Unconstructed13.js"></script>
+        <script src="qw2/data/json_Roads14.js"></script>
+        <script src="qw2/data/json_Contours15.js"></script>
+        <script src="qw2/data/json_Landmarks16.js"></script>
+        <script src="qw2/data/json_IITKBoundary17.js"></script>
+        <script src="qw2/data/json_Merged18.js"></script>
+        <script src="qw2/data/json_Mergednew18.js"></script>
+    <!-- ////////////////// -->
+
+    <script src="Print/dist/leaflet.easyPrint.js"></script>
+    <script src="Print/dist/jQuery.print.js"></script>
+
+       <H1 style="padding-top:10px;padding-left:50px; font-family: 'Copperplate Gothic Light';
+  font-size: 30px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+  line-height: 26.4px;"> GEOGRAPHICAL INFORMATION SYSTEM</H1>
+       <img src="globe.ico" style=" position:fixed; height:100px;width:100px;left:780px;top:0px;">
+       <img src="iitk-logo.png" style="z-index:10000;height:80px;width:400px;position:fixed;top:10px;left:800px;">
+<!-- SIDEBAR/////////////// -->
+      <div id="sidebar" class="sidebar collapsed">
+              <!-- Nav tabs -->
+              <div class="sidebar-tabs">
+                  <ul role="tablist">
+                      <li><a href="#home" role="tab"><i class="fa fa-home"></i></a></li>
+                      <li><a href="#profile" role="tab"><i class="fa fa-search"></i></a></li>
+                      <li ><a href="#messages" role="tab"><i class="fa fa-location-arrow" aria-hidden="true"></i></a></li>
+                      <li ><a href="#shutdown" role="tab"><i class="fa fa-bell" aria-hidden="true"></i></i></a></li>
+                      <li ><a href="#seeshutdown" role="tab"><i class="fa fa-bell" aria-hidden="true"></i></i></a></li>
+                  </ul>
+
+                  <ul role="tablist">
+                      <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+                  </ul>
+              </div>
+
+              <!-- Tab panes -->
+              <div class="sidebar-content">
+                  <div class="sidebar-pane" id="home">
+                      <h1 class="sidebar-header">
+                          WELCOME
+                          <div class="sidebar-close"><i class="fa fa-caret-left"></i></div>
+                      </h1>
+
+                       <p> Welcome to Web GIS for IIT Kanpur.</p><br>
+                        <p> You can do the following operations from this portal</p>
+                        <ul>
+                          <li>Get coordinates of any point</li>
+                          <li>Measure perimeter</li>
+                          <li>Measure area</li>
+                          <li>Draw arbitrary polygons and measure them</li>
+                          <li>Search for a feature</li>
+                        </ul>
+
+                        <input type="button" class= "button-gm" onclick="map.setView([26.50943,80.23397], 15);" value="Reset View" />
+                  </div>
+
+                  <div class="sidebar-pane" id="profile">
+                      <h1 class="sidebar-header">Search<div class="sidebar-close"><i class="fa fa-caret-left"></i></div></h1>
+                    <!-- SEARCH STARTS HERE -->
+                    <div id="tabs_container">     
+                        <ul id="tabs">
+                            <li class="active"><a href="#tab1">Search All</a></li>
+                            <li><a class="icon_accept" href="#tab2">Search Specific</a></li>
+                            <!-- <li><a href="#tab3">Get position</a></li> -->
+                        </ul>
+                        </div>
+
+                        <div id="tabs_content_container">
+                          <div id="tab1" class="tab_content" style="display: block;">
+                                  <p> Search all buildings</p><br>
+                                  <div id="findbox_allbldg"></div>
+                                                
+                                  <input type="button" class= "button-gm" onclick="getcent(); return false;" value="Locate on Google Maps" />
+                                  <img src="gm.png" title="Locate on Google Maps" style="height:40px;width:40px;margin-left:20px;display:inline;position:fixed;">
+                                  
+                          </div>
+                          <div id="tab2" class="tab_content" >
+                           
+                            <p> Academic: </p>
+                              <div id="findbox_acad"></div>
+                              <p> Residential: </p>
+                              <div id="findbox_resid"></div>
+                              <div id="findbox_resid_house"></div>
+                              <div id="findbox_resid_hall"></div>
+                              <p>Facilities: </p>
+                              <div id="findbox_fac"></div>
+                              <div id="findbox_shops"></div>
+                             <div id="findbox_fit"></div>
+                              <div id="findbox_rel"></div>
+                              <p>Security</p>
+                               <div id="findbox_sec"></div>
+                          </div>
+                          <!-- <div id="tab3" class="tab_content">
+
+                            <button onclick="onMapClick(e)">Get coordinates</button>
+                              <script>
+                               
+                                function onMapClick(e) {
+                                var popup = L.popup()
+                                .setLatLng(e.latlng)
+                                .setContent("You clicked the map at " + e.latlng)
+                                .openOn(map);
+                              </script>
+                          </div> -->
+                        </div>
+                         <script type="text/javascript">
+                        $(document).ready(function(){
+                              //  When user clicks on tab, this code will be executed
+                              $("#tabs li").click(function() {
+                                  //  First remove class "active" from currently active tab
+                                  $("#tabs li").removeClass('active');
+                           
+                                  //  Now add class "active" to the selected/clicked tab
+                                  $(this).addClass("active");
+                           
+                                  //  Hide all tab content
+                                  $(".tab_content").hide();
+                           
+                                  //  Here we get the href value of the selected tab
+                                  var selected_tab = $(this).find("a").attr("href");
+                           
+                                  //  Show the selected tab content
+                                  $(selected_tab).fadeIn();
+                           
+                                  //  At the end, we add return false so that the click on the link is not executed
+                                  return false;
+                              });
+                          });
+                        </script>
+     
+                     <!--  <div id="findbox"></div>
+                      <div id="findbox2"></div>
+                      <div id="findbox3"></div> -->
+                  </div>
+
+                  <div class="sidebar-pane" id="messages">
+                      <h1 class="sidebar-header">Routing<div class="sidebar-close"><i class="fa fa-caret-left"></i></div></h1>
+                      <!-- <button id="findroute">Start Routing</button> -->
+                      <div id="findbox_from"></div>
+                      
+                      <input type="button" id="startbt" class= "button-0" onclick="document.getElementById('endbt').disabled=false;startloc(); return false;" value="Confirm Start" />
+
+                      <div id="findbox_to"></div>
+                      
+                       <input type="button" id="endbt" class= "button-0" onclick="document.getElementById('startbt').disabled=true;endloc(); return false;" value="Confirm End " />
+                       <script type="text/javascript">
+                         document.getElementById("endbt").disabled = true;
+                       </script>
+                      <p> <br></p>
+                      <!-- <input name="textbox1" id="textbox1" type="text" /> -->
+                      
+                     
+                      <button class="button-1" onclick="routingfunction(); return false;"><i class="fa fa-car"></i> Find Route</button>
+                      <button class="button-gm" id="button-gd" onclick="getdirn(); return false;"><i class="fa fa-google" aria-hidden="true"></i> Navigate on Google Maps</button>
+                      <!-- <img src="gm.png" title="View on Google Maps" style="z-index:10000;height:40px;width:40px;display:inline;margin-left:150px;margin-top:20px;"> -->
+
+                      <!-- <input type="button" class= "button-gm" id="button-gd" onclick="getdirn(); return false;" value="View on Google Maps" /> -->
+                      
+                      <div id='route-narrative' style="padding-top: 95px; color: #228B22; font-family:Arial, Helvetica, sans-serif">
+                      </div>
+                  
+                  </div>
+
+                  <div class="sidebar-pane" id="shutdown">
+                      <h1 class="sidebar-header">Shutdown Notifications<div class="sidebar-close"><i class="fa fa-caret-left"></i></div></h1>
+                        <p>Choose location for Shutdown</p>
+                        <div id="findbox_shut"></div>
+                        <form name="form1" > 
+                          <input type="button" id="addshut" class= "button-0" onclick="addshutplace(); return false;" value="  Add  " />
+                          
+                          <input type="button" id="delshut" class= "button-0" onclick="delshutplace(); return false;" value=" Delete" />
+                          <select name="listValue" id="listbox" multiple>
+                            <option value="empty">
+                          </select>
+
+                          <select id="shutselect">
+                          <option value="void">Select Shutdown Type</option>
+                          <option value="1">Electricity</option>
+                          <option value="2">Honey Beehives Removal</option>
+                          <option value="3">Water</option>
+                           <option value="4">Custom</option>
+                          </select>
+                          <input type="button" id="submshut" class= "button-0" onclick="submshutplace();" value="Submit Information" />
+                          <br><br>
+                          <div id="status"></div>
+
+                        </form>
+                        
+                        <!-- <button class="button-0" id="shuttype" onclick="selshuttype();" type="button"> Confirm </button> -->
+                  </div>
+
+
+                  <!-- SEE SHUTDOWN -->
+                  <div class="sidebar-pane" id="seeshutdown">
+                      <h1 class="sidebar-header">Know Shutdown Locations<div class="sidebar-close"><i class="fa fa-caret-left"></i></div></h1>
+                      <form>
+                      <select id="shutselectsee">
+                      <option value="void">Select Shutdown Type</option>
+                      <option value="1">Electricity</option>
+                      <option value="2">Honey Beehives Removal</option>
+                      <option value="3">Water</option>
+                       <option value="4">Custom</option>
+                      </select>
+                      <input type="button" id="seeshut" class= "button-0" onclick="seeshutplace();" value="See Locations" />
+                      <div id="getlayer"></div>
+                      </form>
+
+                  </div>
+
+                  <div class="sidebar-pane" id="settings">
+                      <h1 class="sidebar-header">Settings<div class="sidebar-close"><i class="fa fa-caret-left"></i></div></h1>
+
+                  </div>
+              </div>
+          </div>
+
+
+       <!-- /////////////// -->
+
+    <div id="map" class="sidebar-map"></div>
+    <div id="route-narrative"></div>
+    <script src="sidebar/js/leaflet-sidebar.js"></script>
+
+    <script src="legend/src/leaflet-panel-layers.js"></script>
+
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-geodesy/v0.1.0/leaflet-geodesy.js'></script>
+    <script src="mylocation/src/L.Control.Locate.js" ></script>
+   
+
+    <script type="text/javascript">
+    var highlightLayer;
+    function highlightFeature(e) {
+        highlightLayer = e.target;
+
+        if (e.target.feature.geometry.type === 'LineString') {
+          highlightLayer.setStyle({
+            color: '#fff00',
+          });
+        } else {
+          highlightLayer.setStyle({
+            fillColor: '#ffff00',
+            fillOpacity: 1
+          });
+        }
+        // highlightLayer.openPopup();  //don't popup on hover
+    }
+    var crs = new L.Proj.CRS('EPSG:32644', '+proj=utm +zone=44 +datum=WGS84 +units=m +no_defs', {
+            resolutions: [2800, 1400, 700, 350, 175, 84, 42, 21, 11.2, 5.6, 2.8, 1.4, 0.7, 0.35, 0.14, 0.07],
+        });
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+      var basemap = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+              maxZoom: 20,
+              subdomains:['mt0','mt1','mt2','mt3']
+          });
+      var map = L.map('map', 
+          { fullscreenControl: true,
+            // crs: crs,      //not loading basemap due to this
+            continuousWorld: false,
+            worldCopyJump: false, 
+            measureControl:false,
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).setView([26.50943,80.23397], 15);
+      // map.locate({setView: true, maxZoom: 16});
+      basemap.addTo(map);
+      var hash = new L.Hash(map);
+        var feature_group = new L.featureGroup([]);
+        var bounds_group = new L.featureGroup([]);
+        var raster_group = new L.LayerGroup([]);
+        var initialOrder = new Array();
+        var layerOrder = new Array();
+        function stackLayers() {
+            for (index = 0; index < initialOrder.length; index++) {
+                map.removeLayer(initialOrder[index]);
+                map.addLayer(initialOrder[index]);
+            }
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        function restackLayers() {
+            for (index = 0; index < layerOrder.length; index++) {
+                layerOrder[index].bringToFront();
+            }
+        }
+
+      
+      var sidebar = L.control.sidebar('sidebar').addTo(map);
+      // add location control to global name space for testing only
+      // on a production site, omit the "lc = "!
+      lc = L.control.locate({
+          follow: true,
+          strings: {
+              title: "Show me where I am, yo!"
+          }
+      }).addTo(map);
+
+      map.on('startfollowing', function() {
+          map.on('dragstart', lc._stopFollowing, lc);
+      }).on('stopfollowing', function() {
+          map.off('dragstart', lc._stopFollowing, lc);
+      });
+
+      // var circle = L.circle([51.508, -0.11], 500, {
+      // color: 'red',
+      // fillColor: '#f03',
+      // fillOpacity: 0.5}).addTo(map);
+      // circle.bindPopup("Well Done, 786!");
+      
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///*********************************************************************************************///      
+///******************************************LAYERS*********************************************///      
+///*********************************************************************************************///      
+///*********************************************************************************************///            
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+       function pop_Landuse2015any0(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleLanduse2015any0(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">type</th><td>' + (feature.properties['type'] !== null ? Autolinker.link(String(feature.properties['type'])) : '') + '</td></tr><tr><th scope="row">use</th><td>' + (feature.properties['use'] !== null ? Autolinker.link(String(feature.properties['use'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleLanduse2015any0(feature) {
+      switch (feature.properties.type) {
+                case 'BUILT UP':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#f1f4c7',
+                    color: '#afb38a',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '1.0',
+                    fillOpacity: '1.0',
+                };
+                break;
+
+                case 'FOOTPATH':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#942033',
+                    color: '#afb38a',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '1.0',
+                    fillOpacity: '1.0',
+                };
+                break;
+
+                case 'OPEN SPACES':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#badd69',
+                    color: '#809848',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '1.0',
+                    fillOpacity: '1.0',
+                };
+                break;
+
+                case 'PARKWAYS':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#ffffbf',
+                    color: '#000000',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '1.0',
+                    fillOpacity: '1.0',
+                };
+                break;
+
+                case 'ROAD EDGE':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#b1b7b6',
+                    color: '#000000',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '1.0',
+                    fillOpacity: '1.0',
+                };
+                break;
+
+                case 'WATER BODY':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#3288bd',
+                    color: '#000000',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '1.0',
+                    fillOpacity: '1.0',
+                };
+                break;
+
+                case 'STADIUM':
+                    return {
+                    weight: '1.04',
+                    fillColor: '#badd69',
+                    color: '#809848',
+                    dashArray: '',
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    opacity: '1.0',
+                    fillOpacity: '1.0',
+                };
+                break;
+
+            }
+        }
+        var json_Landuse2015any0JSON = new L.geoJson(json_Landuse2015any0, {
+            onEachFeature: pop_Landuse2015any0,
+            style: doStyleLanduse2015any0
+        });
+        layerOrder[layerOrder.length] = json_Landuse2015any0JSON;
+        bounds_group.addLayer(json_Landuse2015any0JSON);
+        initialOrder[initialOrder.length] = json_Landuse2015any0JSON;
+        feature_group.addLayer(json_Landuse2015any0JSON);
+        function pop_Academic1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleAcademic1(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">Department</th><td>' + (feature.properties['Department'] !== null ? Autolinker.link(String(feature.properties['Department'])) : '') + '</td></tr><tr><th scope="row">USE</th><td>' + (feature.properties['USE'] !== null ? Autolinker.link(String(feature.properties['USE'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Floors</th><td>' + (feature.properties['Floors'] !== null ? Autolinker.link(String(feature.properties['Floors'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">Road_ID</th><td>' + (feature.properties['Road_ID'] !== null ? Autolinker.link(String(feature.properties['Road_ID'])) : '') + '</td></tr><tr><th scope="row">NameUse</th><td>' + (feature.properties['NameUse'] !== null ? Autolinker.link(String(feature.properties['NameUse'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleAcademic1(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#f60511',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_Academic1JSON = new L.geoJson(json_Academic1, {
+            onEachFeature: pop_Academic1,
+            style: doStyleAcademic1
+        });
+        layerOrder[layerOrder.length] = json_Academic1JSON;
+        bounds_group.addLayer(json_Academic1JSON);
+        initialOrder[initialOrder.length] = json_Academic1JSON;
+        feature_group.addLayer(json_Academic1JSON);
+        function pop_Facilities2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleFacilities2(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">USE</th><td>' + (feature.properties['USE'] !== null ? Autolinker.link(String(feature.properties['USE'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Floors</th><td>' + (feature.properties['Floors'] !== null ? Autolinker.link(String(feature.properties['Floors'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">RD_ID</th><td>' + (feature.properties['RD_ID'] !== null ? Autolinker.link(String(feature.properties['RD_ID'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleFacilities2(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#6af1c4',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_Facilities2JSON = new L.geoJson(json_Facilities2, {
+            onEachFeature: pop_Facilities2,
+            style: doStyleFacilities2
+        });
+        layerOrder[layerOrder.length] = json_Facilities2JSON;
+        bounds_group.addLayer(json_Facilities2JSON);
+        initialOrder[initialOrder.length] = json_Facilities2JSON;
+        feature_group.addLayer(json_Facilities2JSON);
+        function pop_Residential3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleResidential3(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Address2</th><td>' + (feature.properties['Address2'] !== null ? Autolinker.link(String(feature.properties['Address2'])) : '') + '</td></tr><tr><th scope="row">Floors</th><td>' + (feature.properties['Floors'] !== null ? Autolinker.link(String(feature.properties['Floors'])) : '') + '</td></tr><tr><th scope="row">BLOCK</th><td>' + (feature.properties['BLOCK'] !== null ? Autolinker.link(String(feature.properties['BLOCK'])) : '') + '</td></tr><tr><th scope="row">Road_ID</th><td>' + (feature.properties['Road_ID'] !== null ? Autolinker.link(String(feature.properties['Road_ID'])) : '') + '</td></tr><tr><th scope="row">ConstYr</th><td>' + (feature.properties['ConstYr'] !== null ? Autolinker.link(String(feature.properties['ConstYr'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">HouseName</th><td>' + (feature.properties['HouseName'] !== null ? Autolinker.link(String(feature.properties['HouseName'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleResidential3(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#ee22d7',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 0.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_Residential3JSON = new L.geoJson(json_Residential3, {
+            onEachFeature: pop_Residential3,
+            style: doStyleResidential3
+        });
+        layerOrder[layerOrder.length] = json_Residential3JSON;
+        bounds_group.addLayer(json_Residential3JSON);
+        initialOrder[initialOrder.length] = json_Residential3JSON;
+        feature_group.addLayer(json_Residential3JSON);
+        function pop_ShopsCanteens4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleShopsCanteens4(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">USE</th><td>' + (feature.properties['USE'] !== null ? Autolinker.link(String(feature.properties['USE'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">RD_ID</th><td>' + (feature.properties['RD_ID'] !== null ? Autolinker.link(String(feature.properties['RD_ID'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleShopsCanteens4(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#ff6e50',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_ShopsCanteens4JSON = new L.geoJson(json_ShopsCanteens4, {
+            onEachFeature: pop_ShopsCanteens4,
+            style: doStyleShopsCanteens4
+        });
+        layerOrder[layerOrder.length] = json_ShopsCanteens4JSON;
+        bounds_group.addLayer(json_ShopsCanteens4JSON);
+        initialOrder[initialOrder.length] = json_ShopsCanteens4JSON;
+        feature_group.addLayer(json_ShopsCanteens4JSON);
+        function pop_FitnessSports5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleFitnessSports5(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Floors</th><td>' + (feature.properties['Floors'] !== null ? Autolinker.link(String(feature.properties['Floors'])) : '') + '</td></tr><tr><th scope="row">AREA</th><td>' + (feature.properties['AREA'] !== null ? Autolinker.link(String(feature.properties['AREA'])) : '') + '</td></tr><tr><th scope="row">Road_ID</th><td>' + (feature.properties['Road_ID'] !== null ? Autolinker.link(String(feature.properties['Road_ID'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">ConstYr</th><td>' + (feature.properties['ConstYr'] !== null ? Autolinker.link(String(feature.properties['ConstYr'])) : '') + '</td></tr><tr><th scope="row">LastUPD</th><td>' + (feature.properties['LastUPD'] !== null ? Autolinker.link(String(feature.properties['LastUPD'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleFitnessSports5(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#127036',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_FitnessSports5JSON = new L.geoJson(json_FitnessSports5, {
+            onEachFeature: pop_FitnessSports5,
+            style: doStyleFitnessSports5
+        });
+        layerOrder[layerOrder.length] = json_FitnessSports5JSON;
+        bounds_group.addLayer(json_FitnessSports5JSON);
+        initialOrder[initialOrder.length] = json_FitnessSports5JSON;
+        feature_group.addLayer(json_FitnessSports5JSON);
+        function pop_EventVenues6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleEventVenues6(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">USE</th><td>' + (feature.properties['USE'] !== null ? Autolinker.link(String(feature.properties['USE'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">RD_ID</th><td>' + (feature.properties['RD_ID'] !== null ? Autolinker.link(String(feature.properties['RD_ID'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleEventVenues6(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#c94fff',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_EventVenues6JSON = new L.geoJson(json_EventVenues6, {
+            onEachFeature: pop_EventVenues6,
+            style: doStyleEventVenues6
+        });
+        layerOrder[layerOrder.length] = json_EventVenues6JSON;
+        bounds_group.addLayer(json_EventVenues6JSON);
+        initialOrder[initialOrder.length] = json_EventVenues6JSON;
+        feature_group.addLayer(json_EventVenues6JSON);
+        function pop_Religious7(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleReligious7(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Floors</th><td>' + (feature.properties['Floors'] !== null ? Autolinker.link(String(feature.properties['Floors'])) : '') + '</td></tr><tr><th scope="row">AREA</th><td>' + (feature.properties['AREA'] !== null ? Autolinker.link(String(feature.properties['AREA'])) : '') + '</td></tr><tr><th scope="row">Road_ID</th><td>' + (feature.properties['Road_ID'] !== null ? Autolinker.link(String(feature.properties['Road_ID'])) : '') + '</td></tr><tr><th scope="row">ConstYr</th><td>' + (feature.properties['ConstYr'] !== null ? Autolinker.link(String(feature.properties['ConstYr'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">LastUPD</th><td>' + (feature.properties['LastUPD'] !== null ? Autolinker.link(String(feature.properties['LastUPD'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleReligious7(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#0fb79e',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_Religious7JSON = new L.geoJson(json_Religious7, {
+            onEachFeature: pop_Religious7,
+            style: doStyleReligious7
+        });
+        layerOrder[layerOrder.length] = json_Religious7JSON;
+        bounds_group.addLayer(json_Religious7JSON);
+        initialOrder[initialOrder.length] = json_Religious7JSON;
+        feature_group.addLayer(json_Religious7JSON);
+        function pop_Parking8(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleParking8(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Road_ID</th><td>' + (feature.properties['Road_ID'] !== null ? Autolinker.link(String(feature.properties['Road_ID'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">NatureAddr</th><td>' + (feature.properties['NatureAddr'] !== null ? Autolinker.link(String(feature.properties['NatureAddr'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleParking8(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#da7f24',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_Parking8JSON = new L.geoJson(json_Parking8, {
+            onEachFeature: pop_Parking8,
+            style: doStyleParking8
+        });
+        layerOrder[layerOrder.length] = json_Parking8JSON;
+        bounds_group.addLayer(json_Parking8JSON);
+        initialOrder[initialOrder.length] = json_Parking8JSON;
+        feature_group.addLayer(json_Parking8JSON);
+        function pop_HallWalkways9(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleHallWalkways9(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">Location</th><td>' + (feature.properties['Location'] !== null ? Autolinker.link(String(feature.properties['Location'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleHallWalkways9(feature) {
+            return {
+                weight: 1.04,
+                color: '#809848',
+                fillColor: '#ab2929',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_HallWalkways9JSON = new L.geoJson(json_HallWalkways9, {
+            onEachFeature: pop_HallWalkways9,
+            style: doStyleHallWalkways9
+        });
+        layerOrder[layerOrder.length] = json_HallWalkways9JSON;
+        bounds_group.addLayer(json_HallWalkways9JSON);
+        initialOrder[initialOrder.length] = json_HallWalkways9JSON;
+        feature_group.addLayer(json_HallWalkways9JSON);
+        function pop_ParksLawns10(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleParksLawns10(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">Id</th><td>' + (feature.properties['Id'] !== null ? Autolinker.link(String(feature.properties['Id'])) : '') + '</td></tr><tr><th scope="row">NATURE</th><td>' + (feature.properties['NATURE'] !== null ? Autolinker.link(String(feature.properties['NATURE'])) : '') + '</td></tr><tr><th scope="row">Shape_Length</th><td>' + (feature.properties['Shape_Length'] !== null ? Autolinker.link(String(feature.properties['Shape_Length'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleParksLawns10(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#14e282',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_ParksLawns10JSON = new L.geoJson(json_ParksLawns10, {
+            onEachFeature: pop_ParksLawns10,
+            style: doStyleParksLawns10
+        });
+        layerOrder[layerOrder.length] = json_ParksLawns10JSON;
+        bounds_group.addLayer(json_ParksLawns10JSON);
+        initialOrder[initialOrder.length] = json_ParksLawns10JSON;
+        feature_group.addLayer(json_ParksLawns10JSON);
+        function pop_Waterbody11(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleWaterbody11(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">Id</th><td>' + (feature.properties['Id'] !== null ? Autolinker.link(String(feature.properties['Id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">Shape_Length</th><td>' + (feature.properties['Shape_Length'] !== null ? Autolinker.link(String(feature.properties['Shape_Length'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleWaterbody11(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#1a27e4',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_Waterbody11JSON = new L.geoJson(json_Waterbody11, {
+            onEachFeature: pop_Waterbody11,
+            style: doStyleWaterbody11
+        });
+        layerOrder[layerOrder.length] = json_Waterbody11JSON;
+        bounds_group.addLayer(json_Waterbody11JSON);
+        initialOrder[initialOrder.length] = json_Waterbody11JSON;
+        feature_group.addLayer(json_Waterbody11JSON);
+        function pop_Security12(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleSecurity12(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">USE</th><td>' + (feature.properties['USE'] !== null ? Autolinker.link(String(feature.properties['USE'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Floors</th><td>' + (feature.properties['Floors'] !== null ? Autolinker.link(String(feature.properties['Floors'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">RD_ID</th><td>' + (feature.properties['RD_ID'] !== null ? Autolinker.link(String(feature.properties['RD_ID'])) : '') + '</td></tr><tr><th scope="row">ConstYr</th><td>' + (feature.properties['ConstYr'] !== null ? Autolinker.link(String(feature.properties['ConstYr'])) : '') + '</td></tr><tr><th scope="row">LastUPD</th><td>' + (feature.properties['LastUPD'] !== null ? Autolinker.link(String(feature.properties['LastUPD'])) : '') + '</td></tr><tr><th scope="row">NameUse</th><td>' + (feature.properties['NameUse'] !== null ? Autolinker.link(String(feature.properties['NameUse'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleSecurity12(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#531532',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_Security12JSON = new L.geoJson(json_Security12, {
+            onEachFeature: pop_Security12,
+            style: doStyleSecurity12
+        });
+        layerOrder[layerOrder.length] = json_Security12JSON;
+        bounds_group.addLayer(json_Security12JSON);
+        initialOrder[initialOrder.length] = json_Security12JSON;
+        feature_group.addLayer(json_Security12JSON);
+        function pop_Unconstructed13(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleUnconstructed13(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">About</th><td>' + (feature.properties['About'] !== null ? Autolinker.link(String(feature.properties['About'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleUnconstructed13(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#a5a5a5',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 1.0
+            };
+        }
+        var json_Unconstructed13JSON = new L.geoJson(json_Unconstructed13, {
+            onEachFeature: pop_Unconstructed13,
+            style: doStyleUnconstructed13
+        });
+        layerOrder[layerOrder.length] = json_Unconstructed13JSON;
+        bounds_group.addLayer(json_Unconstructed13JSON);
+        initialOrder[initialOrder.length] = json_Unconstructed13JSON;
+        feature_group.addLayer(json_Unconstructed13JSON);
+        function pop_Roads14(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleRoads14(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">Id</th><td>' + (feature.properties['Id'] !== null ? Autolinker.link(String(feature.properties['Id'])) : '') + '</td></tr><tr><th scope="row">type</th><td>' + (feature.properties['type'] !== null ? Autolinker.link(String(feature.properties['type'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">Surface</th><td>' + (feature.properties['Surface'] !== null ? Autolinker.link(String(feature.properties['Surface'])) : '') + '</td></tr><tr><th scope="row">TEMPNAME</th><td>' + (feature.properties['TEMPNAME'] !== null ? Autolinker.link(String(feature.properties['TEMPNAME'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleRoads14(feature) {
+            return {
+                weight: 5.04,
+                color: '#ffffff',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0
+            };
+        }
+        var json_Roads14JSON = new L.geoJson(json_Roads14, {
+            onEachFeature: pop_Roads14,
+            style: doStyleRoads14
+        });
+        layerOrder[layerOrder.length] = json_Roads14JSON;
+        bounds_group.addLayer(json_Roads14JSON);
+        initialOrder[initialOrder.length] = json_Roads14JSON;
+        feature_group.addLayer(json_Roads14JSON);
+        function pop_Contours15(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleContours15(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">CONTOUR</th><td>' + (feature.properties['CONTOUR'] !== null ? Autolinker.link(String(feature.properties['CONTOUR'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleContours15(feature) {
+            return {
+                weight: 1.04,
+                color: '#c09363',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0
+            };
+        }
+        var json_Contours15JSON = new L.geoJson(json_Contours15, {
+            onEachFeature: pop_Contours15,
+            style: doStyleContours15
+        });
+        layerOrder[layerOrder.length] = json_Contours15JSON;
+        bounds_group.addLayer(json_Contours15JSON);
+        function pop_Landmarks16(feature, layer) {
+
+            layer.on({
+              // alert('inside pop_landmarks');
+                mouseout: function(e) {
+                    layer.setStyle(doStyleLandmarks16(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">name</th><td>' + (feature.properties['name'] !== null ? Autolinker.link(String(feature.properties['name'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleLandmarks16() {
+            return {
+                radius: 2.4,
+                fillColor: '#5c2b5c',
+                color: '#000000',
+                weight: 0.0,
+                opacity: 1.0,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 1.0
+            }
+        }
+        function doPointToLayerLandmarks16(feature, latlng) {
+            return L.circleMarker(latlng, doStyleLandmarks16())
+        }
+        var json_Landmarks16JSON = new L.geoJson(json_Landmarks16, {
+            onEachFeature: pop_Landmarks16, 
+            pointToLayer: doPointToLayerLandmarks16
+            });
+        layerOrder[layerOrder.length] = json_Landmarks16JSON;
+
+        bounds_group.addLayer(json_Landmarks16JSON);
+        initialOrder[initialOrder.length] = json_Landmarks16JSON;
+        feature_group.addLayer(json_Landmarks16JSON);
+        function pop_IITKBoundary17(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleIITKBoundary17(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function doStyleIITKBoundary17(feature) {
+            return {
+                weight: 5.04,
+                color: '#721515',
+                fillColor: '#000000',
+                dashArray: '12.6,6.3,1.26,6.3',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 1.0,
+                fillOpacity: 0.0
+            };
+        }
+        var json_IITKBoundary17JSON = new L.geoJson(json_IITKBoundary17, {
+            onEachFeature: pop_IITKBoundary17,
+            style: doStyleIITKBoundary17
+        });
+        layerOrder[layerOrder.length] = json_IITKBoundary17JSON;
+        bounds_group.addLayer(json_IITKBoundary17JSON);
+
+        function pop_Mergednew18(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleMergednew18(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table><tr><th scope="row">id</th><td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><th scope="row">Name</th><td>' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td></tr><tr><th scope="row">ShortName</th><td>' + (feature.properties['ShortName'] !== null ? Autolinker.link(String(feature.properties['ShortName'])) : '') + '</td></tr><tr><th scope="row">Type</th><td>' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Nature</th><td>' + (feature.properties['Nature'] !== null ? Autolinker.link(String(feature.properties['Nature'])) : '') + '</td></tr><tr><th scope="row">Department</th><td>' + (feature.properties['Department'] !== null ? Autolinker.link(String(feature.properties['Department'])) : '') + '</td></tr><tr><th scope="row">USE</th><td>' + (feature.properties['USE'] !== null ? Autolinker.link(String(feature.properties['USE'])) : '') + '</td></tr><tr><th scope="row">Address1</th><td>' + (feature.properties['Address1'] !== null ? Autolinker.link(String(feature.properties['Address1'])) : '') + '</td></tr><tr><th scope="row">Floors</th><td>' + (feature.properties['Floors'] !== null ? Autolinker.link(String(feature.properties['Floors'])) : '') + '</td></tr><tr><th scope="row">Shape_Leng</th><td>' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td></tr><tr><th scope="row">Shape_Area</th><td>' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td></tr><tr><th scope="row">Road_ID</th><td>' + (feature.properties['Road_ID'] !== null ? Autolinker.link(String(feature.properties['Road_ID'])) : '') + '</td></tr><tr><th scope="row">Address2</th><td>' + (feature.properties['Address2'] !== null ? Autolinker.link(String(feature.properties['Address2'])) : '') + '</td></tr><tr><th scope="row">BLOCK</th><td>' + (feature.properties['BLOCK'] !== null ? Autolinker.link(String(feature.properties['BLOCK'])) : '') + '</td></tr><tr><th scope="row">HouseName</th><td>' + (feature.properties['HouseName'] !== null ? Autolinker.link(String(feature.properties['HouseName'])) : '') + '</td></tr><tr><th scope="row">About</th><td>' + (feature.properties['About'] !== null ? Autolinker.link(String(feature.properties['About'])) : '') + '</td></tr><tr><th scope="row">Combined</th><td>' + (feature.properties['Combined'] !== null ? Autolinker.link(String(feature.properties['Combined'])) : '') + '</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleMergednew18(feature) {
+            return {
+                weight: 1.04,
+                color: '#000000',
+                fillColor: '#e1e1e1',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                opacity: 0.0,
+                fillOpacity: 0.258823529412
+            };
+        }
+        var json_Mergednew18JSON = new L.geoJson(json_Mergednew18, {
+            onEachFeature: pop_Mergednew18,
+            style: doStyleMergednew18
+        });
+        layerOrder[layerOrder.length] = json_Mergednew18JSON;
+        bounds_group.addLayer(json_Mergednew18JSON);
+        initialOrder[initialOrder.length] = json_Mergednew18JSON;
+        feature_group.addLayer(json_Mergednew18JSON);
+////////////////LAYER ends (from qgis2web)///////////////
+  
+        raster_group.addTo(map);
+        feature_group.addTo(map);
+
+///OSM geocoder//////        
+        // var osmGeocoder = new L.Control.OSMGeocoder({
+        //     collapsed: true,
+        //     position: 'bottomright',
+        //     text: 'Search World',
+        // });
+        // osmGeocoder.addTo(map);
+
+//// TOGGLE LAYERS //////////////////////////
+//       L.control.layers({
+//           'Google Streets' : L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+//               maxZoom: 20,
+//               subdomains:['mt0','mt1','mt2','mt3']
+//           }),
+       
+//         'Google Satellite' : L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+//     maxZoom: 20,
+//     subdomains:['mt0','mt1','mt2','mt3']
+// }),
+//         'Google Terrain' : L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+//     maxZoom: 20,
+//     subdomains:['mt0','mt1','mt2','mt3']
+// }),
+//         'OpenStreetMap': L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'),
+          
+//           'Topographic Map' : L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}')
+          
+//       }).addTo(map);
+
+      ///// of qgis2web//////////
+        var baseMaps = {'Google Streets' : L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+              maxZoom: 20,
+              subdomains:['mt0','mt1','mt2','mt3']
+          }),
+        
+        'Google Satellite' : L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+}),
+        'Google Terrain' : L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+}),
+        'OpenStreetMap': L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'),
+          
+          'Topographic Map' : L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}')};
+        L.control.layers(baseMaps,{'<img src="qw2/legend/Merged18.png" /> Merged': json_Mergednew18JSON,
+          // '<img src="qw2/legend/IITKBoundary17.png" /> IITK Boundary': json_IITKBoundary17JSON,
+          '<img src="qw2/legend/Landmarks16.png" /> Landmarks': json_Landmarks16JSON,'<img src="qw2/legend/Contours15.png" /> Contours': json_Contours15JSON,'<img src="qw2/legend/Roads14.png" /> Roads': json_Roads14JSON,'<img src="qw2/legend/Unconstructed13.png" /> Unconstructed': json_Unconstructed13JSON,'<img src="qw2/legend/Security12.png" /> Security': json_Security12JSON,'<img src="qw2/legend/Waterbody11.png" /> Waterbody': json_Waterbody11JSON,'<img src="qw2/legend/ParksLawns10.png" /> Parks/Lawns': json_ParksLawns10JSON,'<img src="qw2/legend/HallWalkways9.png" /> Hall Walkways': json_HallWalkways9JSON,'<img src="qw2/legend/Parking8.png" /> Parking': json_Parking8JSON,'<img src="qw2/legend/Religious7.png" /> Religious': json_Religious7JSON,'<img src="qw2/legend/EventVenues6.png" /> Event Venues': json_EventVenues6JSON,'<img src="qw2/legend/FitnessSports5.png" /> Fitness/Sports': json_FitnessSports5JSON,'<img src="qw2/legend/ShopsCanteens4.png" /> Shops/Canteens': json_ShopsCanteens4JSON,'<img src="qw2/legend/Residential3.png" /> Residential': json_Residential3JSON,'<img src="qw2/legend/Facilities2.png" /> Facilities': json_Facilities2JSON,'<img src="qw2/legend/Academic1.png" /> Academic': json_Academic1JSON,'Landuse <br />': json_Landuse2015any0JSON,},{collapsed:false, autoZIndex:true}).addTo(map);
+        
+        json_Mergednew18JSON.bringToBack();
+        json_Landuse2015any0JSON.bringToBack();
+
+//SEARCH TOOL //////////////////////////
+
+      
+      // currently json_Mergednew18JSON is the layer to search instead of all merged
+     
+   
+     var searchControl= new L.Control.Search({
+        container: 'findbox_allbldg',
+        layer: json_Mergednew18JSON,
+        propertyName: 'Combined',
+        
+        textPlaceholder: 'Enter Any Name or Initials',
+        initial: false,
+        collapsed: false,
+        markerLocation: true,
+        callTip: function(text, val) {
+      var type = val.layer.feature.properties.Department;
+      return '<a href="#" class="'+type+'">'+text+'('+type+')'+'</a>';
+    }
+      }) ;
+      map.addControl(searchControl);
+
+      var searchControl= new L.Control.Search({
+        container: 'findbox_acad',
+        layer: json_Academic1JSON,
+        propertyName: 'Name',
+        textPlaceholder: 'Enter Name/Department/Initials',
+        initial: false,
+        collapsed: false,
+        markerLocation: true
+      }) ;
+      map.addControl(searchControl);
+
+      var searchControl= new L.Control.Search({
+        container: 'findbox_resid',
+        layer: json_Residential3JSON,
+        propertyName: 'Name',
+        textPlaceholder: 'Enter Name/Initials',
+        initial: false,
+        collapsed: false,
+        markerLocation: true
+      }) ;
+      map.addControl(searchControl);
+
+      var searchControl= new L.Control.Search({
+        container: 'findbox_resid_house',
+        layer: json_Residential3JSON,
+        propertyName: 'HouseName',
+        textPlaceholder: '[OR] Search House Number',
+        initial: false,
+        collapsed: false,
+        markerLocation: true
+      }) ;
+      map.addControl(searchControl);
+
+      var searchControl= new L.Control.Search({
+        container: 'findbox_resid_hall',
+        layer: json_Residential3JSON,
+        propertyName: 'BLOCK',
+        textPlaceholder: '[OR] Search Hall Block',
+        initial: false,
+        collapsed: false,
+        markerLocation: true
+      }) ;
+      map.addControl(searchControl);
+
+      var searchControl= new L.Control.Search({
+        container: 'findbox_fac',
+        layer: json_Facilities2JSON,
+        propertyName: 'Name',
+        textPlaceholder: 'Enter Name/Initials',
+        initial: false,
+        collapsed: false,
+        markerLocation: true
+      }) ;
+      map.addControl(searchControl);
+      var searchControl= new L.Control.Search({
+        container: 'findbox_shops',
+        layer: json_ShopsCanteens4JSON,
+        propertyName: 'Name',
+        textPlaceholder: '[OR] Search Shop Name/Initials',
+        initial: false,
+        collapsed: false,
+        markerLocation: true
+      }) ;
+      map.addControl(searchControl);
+
+      var searchControl= new L.Control.Search({
+        container: 'findbox_fit',
+        layer: json_ShopsCanteens4JSON,
+        propertyName: 'Name',
+        textPlaceholder: '[OR] Search Fitness/Sport Places',
+        initial: false,
+        collapsed: false,
+        markerLocation: true
+      }) ;
+      map.addControl(searchControl)
+      var searchControl= new L.Control.Search({
+        container: 'findbox_rel',
+        layer: json_Religious7JSON,
+        propertyName: 'Name',
+        textPlaceholder: '[OR] Search Religious Places',
+        initial: false,
+        collapsed: false,
+        markerLocation: true
+      }) ;
+      map.addControl(searchControl)
+
+      var searchControl= new L.Control.Search({
+        container: 'findbox_sec',
+        layer: json_Security12JSON,
+        propertyName: 'NameUse',
+        textPlaceholder: 'Search Security Checkpoints',
+        initial: false,
+        collapsed: false,
+        markerLocation: true
+      }) ;
+      map.addControl(searchControl)
+//////////////////////////////////////
+
+      ////See on GOOGLE MAPS////////////
+      var maplat;
+      var maplng;
+      function getcent(){
+          mapCenter = map.getCenter();
+    
+          var str=String(mapCenter);
+          mapcent = str.match(/[+-]?\d+(\.\d+)?/g); //     /\d+/g);
+          maplat = mapcent[0];
+          maplng = mapcent[1];
+          //alert(strcent[0]);
+          url='https://www.google.co.in/maps/place/'+maplat+'N+'+maplng+'E/@'+maplat+','+maplng+',17z';
+          window.open(url);
+          //return [startlat, startlng];
+      };
+
+      /// FOR ROUTING/////////////////
+     var startCenter;
+     var strcent;
+     var startlat;
+     var startlng;
+     var endCenter;
+     var endcent;
+     var endlat;
+     var endlng;
+      
+     var searchControl= new L.Control.Search({
+        container: 'findbox_from',
+        layer: json_Mergednew18JSON,
+        propertyName: 'Combined',
+        
+        textPlaceholder: 'Start',
+        initial: false,
+        collapsed: false,
+        markerLocation: false,
+        
+      }) ;
+      map.addControl(searchControl);
+      function startloc(){
+          startCenter = map.getCenter();
+    
+          var str=String(startCenter);
+          strcent = str.match(/[+-]?\d+(\.\d+)?/g); //     /\d+/g);
+          startlat = strcent[0];
+          startlng = strcent[1];
+          //alert(strcent[0]);
+
+          //return [startlat, startlng];
+      };
+
+       var searchControl= new L.Control.Search({
+          container: 'findbox_to',
+          layer: json_Mergednew18JSON,
+          propertyName: 'Combined',
+          
+          textPlaceholder: 'End',
+          initial: false,
+          collapsed: false,
+          markerLocation: false,
+          
+        }) ;
+        map.addControl(searchControl);
+
+      function endloc(){ 
+         endCenter = map.getCenter();
+         var str=String(endCenter);
+           endcent = str.match(/[+-]?\d+(\.\d+)?/g); //     /\d+/g);
+           endlat = endcent[0];
+           endlng = endcent[1];
+
+          // alert(endlat);
+          // alert(endlng);
+
+          // var endlat = endCenter.lat();
+          // var endlng = endCenter.lng();
+          //return [endlat, endlng];
+      };
+      
+
+                  
+      function routingfunction(){
+          // var startcoord=startloc();
+          // var endcoord=endloc();
+          // var startlat = startcoord[0];
+          // var startlng = startcoord[1];
+          
+          // var endlat = endcoord[0];
+          // var endlng = endcoord[1];
+          var dir;
+          dir = MQ.routing.directions()
+          .on('success', function(data) {
+            var legs = data.route.legs,
+                html = '',
+                maneuvers,
+                i;
+
+            if (legs && legs.length) {
+                maneuvers = legs[0].maneuvers;
+
+                for (i=0; i < maneuvers.length; i++) {
+                    html +=  '<i class="fa fa-space-shuttle"></i>';
+                    html += maneuvers[i].narrative + '<br>';
+                }
+
+                L.DomUtil.get('route-narrative').innerHTML = html;
+            }
+          });
+ 
+          dir.route({
+              locations: [
+                  { latLng: { lat: startlat, lng: startlng} },
+                   { latLng: { lat: endlat, lng: endlng} }
+              ]
+          });
+
+          // map.addLayer(MQ.routing.routeLayer({
+          //     directions: dir,
+          //     fitBounds: true
+          // }));
+
+          CustomRouteLayer = MQ.Routing.RouteLayer.extend({
+            
+          });
+          map.addLayer(new CustomRouteLayer({
+            directions: dir,
+            fitBounds: true,
+            draggable: true,
+            ribbonOptions: {
+              draggable: true,
+              ribbonDisplay: { color: '#8333FF', opacity: 1 },
+              widths: [13]
+            }
+          }));
+
+        };
+       
+
+// END SEARCH & ROUTING TOOL ----------------------
+
+//ROUTE ON GM
+function getdirn(){
+          url1='https://www.google.co.in/maps/dir/'+startlat+','+startlng+'/'+endlat+','+endlng+'/@'+startlat+','+startlng+',17z';
+          window.open(url1);
+          //return [startlat, startlng];
+      };
+
+// SHUTDOWN NOTIFICATIONS
+          var searchControl= new L.Control.Search({
+          container: 'findbox_shut',
+          layer: json_Mergednew18JSON,
+          propertyName: 'Combined',
+          
+          textPlaceholder: 'Enter Location',
+          initial: false,
+          collapsed: false,
+          markerLocation: true,
+          
+        }) ;
+        map.addControl(searchControl);
+
+//Adding and deleting from list box
+        var i=0;
+        function addshutplace(){
+          // alert(document.getElementsByName("searchbox").value);
+          var v = document.getElementsByName("searchbox").value;
+       // get the TextBox Value and assign it into the variable
+       AddOpt = new Option(v, v);
+       document.form1.listValue.options[i++] = AddOpt;
+       return true;
+    }
+
+      function delshutplace() {
+           var s = 1;
+           var Index;
+           if (document.form1.listValue.selectedIndex == -1) {
+              alert("Please select any item from the ListBox");
+              return true;
+           }
+           while (s > 0) {
+               Index = document.form1.listValue.selectedIndex;
+               if (Index >= 0) {
+                    document.form1.listValue.options[Index] = null;
+                     --i;
+               }
+               else
+                  s = 0;
+           }
+           return true;
+      }
+
+      var myLayer = {
+        "type": "FeatureCollection",
+        "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+        "features":[]
+      }
+      // myLayer.addData(geojsonFeature);
+      // shutfeature={};
+      function submshutplace () {
+        var list = document.getElementById('listbox');
+        // console.log(list.options)
+        
+        L.geoJson(json_Mergednew18, {
+            onEachFeature: checkMatch
+        });
+         
+      }
+
+      // title={};
+      
+      function checkMatch (feature) {
+        var list = document.getElementById('listbox');
+        for(var i = 0; i < list.options.length; ++i)
+          // title=list.options[i].value;
+        // console.log(i)
+          if (list.options[i].value==feature.properties.Combined){
+
+            // myLayer['features'].push(feature);
+            var myLayerString= JSON.stringify(feature);
+
+            var select = document.getElementById("shutselect");
+            var answer = select.options[select.selectedIndex].value;
+            var descr; 
+            switch (answer) {
+                      case '1':   descr='1';break;
+                      case '2':   descr='2';break;
+                      case '3':   descr='3';break;
+                      case '4':   descr='4';break;
+                      default :   descr='0';break;
+                  };
+             ////Posting to php using AJAX /////////////
+
+              // Create our XMLHttpRequest object
+              var hr = new XMLHttpRequest();
+              // Create some variables we need to send to our PHP file
+              var url = "postphp.php";
+              var vars = "description="+descr+"&shutdownlayer="+myLayerString;
+              hr.open("POST", url, true);
+              // Set content type header information for sending url encoded variables in the request
+              hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+              // Access the onreadystatechange event for the XMLHttpRequest object
+              hr.onreadystatechange = function() {
+                if(hr.readyState == 4 && hr.status == 200) {
+                  var return_data = hr.responseText;
+                document.getElementById("status").innerHTML = return_data;
+                // alert(return_data);
+                }
+              }
+              // Send the data to PHP now... and wait for response to update the status div
+              hr.send(vars); // Actually execute the request
+              document.getElementById("status").innerHTML = "processing...";
+
+              ////////DONE POSTING TO PHP////////////////
+
+          }
+       
+      }
+
+///SHUTDOWN STYLES/////////
+function pop_shutdown(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(doStyleshutdown(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = 'It is a shutdown';
+            layer.bindPopup(popupContent);
+        }
+       
+        function doStyleshutdown(feature) {
+          var select = document.getElementById("shutselectsee");
+          var answer = select.options[select.selectedIndex].value;
+           switch (answer) {
+                        case '1':   return {
+                                    weight: 1.04,
+                                    color: '#000000',
+                                    fillColor: '#g26b33',
+                                    dashArray: '',
+                                    lineCap: 'square',
+                                    lineJoin: 'bevel',
+                                    opacity: 0.7,
+                                    fillOpacity: 0.67
+                                };
+                        case '2':   return {
+                                    weight: 1.04,
+                                    color: '#000000',
+                                    fillColor: '#c54b73',
+                                    dashArray: '',
+                                    lineCap: 'square',
+                                    lineJoin: 'bevel',
+                                    opacity: 0.7,
+                                    fillOpacity: 0.67
+                                };
+                        case '3':   return {
+                                    weight: 1.04,
+                                    color: '#000000',
+                                    fillColor: '#0f032g',
+                                    dashArray: '',
+                                    lineCap: 'square',
+                                    lineJoin: 'bevel',
+                                    opacity: 0.7,
+                                    fillOpacity: 0.67
+                                };
+                        case '4':   return {
+                                    weight: 1.04,
+                                    color: '#000000',
+                                    fillColor: '#00g533',
+                                    dashArray: '',
+                                    lineCap: 'square',
+                                    lineJoin: 'bevel',
+                                    opacity: 0.7,
+                                    fillOpacity: 0.67
+                                };
+                    }
+            
+        }
+        
+///////SEE SHUTDOWN LOCATIg26b33ONS////////////
+      function seeshutplace() {
+        layerobj={};
+        var select = document.getElementById("shutselectsee");
+        var answer = select.options[select.selectedIndex].value;
+        var hret = new XMLHttpRequest();
+
+        var ans="answer="+answer;
+        hret.open("POST", "getphp.php", true);
+        hret.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        hret.onreadystatechange = function() {
+          if (hret.readyState == 4 && hret.status == 200) {
+            // document.getElementById("getlayer").innerHTML = hret.responseText;
+            lc=hret.responseText;
+            lc=lc.slice(0,-1);
+            // layerwhole=layercomma.replace(/,\s*$/, "");
+            layerstr=lc.split("|");
+            
+            for (i = 0; i < layerstr.length; i++) { 
+
+              
+              layerobj[i]=JSON.parse(layerstr[i]);
+              // document.getElementById("getlayer").innerHTML
+              // alert(layerobj[i]);
+              myLayer['features'].push(layerobj[i]);
+            }
+
+            // Add mylayer
+            var json_shutdown = new L.geoJson(myLayer, {
+                        onEachFeature: pop_shutdown,
+                        style: doStyleshutdown
+                    }).addTo(map);
+
+            // var json_myLayerJSON = new L.geoJson(myLayer);  //DONE ADDING SHUTDOWN FEATURE ON MAP
+
+         }
+        };
+        
+        hret.send(ans);
+
+
+
+      }
+
+//////////////
+
+// START MEASURE TOOLS /////////////////
+      L.Control.measureControl().addTo(map);
+
+      var featureGroup = L.featureGroup().addTo(map);
+
+      var drawControl = new L.Control.Draw({
+        edit: {
+          featureGroup: featureGroup,
+          remove: true
+        },
+        draw: {
+          polyline: false,
+          polygon: {
+            allowIntersection: false,
+            showArea: true,
+            drawError: {
+              color: '#b00b00',
+              timeout: 1000
+            },
+            shapeOptions: {
+              color: '#bada55'
+            }
+          },
+          circle: {
+            shapeOptions: {
+              color: '#662d91'
+            }
+          },
+          marker: false
+        }
+      }).addTo(map);
+
+      map.on('draw:created', showPolygonArea);
+      map.on('draw:edited', showPolygonAreaEdited);
+
+      function showPolygonAreaEdited(e) {
+        e.layers.eachLayer(function(layer) {
+          showPolygonArea({ layer: layer });
+        });
+      }
+      function showPolygonArea(e) {
+        featureGroup.clearLayers();
+        featureGroup.addLayer(e.layer);
+        e.layer.bindPopup((LGeo.area(e.layer)).toFixed(2) + ' m<sup>2</sup>');
+        e.layer.openPopup();
+
+        
+      }
+//END MEASURE TOOLS --------------------
+
+//PRINT TOOL
+      L.easyPrint().addTo(map)
+// SCALE
+      // function onLocationFound(e) {
+      //       var radius = e.accuracy / 2;
+      //       L.marker(e.latlng).addTo(map)
+      //       .bindPopup("You are within " + radius + " meters from this point")
+      //       .openPopup();
+      //       L.circle(e.latlng, radius).addTo(map);
+      //   }
+      //   map.on('locationfound', onLocationFound);
+        L.control.scale({options: {position: 'bottomleft', maxWidth: 100, metric: false, imperial: true, updateWhenIdle: false}}).addTo(map);
+        // stackLayers();
+        // map.on('overlayadd', restackLayers);
+      
+    </script>
+
+
+
+  </body>
+</html>

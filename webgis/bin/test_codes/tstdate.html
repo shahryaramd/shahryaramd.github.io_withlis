@@ -1,0 +1,29 @@
+
+<form id="form1" name="form1" method="post" action="tstdate.php">
+<p>
+<label>Date
+<script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>
+<script>
+    webshims.setOptions('forms-ext', {types: 'date'});
+webshims.polyfill('forms forms-ext');
+</script>
+<input type="date" />
+</label>
+</p>
+<p>
+<label>Time
+<input name="Time" type="text" id="Time" value="12:00:00" />
+</label>
+<label>
+<input name="ampm" type="radio" id="ampm" value="am" checked="checked" />
+am</label>
+<label>
+<input type="radio" name="ampm" id="ampm" value="pm" />
+pm</label>
+</p>
+<p>
+<label>
+<input type="submit" name="Submit" id="Submit" value="Submit" />
+</label>
+</p>
+</form>

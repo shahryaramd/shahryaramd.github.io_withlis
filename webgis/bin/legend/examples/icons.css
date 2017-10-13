@@ -1,0 +1,39 @@
+.icon {
+	display: inline-block;
+	margin: 2px;
+	height: 16px;
+	width: 16px;
+	background-color: #ccc;
+}
+
+/* ICONS */
+.icon-bar {
+	background: url('legend/images/icons/bar.png') center center no-repeat;
+}
+.icon-fuel {
+	background: url('legend/images/icons/fuel.png') center center no-repeat;
+}
+.icon-parking {
+	background: url('legend/images/icons/parking.png') center center no-repeat;
+}
+.icon-drinking_water {
+	background: url('legend/images/icons/drinking_water.png') center center no-repeat;
+}
+
+/* MARKERS */
+.leaflet-marker-icon {
+	padding: 2px;
+	text-align: center;
+}
+.marker-bar {
+	background: url('legend/images/markers/bar.png') center center no-repeat;
+}
+.marker-fuel {
+	background: url('legend/images/markers/fuel.png') center center no-repeat;
+}
+.marker-parking {
+	background: url('legend/images/markers/parking.png') center center no-repeat;
+}
+.marker-drinking_water {
+	background: url('legend/images/markers/drinking_water.png') center center no-repeat;
+}

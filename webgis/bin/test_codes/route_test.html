@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.css" />
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.js"></script>
+        <script src="https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-map.js?key=aLnojtzcFJOuNAd6BxA3uz8pn7PHhrWv"></script>
+        <script src="https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-routing.js?key=aLnojtzcFJOuNAd6BxA3uz8pn7PHhrWv"></script>
+
+        <script type="text/javascript">
+            window.onload = function() {
+
+                var map,
+                    dir;
+
+                map = L.map('map', {
+                  layers: MQ.mapLayer(),
+                  center: [ 26.50943,80.23397 ],
+                  zoom: 15
+                });
+
+                dir = MQ.routing.directions();
+
+                dir.route({
+                    locations: [
+                        'iit kanpur',
+                        'nankari'
+                    ]
+                });
+
+                map.addLayer(MQ.routing.routeLayer({
+                    directions: dir,
+                    fitBounds: true
+                }));
+            }
+        </script>
+    </head>
+
+    <body style='border:0; margin: 0'>
+        <div id='map' style='width:1100px; height:530px;'></div>
+
+</html>

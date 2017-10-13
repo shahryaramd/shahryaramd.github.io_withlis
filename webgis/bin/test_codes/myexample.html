@@ -1,0 +1,81 @@
+
+
+<!-- FINALLY SEARCH WORKED  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+<title></title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+<link rel="stylesheet" href="../src/leaflet-search.css" />
+<style type="text/css">
+	  #map {
+            position: absolute;
+            top:0;
+            left: 0;
+            right: 0;
+            bottom:0;
+      }
+</style>
+</head>
+
+<body>
+
+<div id="map"></div>
+
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js" type="text/javascript"></script>
+<script src="../src/leaflet-search.js"></script>
+<script src="data/BUILDING_FAC.js"></script>
+<script>
+
+	//sample data values define in us-states.js
+	var data = building_fac;
+
+	var map = L.map('map').setView([26.50943,80.23397], 16);
+      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar',   attribution: false,
+      maxZoom: 18,
+      }).addTo(map);
+
+	var featuresLayer = new L.GeoJSON(data, {
+
+			style: function(feature) {
+				return {color: '#3f0' };
+			},
+			onEachFeature: function(feature, marker) {
+				marker.bindPopup("Name: "+feature.properties.Name + '\n' +
+                
+                  "ShortName: " + feature.properties.ShortName +'\n' + "Type: " + feature.properties.Type +'\n' +
+                  "Nature: " + feature.properties.Nature +'\n' +
+                  "Department: " + feature.properties.Department + '\n' +"Use: " + feature.properties.USE +'\n' +
+                  "Address1: " + feature.properties.Address1 + '\n' +"Address2: " + feature.properties.Address2 +'\n' +
+                  "Floors: " + feature.properties.Floors +'\n' +"Construction Year: " + feature.properties.ConstYr +'\n' +
+                  "Area: " + feature.properties.AREA +'\n' +
+                  "Geometry: "+feature.geometry.type + '\n');
+			}
+		});
+
+	map.addLayer(featuresLayer);
+
+	var searchControl = new L.Control.Search({layer: featuresLayer, propertyName: 'Name', circleLocation:false});
+
+	searchControl.on('search_locationfound', function(e) {
+		
+		e.layer.setStyle({fillColor: '#3f0', color: '#0f0'});
+		if(e.layer._popup)
+			e.layer.openPopup();
+
+	}).on('search_collapsed', function(e) {
+
+		featuresLayer.eachLayer(function(layer) {	//restore feature color
+			featuresLayer.resetStyle(layer);
+		});	
+	});
+	
+	map.addControl( searchControl );  //inizialize search control
+
+</script>
+
+</body>
+</html>

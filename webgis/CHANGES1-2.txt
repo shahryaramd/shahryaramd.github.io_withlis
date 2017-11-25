@@ -1,3 +1,0 @@
-1. Add zoomhome 3 files in js folder
-2. Modify index and home.php 
-3. Add qwfb/indexnew.html to show labels

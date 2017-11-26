@@ -25,8 +25,8 @@
 
 		<script type="text/javascript">
 		var reqDate = getParamValue("date");
-		fn = 'https://128.95.45.89/testdss/optim_data/forecast_inflow_'+reqDate+'.txt'
-		// fn='../data/optim_data/forecast_inflow_'+reqDate+'.txt'
+		// fn = 'http://128.95.45.89/testdss/optim_data/forecast_inflow_'+reqDate+'.txt'
+		fn='../data/optim_data/forecast_inflow_'+reqDate+'.txt'
 		$.get(fn, function(csv) {
 			$('#container').highcharts({
 				data: {

@@ -24,7 +24,7 @@
 		<script type="text/javascript">
 		var reqDate = getParamValue("date");
 		// fn = 'http://128.95.45.89/testdss/optim_data/release_optim_'+reqDate+'.txt'
-		fn = '../data/optim_data/release_optim_20171118.txt'
+		fn = '../data/optim_data/release_optim_'+reqDate+'.txt'
 		$.get(fn, function(csv) {
 			$('#container').highcharts({
 				data: {

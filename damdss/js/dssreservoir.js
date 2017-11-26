@@ -80,7 +80,7 @@ function initForecastChart() {
 }
 
 function initOptimChart() {
-    var date = new Date(document.getElementById('forecastdate').value);
+    var date = new Date(document.getElementById('optimdate').value);
     var yyyy = date.getFullYear().toString();
     var mm = (date.getMonth()+1).toString(); // getMonth() is zero-based
     var dd  = date.getDate().toString();

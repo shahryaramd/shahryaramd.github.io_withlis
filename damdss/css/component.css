@@ -64,7 +64,7 @@ body,
 	left: 0;
 	z-index: 100;
 	visibility: hidden;
-	width: 530px;
+	width: 45%;
 	height: 100%;
 	background: #fff;
 	-webkit-transition: all 0.5s;
@@ -102,7 +102,7 @@ body,
 
 .st-menu h2 {
 	margin: 0;
-	padding: 1em;
+	padding: 27px 27px 0 27px;
 	color: rgba(0,0,0,0.4);
 	text-shadow: 0 0 1px rgba(0,0,0,0.1);
 	font-weight: 300;
@@ -305,7 +305,7 @@ body,
 
 .st-effect-6.st-menu-open .st-pusher {
 	-webkit-transform: translate3d(530px, 0, 0) rotateY(-15deg);
-	transform: translate3d(530px, 0, 0) rotateY(-15deg);
+	transform: translate3d(, 0, 0) rotateY(-15deg);
 }
 
 .st-effect-6.st-menu {
@@ -380,8 +380,8 @@ body,
 }
 
 .st-effect-8.st-menu-open .st-pusher {
-	-webkit-transform: translate3d(530px, 0, 0);
-	transform: translate3d(530px, 0, 0);
+	-webkit-transform: translate3d(45%, 0, 0);
+	transform: translate3d(45%, 0, 0);
 }
 
 .st-effect-8.st-menu {
@@ -450,8 +450,8 @@ body,
 }
 
 .st-effect-10.st-menu-open .st-pusher {
-	-webkit-transform: translate3d(530px, 0, 0);
-	transform: translate3d(530px, 0, 0);
+	-webkit-transform: translate3d(45%, 0, 0);
+	transform: translate3d(45%, 0, 0);
 }
 
 .st-effect-10.st-menu {
@@ -551,8 +551,8 @@ body,
 }
 
 .st-effect-13.st-menu-open .st-pusher {
-	-webkit-transform: translate3d(530px, 0, 0);
-	transform: translate3d(530px, 0, 0);
+	-webkit-transform: translate3d(45%, 0, 0);
+	transform: translate3d(45%, 0, 0);
 }
 
 .st-effect-13.st-menu {
@@ -589,8 +589,8 @@ body,
 }
 
 .st-effect-14.st-menu-open .st-pusher {
-	-webkit-transform: translate3d(530px, 0, 0);
-	transform: translate3d(530px, 0, 0);
+	-webkit-transform: translate3d(45%, 0, 0);
+	transform: translate3d(45%, 0, 0);
 }
 
 .st-effect-14.st-menu {
@@ -617,5 +617,5 @@ body,
 /* Fallback example for browsers that don't support 3D transforms (and no JS fallback) */
 .no-csstransforms3d .st-pusher,
 .no-js .st-pusher {
-	padding-left: 530px;
+	padding-left: 45%;
 }

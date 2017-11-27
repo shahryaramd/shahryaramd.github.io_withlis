@@ -14,6 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="css/demo.css" />
 	<link rel="stylesheet" type="text/css" href="css/icons.css" />
 	<link rel="stylesheet" type="text/css" href="css/component.css" />
+	<script src="https://use.fontawesome.com/e6fc3c0478.js"></script>
 
 	<!-- Leaflet -->
 	<link rel="stylesheet" href="css/leaflet.css" />
@@ -33,7 +34,7 @@
 			overflow-y: hidden;
 			overflow-x: hidden;
 			/*float: center;*/
-			width: 90%;
+			width: 80%;
 			height: 80%;
 			padding: 30;
 			margin: 2 auto;
@@ -44,33 +45,10 @@
 
 <body onload="initialize()">
 	<div id="st-container" class="st-container">
-		<!-- Actual Operations -->
-		<nav class="st-menu st-effect-1" id="menu-1">
-			<h2 class="icon icon-lab">Actual Operations</h2>
-			<div id="content-sidebar" class="sideinfo">
-				<div class="input-field">
-					<select name="actualVar" id="actualVar" onchange="initChart()">
-					      <option value="" disabled selected>Select Variable</option>
-					      <option value="inflow">Inflow & Release</option>
-					      <option value="elev">Forebay Elevation</option>
-					      <option value="hp">Hydropower Generation</option>
-					</select>
-				</div>
-				<!-- <div style="float:left;margin-right:20px">
-					<label for="from">Start Date</label>
-					<input type="text" class="datepicker" id="from">
-				</div>
-				<div style="float:left;">
-					<label for="to">End Date</label>
-					<input type="text" class="datepicker" id="to">
-				</div> -->
-				<div id="ifr_actual" frameborder=None></div>
-			</div>
 
-		</nav>
 		<!-- Forecast Data -->
 		<nav class="st-menu st-effect-2" id="menu-2">
-			<h2 class="icon icon-lab">Forecast Data</h2>
+			<h2><i class="fa fa-laptop" aria-hidden="true"></i>&nbsp;&nbsp;Modeled Streamflow</h2>
 			<div id="content-sidebar" class="sideinfo">
 				<div class="input-field">
 					<select name="forecastVar" id="forecastVar" onchange="initForecastChart()">
@@ -80,6 +58,15 @@
 					</select>
 				</div>
 				<input type="text" class="datepicker" id="forecastdate" placeholder="Forecast Date" onchange="initForecastChart()">
+				<div style="display:inline;">
+					<a id="datechange" onclick="decreaseForecastDate();" title="Step back a day" class="waves-effect waves-teal btn-flat">
+						<i class="fa fa-step-backward" aria-hidden="true"></i>
+					</a>
+					<a id="datechange" onclick="increaseForecastDate();" title="Step forward a day" class="waves-effect waves-teal btn-flat">
+						<i class="fa fa-step-forward" aria-hidden="true"></i>
+					</a>
+
+				</div>
 
 				<div id="ifr_forecast" frameborder=None></div>
 			</div>
@@ -87,7 +74,7 @@
 
 		<!-- Optimized Operations -->
 		<nav class="st-menu st-effect-3" id="menu-3">
-			<h2 class="icon icon-lab">Optimized Operations</h2>
+			<h2><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;&nbsp;Optimized Operations</h2>
 			<div id="content-sidebar" class="sideinfo">
 				<div class="input-field">
 					<select name="optimVar" id="optimVar" onchange="initOptimChart()">
@@ -98,29 +85,70 @@
 					</select>
 				</div>
 				<input type="text" class="datepicker" id="optimdate" placeholder="Optimization Date" onchange="initOptimChart()">
-
+				<div style="display:inline;">
+					<a id="datechange" onclick="decreaseOptimDate();" title="Step back a day" class="waves-effect waves-teal btn-flat">
+						<i class="fa fa-step-backward" aria-hidden="true"></i>
+					</a>
+					<a id="datechange" onclick="increaseOptimDate();" title="Step forward a day" class="waves-effect waves-teal btn-flat">
+						<i class="fa fa-step-forward" aria-hidden="true"></i>
+					</a>
+				</div>
 				<div id="ifr_optim" frameborder=None></div>
 			</div>
 
 		</nav>
 
-		<!-- Download data -->
-		<nav class="st-menu st-effect-4" id="menu-4">
-			<h2 class="icon icon-lab">Download Data</h2>
+		<!-- Actual Operations -->
+		<nav class="st-menu st-effect-1" id="menu-1">
+			<h2><i class="fa fa-globe" aria-hidden="true"></i>&nbsp;&nbsp;Actual Operations</h2>
 			<div id="content-sidebar" class="sideinfo">
 				<div class="input-field">
-					<select name="downloadData" id="downloadData" onchange="initDownload">
+					<select name="actualVar" id="actualVar" onchange="initActualChart()">
 					      <option value="" disabled selected>Select Variable</option>
-					      <option value="inflowA">Actual Inflow</option>
-						  <option value="inflowF">Forecast Inflow</option>
-						  <option value="releaseA">Actual Release</option>
-						  <option value="releaseF">Optimized Release</option>
-					      <option value="elevA">Actual Elevation</option>
-						  <option value="elevF">Optimized Elevation</option>
+					      <option value="inflow">Inflow & Release</option>
+					      <option value="elev">Forebay Elevation</option>
+					      <option value="hp">Hydropower Generation</option>
 					</select>
 				</div>
-				<input type="text" class="datepicker" id="downloaddate" placeholder="Download Date">
 
+				<div id="ifr_actual" frameborder=None></div>
+			</div>
+
+		</nav>
+		<!-- Download data -->
+		<nav class="st-menu st-effect-4" id="menu-4">
+			<h2><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;Download Data</h2>
+			<div id="content-sidebar" class="sideinfo">
+				<div class="input-field">
+					<select name="downloadData" id="downloadData" onchange="initDownload()">
+					      <option value="" disabled selected>Select Variable</option>
+						  <optgroup label="Observed Data">
+							      <option value="inflowA">Inflow</option>
+								  <option value="releaseA">Release</option>
+								  <option value="elevA">Forebay Elevation</option>
+								  <option value="hpA">Hydropower</option>
+						   </optgroup>
+						   <optgroup label="Modeled Data">
+							  	<option value="inflowF">Forecast + Hindcast Inflow</option>
+								<option value="inflowH">Hindcast Inflow</option>
+						   </optgroup>
+						   <optgroup label="Optimized Data">
+							   <option value="releaseO">Release</option>
+							  <option value="elevO">Forebay Elevation</option>
+							  <option value="hpO">Hydropower</option>
+						   </optgroup>
+					</select>
+				</div>
+				<input type="text" class="datepicker" id="downloaddate" placeholder="Download Date" onchange="initDownload()">
+				<div style="display:inline;">
+					<a id="datechange" onclick="decreaseDownloadDate();" title="Step back a day" class="waves-effect waves-teal btn-flat">
+						<i class="fa fa-step-backward" aria-hidden="true"></i>
+					</a>
+					<a id="datechange" onclick="increaseDownloadDate();" title="Step forward a day" class="waves-effect waves-teal btn-flat">
+						<i class="fa fa-step-forward" aria-hidden="true"></i>
+					</a>
+				</div><br>
+				<a id="linkd" href="" download> &nbsp;&nbsp;&nbsp;Download </a>
 				<div id="ifr_download" frameborder=None></div>
 			</div>
 
@@ -139,26 +167,25 @@
 				<div id="st-trigger-effects">
 
 					<!-- Dropdown Trigger -->
-					<a class='dropdown-button btn' href='#' data-activates='dropdown1'>detroit dam</a>
+					<!-- <a class='dropdown-button btn' href='#' data-activates='dropdown1'>detroit dam</a> -->
 
 					<!-- Dropdown Structure -->
-					<ul id='dropdown1' class='dropdown-content'>
+					<!-- <ul id='dropdown1' class='dropdown-content'>
 						<li><a href="#!">Pensacola Dam</a></li>
-					</ul>
-					<!--
-					   <input class="with-gap" name="group3" type="radio" id="test5" checked />
-					   <label for="test5">DETROIT DAM &nbsp;&nbsp;</label> -->
+					</ul> -->
 
+					<input class="with-gap" name="group3" type="radio" id="test5" checked />
+					<label for="test5">DETROIT DAM &nbsp;&nbsp;</label>
 
-					<button class="btn waves-effect waves-light" data-effect="st-effect-1">Actual Operations</button>
-					<button class="btn waves-effect waves-light" data-effect="st-effect-2">Forecast Data</button>
-					<button class="btn waves-effect waves-light" data-effect="st-effect-3">Optimized Operations</button>
-					<button class="btn waves-effect waves-light" data-effect="st-effect-4">Download Data</button>
+					<button class="btn waves-effect waves-light" data-effect="st-effect-2"><i class="fa fa-laptop" aria-hidden="true"></i>&nbsp;Modeled Streamflow</button>
+					<button class="btn waves-effect waves-light" data-effect="st-effect-3"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Optimized Operations</button>
+					<button class="btn waves-effect waves-light" data-effect="st-effect-1"><i class="fa fa-globe" aria-hidden="true"></i>&nbsp;Actual Operations</button>
+					<button class="btn waves-effect waves-light" data-effect="st-effect-4"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Download Data</button>
 
 				</div>
 				<!-- <br> -->
-				<div class="info" id="map" height=90%></div>
-				<div class="info">
+				<div class="infomap" id="map" height=90%></div>
+				<div class="infofoot">
 					<p>Copyright (C) | Shahryar K Ahmad | 2017</p>
 				</div>
 			</div>

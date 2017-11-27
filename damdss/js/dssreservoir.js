@@ -1,29 +1,137 @@
 // Initialize date
 
-function initialize()
-{
+function initialize() {
     var monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
+        "July", "August", "September", "October", "November", "December"
+    ];
 
     var date = new Date();
-    date.setDate(date.getDate()-1);
+    date.setDate(date.getDate() - 1);
     var yyyy = date.getFullYear().toString();
-    var mm = (date.getMonth()+1).toString(); // getMonth() is zero-based
+    var mm = (date.getMonth() + 1).toString(); // getMonth() is zero-based
     var mmfull = (monthNames[date.getMonth()]).toString();
-    var dd  = date.getDate().toString();
-    var reqDate = yyyy + (mm[1]?mm:"0"+mm[0]) + (dd[1]?dd:"0"+dd[0]);
-    document.getElementById('forecastdate').value = (dd[1]?dd:"0"+dd[0]) +" "+ mmfull + ", "+ yyyy ;
-    document.getElementById('optimdate').value = (dd[1]?dd:"0"+dd[0]) +" "+ mmfull + ", "+ yyyy;
-    document.getElementById('downloaddate').value = (dd[1]?dd:"0"+dd[0]) +" "+ mmfull + ", "+ yyyy;
-// document.getElementById('selInfo').innerHTML = "Please select Basin.";
+    var dd = date.getDate().toString();
+    var reqDate = yyyy + (mm[1] ? mm : "0" + mm[0]) + (dd[1] ? dd : "0" + dd[0]);
+    document.getElementById('forecastdate').value = (dd[1] ? dd : "0" + dd[0]) + " " + mmfull + ", " + yyyy;
+    document.getElementById('optimdate').value = (dd[1] ? dd : "0" + dd[0]) + " " + mmfull + ", " + yyyy;
+    document.getElementById('downloaddate').value = (dd[1] ? dd : "0" + dd[0]) + " " + mmfull + ", " + yyyy;
+    // document.getElementById('selInfo').innerHTML = "Please select Basin.";
 }
 
+// Functions for incrementing/decrementing date
+
+function decreaseForecastDate() {
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    el = document.getElementById('forecastdate');
+    var curdate = new Date(el.value);
+    curdate.setDate(curdate.getDate()-1);
+    var yyyy = curdate.getFullYear().toString();
+    var mm = (curdate.getMonth() + 1).toString(); // getMonth() is zero-based
+    var mmfull = (monthNames[curdate.getMonth()]).toString();
+    var dd = curdate.getDate().toString();
+    el.value = (dd[1] ? dd : "0" + dd[0]) + " " + mmfull + ", " + yyyy;
+    ev = document.createEvent('Event');
+    ev.initEvent('change', true, false);
+    el.dispatchEvent(ev);
+
+}
+
+function increaseForecastDate() {
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    el = document.getElementById('forecastdate');
+
+    var curdate = new Date(el.value);
+    curdate.setDate(curdate.getDate() + 1);
+    var yyyy = curdate.getFullYear().toString();
+    var mm = (curdate.getMonth() + 1).toString(); // getMonth() is zero-based
+    var mmfull = (monthNames[curdate.getMonth()]).toString();
+    var dd = curdate.getDate().toString();
+    el.value = (dd[1] ? dd : "0" + dd[0]) + " " + mmfull + ", " + yyyy;
+    ev = document.createEvent('Event');
+    ev.initEvent('change', true, false);
+    el.dispatchEvent(ev);
+}
+
+function decreaseOptimDate() {
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    el = document.getElementById('optimdate');
+    var curdate = new Date(el.value);
+    curdate.setDate(curdate.getDate()-1);
+    var yyyy = curdate.getFullYear().toString();
+    var mm = (curdate.getMonth() + 1).toString(); // getMonth() is zero-based
+    var mmfull = (monthNames[curdate.getMonth()]).toString();
+    var dd = curdate.getDate().toString();
+    el.value = (dd[1] ? dd : "0" + dd[0]) + " " + mmfull + ", " + yyyy;
+    ev = document.createEvent('Event');
+    ev.initEvent('change', true, false);
+    el.dispatchEvent(ev);
+
+}
+
+function increaseOptimDate() {
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    el = document.getElementById('optimdate');
+
+    var curdate = new Date(el.value);
+    curdate.setDate(curdate.getDate() + 1);
+    var yyyy = curdate.getFullYear().toString();
+    var mm = (curdate.getMonth() + 1).toString(); // getMonth() is zero-based
+    var mmfull = (monthNames[curdate.getMonth()]).toString();
+    var dd = curdate.getDate().toString();
+    el.value = (dd[1] ? dd : "0" + dd[0]) + " " + mmfull + ", " + yyyy;
+    ev = document.createEvent('Event');
+    ev.initEvent('change', true, false);
+    el.dispatchEvent(ev);
+}
+
+function decreaseDownloadDate() {
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    el = document.getElementById('downloaddate');
+    var curdate = new Date(el.value);
+    curdate.setDate(curdate.getDate()-1);
+    var yyyy = curdate.getFullYear().toString();
+    var mm = (curdate.getMonth() + 1).toString(); // getMonth() is zero-based
+    var mmfull = (monthNames[curdate.getMonth()]).toString();
+    var dd = curdate.getDate().toString();
+    el.value = (dd[1] ? dd : "0" + dd[0]) + " " + mmfull + ", " + yyyy;
+    ev = document.createEvent('Event');
+    ev.initEvent('change', true, false);
+    el.dispatchEvent(ev);
+
+}
+
+function increaseDownloadDate() {
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    el = document.getElementById('downloaddate');
+
+    var curdate = new Date(el.value);
+    curdate.setDate(curdate.getDate() + 1);
+    var yyyy = curdate.getFullYear().toString();
+    var mm = (curdate.getMonth() + 1).toString(); // getMonth() is zero-based
+    var mmfull = (monthNames[curdate.getMonth()]).toString();
+    var dd = curdate.getDate().toString();
+    el.value = (dd[1] ? dd : "0" + dd[0]) + " " + mmfull + ", " + yyyy;
+    ev = document.createEvent('Event');
+    ev.initEvent('change', true, false);
+    el.dispatchEvent(ev);
+}
 
 //Materialize options
 $(document).ready(function() {
     $('select').material_select();
-  });
+});
 
 $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
@@ -35,9 +143,9 @@ $('.datepicker').pickadate({
 });
 
 
-function initChart(){
+function initActualChart() {
 
-    var srcChart=""
+    var srcChart = ""
     if (document.getElementById('actualVar').value == "inflow") {
         srcChart = "charts/curr_inoutflow.html";
     } else if (document.getElementById('actualVar').value == "elev") {
@@ -48,33 +156,33 @@ function initChart(){
         srcChart = ""
     }
 
-    if (srcChart == ""){
-        document.getElementById('ifr_actual').innerHTML= "Please select a variable to start with!"
-    } else{
-        strIfr='<iframe src='+srcChart+' height="430px" width="500px" frameborder="0"></iframe>'
-        document.getElementById('ifr_actual').innerHTML= strIfr;
+    if (srcChart == "") {
+        document.getElementById('ifr_actual').innerHTML = "Please select a variable to start with!"
+    } else {
+        strIfr = '<iframe src=' + srcChart + ' height="430px" width="95%" frameborder="0"></iframe>'
+        document.getElementById('ifr_actual').innerHTML = strIfr;
     }
 }
 
 function initForecastChart() {
     var date = new Date(document.getElementById('forecastdate').value);
     var yyyy = date.getFullYear().toString();
-    var mm = (date.getMonth()+1).toString(); // getMonth() is zero-based
-    var dd  = date.getDate().toString();
-    var reqDate = yyyy + (mm[1]?mm:"0"+mm[0]) + (dd[1]?dd:"0"+dd[0]);
+    var mm = (date.getMonth() + 1).toString(); // getMonth() is zero-based
+    var dd = date.getDate().toString();
+    var reqDate = yyyy + (mm[1] ? mm : "0" + mm[0]) + (dd[1] ? dd : "0" + dd[0]);
     if (document.getElementById('forecastVar').value == "gfs") {
-        srcChart = "charts/forecast_inflow.html?date="+reqDate;
+        srcChart = "charts/forecast_inflow.html?date=" + reqDate;
     } else if (document.getElementById('forecastVar').value == "gefs") {
-        srcChart = "charts/forecast_inflow_gefs.html?date="+reqDate;
+        srcChart = "charts/forecast_inflow_gefs.html?date=" + reqDate;
     } else {
         srcChart = ""
     }
 
-    if (srcChart == ""){
-        document.getElementById('ifr_forecast').innerHTML= "Please select a variable to start with!"
-    } else{
-        strIfr='<iframe src='+srcChart+' height="430px" width="500px" frameborder="0"></iframe>'
-        document.getElementById('ifr_forecast').innerHTML= strIfr;
+    if (srcChart == "") {
+        document.getElementById('ifr_forecast').innerHTML = "Please select a variable to start with!"
+    } else {
+        strIfr = '<iframe src=' + srcChart + ' height="430px" width="95%" frameborder="0"></iframe>'
+        document.getElementById('ifr_forecast').innerHTML = strIfr;
     }
 
 }
@@ -82,24 +190,64 @@ function initForecastChart() {
 function initOptimChart() {
     var date = new Date(document.getElementById('optimdate').value);
     var yyyy = date.getFullYear().toString();
-    var mm = (date.getMonth()+1).toString(); // getMonth() is zero-based
-    var dd  = date.getDate().toString();
-    var reqDate = yyyy + (mm[1]?mm:"0"+mm[0]) + (dd[1]?dd:"0"+dd[0]);
+    var mm = (date.getMonth() + 1).toString(); // getMonth() is zero-based
+    var dd = date.getDate().toString();
+    var reqDate = yyyy + (mm[1] ? mm : "0" + mm[0]) + (dd[1] ? dd : "0" + dd[0]);
     if (document.getElementById('optimVar').value == "outflow") {
-        srcChart = "charts/optim_outflow.html?date="+reqDate;
+        srcChart = "charts/optim_outflow.html?date=" + reqDate;
     } else if (document.getElementById('optimVar').value == "elev") {
-        srcChart = "charts/optim_elev.html?date="+reqDate;
+        srcChart = "charts/optim_elev.html?date=" + reqDate;
     } else if (document.getElementById('optimVar').value == "hp") {
-        srcChart = "charts/optim_hp.html?date="+reqDate;
+        srcChart = "charts/optim_hp.html?date=" + reqDate;
     } else {
         srcChart = ""
     }
 
-    if (srcChart == ""){
-        document.getElementById('ifr_optim').innerHTML= "Please select a variable to start with!"
-    } else{
-        strIfr='<iframe src='+srcChart+' height="430px" width="500px" frameborder="0"></iframe>'
-        document.getElementById('ifr_optim').innerHTML= strIfr;
+    if (srcChart == "") {
+        document.getElementById('ifr_optim').innerHTML = "Please select a variable to start with!"
+    } else {
+        strIfr = '<iframe src=' + srcChart + ' height="430px" width="95%" frameborder="0"></iframe>'
+        document.getElementById('ifr_optim').innerHTML = strIfr;
+    }
+
+}
+
+function initDownload() {
+    var date = new Date(document.getElementById('downloaddate').value);
+    var yyyy = date.getFullYear().toString();
+    var mm = (date.getMonth() + 1).toString(); // getMonth() is zero-based
+    var dd = date.getDate().toString();
+    var reqDate = yyyy + (mm[1] ? mm : "0" + mm[0]) + (dd[1] ? dd : "0" + dd[0]);
+    if (document.getElementById('downloadData').value == "inflowA") {
+        srcChart = "./data/usace_data/det_inflow.txt";
+    } else if (document.getElementById('downloadData').value == "releaseA") {
+        srcChart = "./data/usace_data/det_outflow.txt";
+    } else if (document.getElementById('downloadData').value == "elevA") {
+        srcChart = "./data/usace_data/det_elev.txt";
+    } else if (document.getElementById('downloadData').value == "hpA") {
+        srcChart = "./data/usace_data/det_hp.txt";
+    } else if (document.getElementById('downloadData').value == "inflowF") {
+        srcChart = "./data/optim_data/forecastFull_inflow_"+reqDate+".txt";
+    } else if (document.getElementById('downloadData').value == "inflowH") {
+        srcChart = "./data/optim_data/forecast_inflow_"+reqDate+".txt";
+    } else if (document.getElementById('downloadData').value == "releaseO") {
+        srcChart = "./data/optim_data/release_optim_"+reqDate+".txt";
+    } else if (document.getElementById('downloadData').value == "elevO") {
+        srcChart = "./data/optim_data/elev_optim_"+reqDate+".txt";
+    } else if (document.getElementById('downloadData').value == "hpO") {
+        srcChart = "./data/optim_data/hp_optim_"+reqDate+".txt";
+    }
+    else {
+        srcChart = ""
+    }
+
+    if (srcChart == "") {
+        document.getElementById('ifr_download').innerHTML = "Please select a variable to start with!"
+    } else {
+        strIfr = '<iframe src=' + srcChart + ' height="430px" width="95%" frameborder="0"></iframe>'
+        document.getElementById('ifr_download').innerHTML = strIfr;
+        document.getElementById('linkd').href = srcChart;
+        document.getElementById('linkd').style="color:#26a59a;";
     }
 
 }
@@ -108,35 +256,40 @@ function initOptimChart() {
 
 //Define Layers
 var highlightLayer;
+
 function highlightFeature(e) {
     highlightLayer = e.target;
 
     if (e.target.feature.geometry.type === 'LineString') {
-      highlightLayer.setStyle({
-        color: '#ffff00',
-      });
+        highlightLayer.setStyle({
+            color: '#ffff00',
+        });
     } else {
-      highlightLayer.setStyle({
-        fillColor: '#ffff00',
-        fillOpacity: 1
-      });
+        highlightLayer.setStyle({
+            fillColor: '#ffff00',
+            fillOpacity: 1
+        });
     }
 }
 L.ImageOverlay.include({
-    getBounds: function () {
+    getBounds: function() {
         return this._bounds;
     }
 });
 var map = L.map('map', {
-    zoomControl:true, maxZoom:28, minZoom:1
+    zoomControl: true,
+    maxZoom: 28,
+    minZoom: 1
 });
 map.setView(new L.LatLng(44.6354, -122.0794), 11);
 var hash = new L.Hash(map);
-var measureControl = new L.Control.Measure(
-    { position: 'topleft' },
-    { activeColor: '#ABE67E' },
-    { completedColor: '#C8F2BE' },
-    {
+var measureControl = new L.Control.Measure({
+    position: 'topleft'
+}, {
+    activeColor: '#ABE67E'
+}, {
+    completedColor: '#C8F2BE'
+}, {
     // primaryLengthUnit: 'meters',
     secondaryLengthUnit: 'kilometers',
     primaryAreaUnit: 'sqmeters'
@@ -159,17 +312,18 @@ var basemap2 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/
     maxZoom: 13
 });
 // basemap2.addTo(map);
-function setBounds() {
-}
+function setBounds() {}
+
 function geoJson2heat(geojson, weight) {
-  return geojson.features.map(function(feature) {
-    return [
-      feature.geometry.coordinates[1],
-      feature.geometry.coordinates[0],
-      feature.properties[weight]
-    ];
-  });
+    return geojson.features.map(function(feature) {
+        return [
+            feature.geometry.coordinates[1],
+            feature.geometry.coordinates[0],
+            feature.properties[weight]
+        ];
+    });
 }
+
 function pop_DrainageBasin0(feature, layer) {
     layer.on({
         mouseout: function(e) {
@@ -206,13 +360,14 @@ map.createPane('pane_DrainageBasin0');
 map.getPane('pane_DrainageBasin0').style.zIndex = 400;
 map.getPane('pane_DrainageBasin0').style['mix-blend-mode'] = 'normal';
 var layer_DrainageBasin0 = new L.geoJson(json_DrainageBasin0, {
-attribution: '<a href=""></a>',
-pane: 'pane_DrainageBasin0',
-onEachFeature: pop_DrainageBasin0,
-style: style_DrainageBasin0_0,
+    attribution: '<a href=""></a>',
+    pane: 'pane_DrainageBasin0',
+    onEachFeature: pop_DrainageBasin0,
+    style: style_DrainageBasin0_0,
 });
 bounds_group.addLayer(layer_DrainageBasin0);
 map.addLayer(layer_DrainageBasin0);
+
 function pop_DetroitLake1(feature, layer) {
     layer.on({
         mouseout: function(e) {
@@ -252,13 +407,14 @@ map.createPane('pane_DetroitLake1');
 map.getPane('pane_DetroitLake1').style.zIndex = 401;
 map.getPane('pane_DetroitLake1').style['mix-blend-mode'] = 'normal';
 var layer_DetroitLake1 = new L.geoJson(json_DetroitLake1, {
-attribution: '<a href=""></a>',
-pane: 'pane_DetroitLake1',
-onEachFeature: pop_DetroitLake1,
-style: style_DetroitLake1_0,
+    attribution: '<a href=""></a>',
+    pane: 'pane_DetroitLake1',
+    onEachFeature: pop_DetroitLake1,
+    style: style_DetroitLake1_0,
 });
 bounds_group.addLayer(layer_DetroitLake1);
 map.addLayer(layer_DetroitLake1);
+
 function pop_DetroitDam2(feature, layer) {
     layer.on({
         mouseout: function(e) {
@@ -299,7 +455,7 @@ var layer_DetroitDam2 = new L.geoJson(json_DetroitDam2, {
     attribution: '<a href=""></a>',
     pane: 'pane_DetroitDam2',
     onEachFeature: pop_DetroitDam2,
-    pointToLayer: function (feature, latlng) {
+    pointToLayer: function(feature, latlng) {
         var context = {
             feature: feature,
             variables: {}
@@ -309,8 +465,18 @@ var layer_DetroitDam2 = new L.geoJson(json_DetroitDam2, {
 });
 bounds_group.addLayer(layer_DetroitDam2);
 map.addLayer(layer_DetroitDam2);
-var baseMaps = {'Google Streets': basemap0, 'Google Satellites': basemap1, 'ESRI World Terrain': basemap2};
-var layerControl = L.control.layers(baseMaps,{'<img src="legend/DetroitDam2.png" /> Detroit Dam': layer_DetroitDam2,'<img src="legend/DetroitLake1.png" /> Detroit Lake': layer_DetroitLake1,'<img src="legend/DrainageBasin0.png" /> Drainage Basin': layer_DrainageBasin0,},{collapsed:true}).addTo(map);
+var baseMaps = {
+    'Google Streets': basemap0,
+    'Google Satellites': basemap1,
+    'ESRI World Terrain': basemap2
+};
+var layerControl = L.control.layers(baseMaps, {
+    '<img src="legend/DetroitDam2.png" /> Detroit Dam': layer_DetroitDam2,
+    '<img src="legend/DetroitLake1.png" /> Detroit Lake': layer_DetroitLake1,
+    '<img src="legend/DrainageBasin0.png" /> Drainage Basin': layer_DrainageBasin0,
+}, {
+    collapsed: true
+}).addTo(map);
 setBounds();
 
 function initMap() {
@@ -327,7 +493,7 @@ function initMap() {
     layer_DetroitDam2 = new L.geoJson(json_DetroitDam2, {
         pane: 'pane_DetroitDam2',
         onEachFeature: pop_DetroitDam2,
-        pointToLayer: function (feature, latlng) {
+        pointToLayer: function(feature, latlng) {
             var context = {
                 feature: feature,
                 variables: {}

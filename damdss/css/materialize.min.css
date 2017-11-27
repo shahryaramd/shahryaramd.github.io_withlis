@@ -5682,7 +5682,7 @@ button:focus {
 
 label {
     font-size: .8rem;
-    color: #26a59a
+    color: #0ec5b7
 }
 
 ::-webkit-input-placeholder {
@@ -6024,7 +6024,7 @@ textarea.materialize-textarea.validate+label:not(.label-icon).active {
 }
 
 [type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:before, [type="radio"].with-gap:checked+label:after {
-    border: 2px solid #26a69a
+    border: 2px solid #36e4d6
 }
 
 [type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:after {

@@ -67,20 +67,39 @@
 						}
 					},
 					title: {
-						text: 'Optimized Release(cfs)',
+						text: 'Release(cfs)',
 						style: {
-							fontWeight: 'bold',
+							// fontWeight: 'bold',
 							fontSize:'15px'
 						}
-					}
-				}
+					},
+					plotLines: [{
+		                label: {
+		                    text: 'Turbine Capacity'
+		                    // x: 5340
+		                },
+		                color: 'orange',
+		                width: 2,
+		                value: 5340,
+		                dashStyle: 'longdashdot'
+		            }]
+				},
+				legend: {
+					enabled:false
+				},
+				series: [{
+					threshold: 5340,
+		            negativeColor: 'green',
+		            color: 'red',
+				}]
+
 			});
 		});
 		</script>
 	</head>
 	<body>
 	<!-- <div align = "left"><a href="../data/det_elev.txt" target="_blank" style="color: #1E88E5;">Download Streamflow Data</a></div> -->
-<div id = "container" style = "min-width: 310px; height: 350px; margin: 0 auto"></div>
+<div id = "container" style = "min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 	</body>
 </html>

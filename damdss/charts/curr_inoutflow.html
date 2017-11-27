@@ -19,7 +19,7 @@
 
 	<script type="text/javascript">
 		// fn = 'http://128.95.45.89/testdss/usace_data/det_inflow.txt'
-		fn = '../data/usace_data/det_inflow.txt'
+		fn = '../data/usace_data/det_flow.txt'
 		$.get(fn, function(csv) {
 			Highcharts.stockChart('container', {
 
@@ -37,10 +37,34 @@
 						fontWeight: 'bold'
 					}
 				},
+				subtitle: {
+		            text: 'Source: US Army Corps of Engineers'
+		        },
+				legend: {
+			        enabled: true,
+			        align: 'center',
+			        // backgroundColor: '#FCFFC5',
+			        // borderColor: 'black',
+			        // borderWidth: 2,
+			        layout: 'horizontal',
+			        verticalAlign: 'bottom',
+			        // y: 100,
+			        shadow: false
+			    },
 				series: [{
 		            marker: {
 		                enabled: true,
 		                radius: 2
+		            },
+		            shadow: false,
+		            tooltip: {
+		                valueDecimals: 2
+		            }
+		        },
+				{
+		            marker: {
+		                enabled: false,
+		                radius: 1
 		            },
 		            shadow: false,
 		            tooltip: {
@@ -102,7 +126,7 @@
 
 <body>
 	<!-- <div align = "left"><a href="../data/det_elev.txt" target="_blank" style="color: #1E88E5;">Download Streamflow Data</a></div> -->
-	<div id="container" style="min-width: 310px; height: 350px; margin: 0 auto"></div>
+	<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 </body>
 
